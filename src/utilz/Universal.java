@@ -15,8 +15,8 @@ public class Universal {
     /*Configurações de resolução da tela*/
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 3.0f;
-    public final static int TILES_IN_WIDTH = 14;  //448px de COMPRIMENTO
-    public final static int TILES_IN_HEIGHT = 8;  //256px ALTURA
+    public final static int TILES_IN_WIDTH = 16;  //512px de COMPRIMENTO
+    public final static int TILES_IN_HEIGHT = 9;  //288px ALTURA
     public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_IN_WIDTH * TILES_SIZE;
     public final static int GAME_HEIGHT = TILES_IN_HEIGHT * TILES_SIZE;
@@ -93,7 +93,7 @@ public class Universal {
     public static boolean block = false; //flag de spawn 
     
     // =============== Geral =============== 
-    public static float OBST_SPEED = 0;
+    public static float BASE_SPEED = 0;
     public static int lastSpeedUpScore = 0;
     public static int speedUpgrades = 0;
     public static final int MAX_SPEED_UPGRADES = 7;
@@ -115,8 +115,12 @@ public class Universal {
         }
     }
     
+    /*-------------- GAME LOOP ---------------*/
+    /*-----------------------------------------*/
+    /*-----------------------------------------*/
+    
     public static void resetGameValues(){
-        OBST_SPEED = -100f * SCALE;
+        BASE_SPEED = -100f * SCALE;
         globalCooldown = 2000;
         SCORE = 0;
         dead = false;
@@ -126,8 +130,24 @@ public class Universal {
     
     public static void increaseAllSpeed(){
         if (speedUpgrades < MAX_SPEED_UPGRADES) {
-            OBST_SPEED -= 10f;
+            BASE_SPEED -= 10f;
             speedUpgrades++;
         }
     }
+    
+        
+    /*-------------- SPRITES CENÁRIO ----------*/
+    /*-----------------------------------------*/
+    /*-----------------------------------------*/
+    
+    public final static int spriteEnviroWidth = 1024;
+    public final static int spriteEnviroWidthSLICED = 128;
+    public final static int spriteEnviroWidthSLICEDSCALED = Universal.spriteEnviroWidthSLICED * (int)Universal.SCALE;
+    public final static int numHorizontalTiles = 8;
+    
+    public final static float layer1YOffset = Universal.GAME_HEIGHT - 98 * Universal.SCALE;
+    public final static float layer2YOffset = Universal.GAME_HEIGHT - 130 * Universal.SCALE;
+    public final static float layer3YOffset = Universal.GAME_HEIGHT - 125 * Universal.SCALE;
+    //a altura de cada um vai ser variável -> evitar colocar a mesma altura que a tela, pesa em processamento
+    
 }

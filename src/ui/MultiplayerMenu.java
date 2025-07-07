@@ -44,7 +44,7 @@ public class MultiplayerMenu implements ScreenStates {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.multMenusheet = new Spritesheet(multMenuFundo, 256, 448, 0.0, Universal.SCALE); 
+        this.multMenusheet = new Spritesheet(multMenuFundo, 288, 512, 0.0, Universal.SCALE); 
     }
 
     /*-------------- MÉTODOS HERDADOS --------------*/

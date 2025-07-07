@@ -4,14 +4,14 @@ import instances.entities.Player1;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Spritesheet { /*Classe para gerenciamento dos sprites*/
-    public int frameHeightOriginal, frameWidthOriginal; //tamanho do frame original
-    public float scale; //escala aplicada para pintar o sprite na tela, utilizando a classe Universal
-    private int renderWidth; //produto final dos tamanhos do frame * escala
-    private int renderHeight; //produto final dos tamanhos do frame * escala
-    BufferedImage spritesheet; //meu spritesheet full 
-    BufferedImage[][] sprites; //o spritesheet dividido
-    BufferedImage[][] spritesEscalonados; //Evita cálculo desnecessario na renderização
+public class Spritesheet { 
+    public int frameHeightOriginal, frameWidthOriginal; 
+    public float scale; 
+    private int renderWidth; 
+    private int renderHeight; 
+    BufferedImage spriteOriginal; 
+    BufferedImage[][] sprites; 
+    BufferedImage[][] spritesEscalonados; 
     int frameAtual;
     int totalFrames;
     int indice;
@@ -22,8 +22,8 @@ public class Spritesheet { /*Classe para gerenciamento dos sprites*/
     int acaoAtual = Universal.IDLE;
     
     // Construtor do Sprite: carrega a sprite sheet e separa os frames
-    public Spritesheet(BufferedImage spritesheet, int frameHeightOriginal, int frameWidthOriginal, double time, float scale) {
-        this.spritesheet = spritesheet;
+    public Spritesheet(BufferedImage spriteOriginal, int frameHeightOriginal, int frameWidthOriginal, double time, float scale) {
+        this.spriteOriginal = spriteOriginal;
         this.frameHeightOriginal = frameHeightOriginal; 
         this.frameWidthOriginal = frameWidthOriginal;
         this.scale = scale;
@@ -31,30 +31,29 @@ public class Spritesheet { /*Classe para gerenciamento dos sprites*/
         this.renderWidth = (int)(frameWidthOriginal * scale);
         
         /*Caso eu mosque e passe um sprite com tamanho bizonho*/
-        if (spritesheet.getWidth() % frameWidthOriginal != 0
-                || spritesheet.getHeight() % frameHeightOriginal != 0) {
-            System.out.println("spritesheet.getWidth(): " + spritesheet.getWidth());
-            System.out.println("spritesheet.getHeight(): " + spritesheet.getHeight());
+        if (spriteOriginal.getWidth() % frameWidthOriginal != 0
+                || spriteOriginal.getHeight() % frameHeightOriginal != 0) {
+            System.out.println("spritesheet.getWidth(): " + spriteOriginal.getWidth());
+            System.out.println("spritesheet.getHeight(): " + spriteOriginal.getHeight());
             System.out.println("frameWidthOriginal: " + frameWidthOriginal);
             System.out.println("frameHeightOriginal: " + frameHeightOriginal);
             throw new IllegalArgumentException("Tamanho da spritesheet não é múltiplo do tamanho do frame.");
         }
         
         //Caso a spritesheet seja composta de 1 único frame
-        if(spritesheet.getWidth() == frameWidthOriginal){
+        if(spriteOriginal.getWidth() == frameWidthOriginal){
                 totalFrames = 0;
                 trocaDeFrames = 0;
             spritesEscalonados = new BufferedImage[1][1];
             BufferedImage scaled = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = scaled.createGraphics();
-            g.drawImage(spritesheet, 0, 0, renderWidth, renderHeight, null);
+            g.drawImage(spriteOriginal, 0, 0, renderWidth, renderHeight, null);
             g.dispose();
             spritesEscalonados[0][0] = scaled;
-                //vou usar somente meu atributo spritesheet
         } else {
         
-            totalIndices = spritesheet.getHeight()/frameHeightOriginal; 
-            totalFrames = spritesheet.getWidth()/frameWidthOriginal; 
+            totalIndices = spriteOriginal.getHeight()/frameHeightOriginal; 
+            totalFrames = spriteOriginal.getWidth()/frameWidthOriginal; 
         
             trocaDeFrames = (int)(Universal.FPS_SET * time / totalFrames);
 
@@ -70,7 +69,7 @@ public class Spritesheet { /*Classe para gerenciamento dos sprites*/
         }
         for(int i = 0; i < totalIndices; i++){
             for(int j = 0; j < totalFrames; j++){
-                sprites[i][j] = getSpriteFromSheet(spritesheet,
+                sprites[i][j] = getSpriteFromSheet(spriteOriginal,
                         j * frameWidthOriginal,
                         i * frameHeightOriginal, frameWidthOriginal, frameHeightOriginal);
 

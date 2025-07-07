@@ -83,7 +83,7 @@ public class FallBlock extends Obstacles{ //extends Obstacles
     public void update(float deltaTime) {
         //movimentação constante pra esquerda
         if (this.isActive) { // se estiver ativo
-            this.setX(this.getX() + Universal.OBST_SPEED * deltaTime); //atualizo a speed
+            this.setX(this.getX() + Universal.BASE_SPEED * deltaTime); //atualizo a speed
             updateY();
             updateObstHitbox();
         }

@@ -49,7 +49,7 @@ public abstract class Obstacles extends Objects{ //muito similiar a classe Entit
     @Override
     public void update(float deltaTime) {
         if(this.isActive){ // se estiver ativo
-        this.setX(this.getX() + Universal.OBST_SPEED * deltaTime); //atualizo a speed
+        this.setX(this.getX() + Universal.BASE_SPEED * deltaTime); //atualizo a speed
         updateObstHitbox();
             //System.out.printf("X: %.2f, Speed: %.2f, dT: %.5f\n", getX(), Universal.OBST_SPEED, deltaTime);
         }

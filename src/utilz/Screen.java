@@ -1,9 +1,9 @@
 package utilz;
 
 import background.Environment;
-import background.Grass;
-import background.Ground;
-import background.Trees1;
+import background.Layer1;
+import background.Layer2;
+import background.Layer3;
 import gamestates.Gamestate;
 import static gamestates.Gamestate.*;
 import instances.Objects;
@@ -42,9 +42,9 @@ public class Screen {
     Player1 player1;
     Spawner spawner;
     /*--- obstáculos ---*/
-    Ground groundlayer;
-    Grass grasslayer;
-    Trees1 midlayer;
+    Layer1 layer1;
+    Layer2 layer2;
+    Layer3 layer3;
     /*--- game states ---*/
     Menu menuscreen;
     GameOver gameoverscreen;
@@ -60,24 +60,12 @@ public class Screen {
         multmenuscreen = new MultiplayerMenu();
         pofflinescreen = new POffline();
             
-        //midlayer
-        //midlayer = new Trees1(this, this.gc);
-        //objectsOnScreen.add(midlayer);
-
-        //grama 
-        //grasslayer = new Grass(this, this.gc);
-        //objectsOnScreen.add(grasslayer);
-        //chão
-        groundlayer = new Ground(this, this.gc);
-        objectsOnScreen.add(groundlayer);
-        
-        
-        
-        
-        
-        
-        player1 = new Player1(this, this.gc);
-        objectsOnScreen.add(player1);
+        layer3 = new Layer3(this, this.gc);
+        objectsOnScreen.add(layer3);
+        layer2 = new Layer2(this, this.gc);
+        objectsOnScreen.add(layer2);
+        layer1 = new Layer1(this, this.gc);
+        objectsOnScreen.add(layer1);
         spawner = new Spawner();
         for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
             objectsOnScreen.add(new Bird(this, this.gc));
@@ -85,6 +73,8 @@ public class Screen {
             objectsOnScreen.add(new Saw(this, this.gc));
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
+        player1 = new Player1(this, this.gc);
+        objectsOnScreen.add(player1);
     }
     
     /*------------ MÉTODO RENDER ------------*/
@@ -96,11 +86,13 @@ public class Screen {
             }
             case PLAYING_OFFLINE:{
                 pofflinescreen.render(g2d);
-                //render do novo gamestate
                 for (Objects obj : objectsOnScreen) {
-                        if (obj instanceof Environment || (obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive())) {
+                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive())) {
                             obj.render(g2d);
-                        }    
+                        }
+                        if (obj instanceof Environment) { 
+                        obj.render(g2d);
+                    }
                 }
                 break;
             }
@@ -115,11 +107,16 @@ public class Screen {
                 break;
             }
             case GAME_OVER:{
-                //pofflinescreen.render(g2d);
+                pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                    if (obj instanceof Environment || (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive())) {
+                    if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive())) {
                         obj.render(g2d);
                     }
+                    
+                    if (obj instanceof Environment) {
+                        obj.render(g2d);
+                    }
+                    
                 }
                 gameoverscreen.render(g2d);
                 break;
@@ -137,44 +134,14 @@ public class Screen {
             break;
             }
             case PLAYING_OFFLINE:{
-                {/*if (!Universal.dead) {
-                    //meu player está VIVO
-                    for (Objects obj : objectsOnScreen) {
-                        if (obj instanceof Entities) {
-                            obj.setIsActive(true);
-                        }
-                    if (!obj.getIsActive()) {
-                        continue;
-                    }
-
-                    // Atualiza fundo sempre
-                    if (obj instanceof Environment) {
-                        obj.update(variacaoTempo);
-                        continue;
-                    }
-                    // Se saiu completamente da tela, desativa
-                    if (obj.getX() < -Universal.TILES_SIZE * 4) {
-                        obj.setIsActive(false);
-                        continue;
-                    }
-                    obj.update(variacaoTempo);
-                    }
-                spawner.play();
-                } else { 
-                    //meu player está MORTO
-                    resetCoordenates();
-                    break;
-                }
-            */}
                 for(Objects obj : objectsOnScreen){
                     if(!obj.getIsActive()){
                         continue; //se estiver desativado, nada acontece, nao é atualizado
                     }
                     if (obj instanceof Environment) {
                         obj.update(variacaoTempo);
-                        continue;
                     }
-                    if (obj.getX() < -Universal.TILES_SIZE * 4) {
+                    if (!(obj instanceof Environment) &&obj.getX() < -Universal.TILES_SIZE * 4) {
                         obj.setIsActive(false);
                         continue;
                     }
@@ -182,12 +149,6 @@ public class Screen {
                 }
                 spawner.play();
                 if(Universal.dead){
-                    
-                    /*for (Objects obj : objectsOnScreen){
-                        if(obj instanceof Entities){
-                            Universal.jump = true;
-                        }
-                    }*/
                     
                     for (Objects obj : objectsOnScreen){
                         if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
@@ -201,7 +162,6 @@ public class Screen {
                 for (Objects obj : objectsOnScreen) {
                         obj.setIsActive(false);
                 }
-                System.out.println("Status: GAME OVER");
                 break;
             }
             default:{
@@ -234,6 +194,9 @@ public class Screen {
     
     public static void resetCoordenates(){
         for (Objects obj : objectsOnScreen) {
+                if (obj instanceof Environment) {
+                    continue;
+                }
                 obj.setIsActive(false);
                 if(obj instanceof Obstacles){
                     obj.setX(Universal.OBST_SPAWN_X);

@@ -25,8 +25,8 @@ public class GameOver implements ScreenStates{
     
     public GameOver(){
         initSpriteGameOver();
-        botoes[0] = new Buttons(4*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoMenuSprite, Gamestate.MENU); //botão de voltar ao menu
-        botoes[1] = new Buttons(8*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoRestartSprite, Gamestate.PLAYING_OFFLINE); //botao de voltar ao loop do jogo
+        botoes[0] = new Buttons(5*Universal.TILES_SIZE, 4*Universal.TILES_SIZE - (Universal.TILES_SIZE/4), 48, 48, botaoMenuSprite, Gamestate.MENU); //botão de voltar ao menu
+        botoes[1] = new Buttons(9*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 4*Universal.TILES_SIZE - (Universal.TILES_SIZE/4), 48, 48, botaoRestartSprite, Gamestate.PLAYING_OFFLINE); //botao de voltar ao loop do jogo
     }
     
     public void initSpriteGameOver(){
@@ -42,7 +42,7 @@ public class GameOver implements ScreenStates{
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.gameoversheet = new Spritesheet(gameOverFundo, 256, 448, 0.0, Universal.SCALE);
+        this.gameoversheet = new Spritesheet(gameOverFundo, 288, 512, 0.0, Universal.SCALE);
     }
     
     /*-------------- MÉTODOS HERDADOS --------------*/

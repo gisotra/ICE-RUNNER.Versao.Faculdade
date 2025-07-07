@@ -26,18 +26,16 @@
     <sprite name="bird">
         <path>/assets/obstacles/bird.png</path>
     </sprite>
-    <sprite name="ground">
-        <path>/assets/environment/ground.png</path>
+    <sprite name="layer1">
+        <path>/assets/environment/ground2.png</path>
     </sprite>
-    <sprite name="grass">
-        <path>/assets/environment/grass.png</path>
+    <sprite name="layer2">
+        <path>/assets/environment/mountains.png</path>
     </sprite>
-    <sprite name="midLayer">
-        <path>/assets/environment/midlayertest.png</path>
+    <sprite name="layer3">
+        <path>/assets/environment/Layer3.png</path>
     </sprite>
-    <sprite name="trees2">
-        <path>/assets/environment/trees2.png</path>
-    </sprite>
+
     <!-- Mouse -->
     <sprite name="cursor">
         <path>/assets/ui/mouse.png</path>

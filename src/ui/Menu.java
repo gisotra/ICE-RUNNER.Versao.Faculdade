@@ -43,7 +43,7 @@ public class Menu implements ScreenStates {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.menusheet = new Spritesheet(menuFundo, 256, 448, 0.0, Universal.SCALE); 
+        this.menusheet = new Spritesheet(menuFundo,288, 512, 0.0, Universal.SCALE); 
     }
 
     /*-------------- MÉTODOS HERDADOS --------------*/
