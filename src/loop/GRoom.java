@@ -61,9 +61,7 @@ public class GRoom implements Runnable {
                     if (Universal.SCORE - Universal.lastSpeedUpScore >= 1000) {
                         Universal.lastSpeedUpScore = (Universal.SCORE / 1000) * 1000;
 
-                        if (Universal.SCORE <= 2000) {
-                            Universal.globalCooldown -= 500;
-                        } else {
+                        if (Universal.SCORE > 2000) {
                             Universal.increaseAllSpeed();
                             if (Universal.SCORE >= 4000 && Universal.globalCooldown > 100) {
                                 Universal.globalCooldown -= 150;

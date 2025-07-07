@@ -57,7 +57,7 @@ public class Wall extends Obstacles{ //extends Obstacles
     
     @Override
     public void render(Graphics2D g2d) {
-        spritesheet.render(g2d, (int) getX() - 84, (int) getY() - 120);
+        spritesheet.render(g2d, (int) getX() - 60, (int) getY() - 120);
         if (Universal.showGrid) {
             drawObstHitbox(g2d);
         }

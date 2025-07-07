@@ -57,7 +57,7 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     
         @Override
     public void render(Graphics2D g2d){
-    spritesheet.render(g2d, (int) getX() - 15, (int) getY() - 37); 
+    spritesheet.render(g2d, (int) getX() - 70, (int) getY() - 50);
         if(Universal.showGrid){
             drawObstHitbox(g2d);
         }

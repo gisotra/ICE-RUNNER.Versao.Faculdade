@@ -44,4 +44,17 @@ public class Server {
         server.startServer();
     }
     */
+    /*
+    como vai funcionar o online do jogo endless runner (multiplayer para quem sobrevive mais tempo):
+    > player entra no jogo (cutscene)
+    > menu
+    > player clica na opção multiplayer
+    > player tem 2 opções [criar servidor] [entrar em servidor]
+    > na primeira opção, o jogador clica e instantaneamente entra em uma sala de espera, que permite começar o jogo somente quando o outro jogador entrar na sala
+    > na segunda opção, vai aparecer uma text area na tela, e o player que está entrando no servidor tem que digitar o ip correspondente, esse valor sera lido e usado para fazer a conexao no servidor
+    do outro cara
+    > depois da conexão, o loop se baseia em quem sobrevive mais tempo no jogo, quando um player morre, o jogo acaba, e este sai como perdedro
+    --> como eu pretendia realizar tudo isso
+    criar 2 threads pras conexões, uma para receber inputs e uma para ler inputs, além disso uma outra thread para o servidor em si
+     */
 }
