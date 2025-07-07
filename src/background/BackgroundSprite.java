@@ -69,9 +69,10 @@ public class BackgroundSprite {
     }
     
     public Tiles sliceImage(BufferedImage imageSpace, int x, int y, int sliceComprimento, int sliceAltura){
-        BufferedImage newSlicedTile = new BufferedImage(sliceComprimento, sliceAltura, BufferedImage.TYPE_INT_ARGB);
+        int larguraExtra = (x + sliceComprimento < imageSpace.getWidth()) ? 1 : 0;
+        BufferedImage newSlicedTile = new BufferedImage(sliceComprimento + larguraExtra, sliceAltura, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = newSlicedTile.createGraphics();
-        g2d.drawImage(imageSpace, 0, 0, sliceComprimento, sliceAltura, x, y, sliceComprimento + x, sliceAltura + y, null);
+        g2d.drawImage(imageSpace, 0, 0, sliceComprimento + larguraExtra, sliceAltura, x, y, sliceComprimento + x + larguraExtra, sliceAltura + y, null);
         g2d.dispose();
         Tiles t = new Tiles(newSlicedTile, x, y, sliceAltura);
         return t;

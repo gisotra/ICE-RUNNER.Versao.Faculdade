@@ -26,9 +26,12 @@ public class Tiles {
     
     public void render(Graphics2D g2d){
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2d.drawImage(tileImage,Math.round(x),Math.round(y), null);
+        //g2d.drawImage(tileImage,Math.round(x),Math.round(y), null);
+        g2d.drawImage(tileImage,(int)x,(int)y, null);
+
         if(Universal.showGrid){
             g2d.drawRect(Math.round(x), Math.round(y), tileImage.getWidth(), tileImage.getHeight());
+
         }
     }
    

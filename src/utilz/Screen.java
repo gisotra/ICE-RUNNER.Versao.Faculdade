@@ -41,7 +41,7 @@ public class Screen {
     
     Player1 player1;
     Spawner spawner;
-    /*--- obstáculos ---*/
+    /*--- camadas do cenário ---*/
     Layer1 layer1;
     Layer2 layer2;
     Layer3 layer3;
@@ -70,7 +70,7 @@ public class Screen {
         for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
             objectsOnScreen.add(new Bird(this, this.gc));
             objectsOnScreen.add(new Wall(this, this.gc));
-            objectsOnScreen.add(new Saw(this, this.gc));
+            //objectsOnScreen.add(new Saw(this, this.gc));
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
         player1 = new Player1(this, this.gc);
