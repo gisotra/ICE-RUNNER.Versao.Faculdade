@@ -73,7 +73,7 @@ public class Screen {
             objectsOnScreen.add(new Saw(this, this.gc));
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
-        player1 = new Player1(this, this.gc);
+        player1 = new Player1(this, this.gc, 1);
         objectsOnScreen.add(player1);
     }
     
@@ -87,7 +87,7 @@ public class Screen {
             case PLAYING_OFFLINE:{
                 pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive())) {
+                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH)) {
                             obj.render(g2d);
                         }
                         if (obj instanceof Environment) { 
@@ -109,7 +109,7 @@ public class Screen {
             case GAME_OVER:{
                 pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                    if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive())) {
+                    if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH)) {
                         obj.render(g2d);
                     }
                     

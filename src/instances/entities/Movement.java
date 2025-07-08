@@ -85,7 +85,7 @@ public class Movement {
             }
             
             if (isJumping) {
-                airSpeed += gravity; 
+                airSpeed += gravity;
                 player1.setY(player1.getY() + airSpeed);
             }
             

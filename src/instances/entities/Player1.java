@@ -15,6 +15,7 @@ public class Player1 extends Entities{
     
     //https://www.youtube.com/watch?v=rTVoyWu8r6g
     /*------------ ATRIBUTOS ------------*/
+    private int playerCode;
     public Movement movement;
     public Collider collider;
     BufferedImage playerSpriteSheet;
@@ -24,8 +25,14 @@ public class Player1 extends Entities{
     Spritesheet floormarksprite;
     public int playerAction = Universal.IDLE;
     
-    public Player1(Screen screen, GCanvas gc){
+    public Player1(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
+        this.playerCode = playerCode;
+        try{
+            setPlayerCode(playerCode);
+        } catch(Exception ex){
+            ex.printStackTrace();
+        }
         movement = new Movement(this);
         collider = new Collider(this);
         initSprite();
@@ -99,7 +106,19 @@ public class Player1 extends Entities{
     public int getHeight() {
         return heightO;
     }
-    
+
+    public int getPlayerCode(){
+        return playerCode;
+    }
+
+    public void setPlayerCode(int playerCode) throws Exception{
+        if(playerCode >= 1 && playerCode <= 2){
+            this.playerCode = playerCode;
+        } else {
+            throw new Exception("Nao pode haver mais de 2 players");
+        }
+    }
+
     public Movement getMovement(){
         return movement;
     }

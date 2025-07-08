@@ -107,7 +107,7 @@ public class BackgroundSprite {
     
     public void render(Graphics2D g2d){
         for(Tiles t : tiles){
-            if (t.getX() > -Universal.TILES_SIZE * 4 && t.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE * 2) {
+            if (t.getX() > -Universal.TILES_SIZE * 4 && t.getX() < Universal.GAME_WIDTH) {
                 t.render(g2d);
             }
         }
