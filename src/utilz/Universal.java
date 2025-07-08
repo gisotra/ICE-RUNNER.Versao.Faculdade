@@ -40,14 +40,16 @@ public class Universal {
     public static final int LANDING = 2;
     public static final int IS_FALLING = 2;
     public static final int IS_DEAD = 3;
+    //inserir uma de DASH
     
     /*flags de direção para usar no player e na classe KeyInputs*/
     public static boolean right = false;
     public static boolean left = false;
     public static boolean up = false;
     public static boolean down = false;
-    public static boolean jump = false;
     public static boolean dead = false;
+    public static boolean dash = false;
+    public static boolean jump = false;
 
     /*Direções de movimento para o SPRITE do player*/
     public static final int LEFT = 0;

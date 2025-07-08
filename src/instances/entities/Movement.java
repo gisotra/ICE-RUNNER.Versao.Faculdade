@@ -8,10 +8,14 @@ public class Movement {
     */
     
     Player1 player1;
+
+    /*horizontal*/
     public float speed = 100f*Universal.SCALE;
     public float MAX_SPEED = 120f*Universal.SCALE;
     public float horizontalSpeed;
     public float atrito = 25.0f*Universal.SCALE;
+
+    /*vertical*/
     public static boolean isJumping = false;
     public float airSpeed = 0f; //Y
     public float gravity = 0.08f * Universal.SCALE;
@@ -19,7 +23,16 @@ public class Movement {
     public boolean inAir = false;
     public float heightGY; //usado para achar a posição Y em que o player tá "no chão"
     public float groundLvl;
-    /*"animação" de morte*/
+
+    /*dash*/
+    public boolean isDashing = false;
+    public boolean canDash = true;
+    public float dashSpeed = 14f;
+    public float dashDuration = 0.5f;
+    public int direction;
+
+
+    /*morte*/
     public boolean deathJump = false; //usei isso aqui pra animação de morte 
     public float deathJumpPower = -1.8f * Universal.SCALE;
     public int cont = 0;
@@ -71,8 +84,8 @@ public class Movement {
             player1.playerAction = Universal.IS_DEAD; //muda a animação
             }
             
-            if (isJumping) { //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
-                airSpeed += gravity; //começo a diminuir a altura 
+            if (isJumping) {
+                airSpeed += gravity; 
                 player1.setY(player1.getY() + airSpeed);
             }
             
@@ -81,6 +94,11 @@ public class Movement {
     
     public void updatePosX(float deltaTime) {
         
+
+        if (Universal.dash && canDash){
+            Dash();
+            return;
+        }
 
         if (Universal.right && !Universal.dead) {
 
@@ -123,7 +141,14 @@ public class Movement {
             player1.setX((Universal.GAME_WIDTH - (Universal.TILES_SIZE)/2));
         }
     }
-    
+
+    public void Dash(){
+        isDashing = true;
+        canDash = false;
+        this.direction = getDirection();
+        //desenvolver a logica do dash aqui
+    }
+
     public boolean isGrounded() {
         if (player1.getY() >= groundLvl) {
             return true;
@@ -131,5 +156,29 @@ public class Movement {
             return false;
         }
     }
-    
+
+    public int getDirection(){
+        if(Universal.up){
+            return 1;
+        } else if (Universal.down) {
+            return 2;
+        } else if (Universal.right){
+            return 3;
+        } else if (Universal.left){
+            return 4;
+        } else if (Universal.up && Universal.left){
+            return 5;
+        } else if (Universal.up && Universal.right){
+            return 6;
+        } else if (Universal.down && Universal. left){
+            return 7;
+        } else if (Universal.down && Universal.right){
+            return 8;
+        }
+        //caso nenhuma direção esteja ativada
+        return 0;
+    }
+
+
+
 }

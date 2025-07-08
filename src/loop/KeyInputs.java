@@ -26,7 +26,7 @@ public class KeyInputs implements KeyListener {
         switch (e.getKeyCode()) {
             /*player1 - Movimentação*/
             case KeyEvent.VK_W:
-                Universal.jump = false; //alteração do método receber para GameCanvas 
+                Universal.up = false;
                 break;
             case KeyEvent.VK_A:
                 Universal.left = false;
@@ -39,7 +39,10 @@ public class KeyInputs implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 Universal.jump = false;
-                break; 
+                break;
+            case KeyEvent.VK_SHIFT:
+                Universal.dash = false;
+                break;
             case KeyEvent.VK_P:
                 break;    
                 /*DEBUG*/
@@ -55,7 +58,7 @@ public class KeyInputs implements KeyListener {
         switch (e.getKeyCode()) {
             /*player1 - Movimentação*/
             case KeyEvent.VK_W:
-                Universal.jump = true;
+                Universal.up = true;
                 break;
             case KeyEvent.VK_A:
                 Universal.left = true;
@@ -68,6 +71,9 @@ public class KeyInputs implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 Universal.jump = true;
+                break;
+            case KeyEvent.VK_SHIFT:
+                Universal.dash = true;
                 break;
             case KeyEvent.VK_P:
                 if (Gamestate.state != MENU) {

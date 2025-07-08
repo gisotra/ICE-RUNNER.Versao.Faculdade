@@ -67,8 +67,8 @@
         <path>/assets/ui/menu_exit_button.png</path>
     </sprite>
     <!-- JOGANDO AFK -->
-    <sprite name="backgroundDay">
-        <path>/assets/environment/possivelFundo.png</path>
+    <sprite name="layer0">
+        <path>/assets/environment/fundo.png</path>
     </sprite>
         
     
