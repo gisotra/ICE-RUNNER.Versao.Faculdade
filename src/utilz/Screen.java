@@ -87,7 +87,7 @@ public class Screen {
             case PLAYING_OFFLINE:{
                 pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH)) {
+                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
                             obj.render(g2d);
                         }
                         if (obj instanceof Environment) { 
@@ -109,7 +109,7 @@ public class Screen {
             case GAME_OVER:{
                 pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                    if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH)) {
+                    if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
                         obj.render(g2d);
                     }
                     
