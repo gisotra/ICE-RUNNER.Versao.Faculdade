@@ -17,7 +17,8 @@ public enum Gamestate {
     MULTIPLAYER_MENU, 
     SERVER_HOSTING, //botão "criar servidor"
     CLIENT_CONNECTING, //botão "jogar como cliente"
-    PLAYING_ONLINE, 
+    PLAYING_ONLINE,
+    LOCAL_MULTIPLAYER,
     END;
     
     public static Gamestate state = MENU;

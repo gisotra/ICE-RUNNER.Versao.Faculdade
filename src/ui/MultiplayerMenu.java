@@ -16,28 +16,32 @@ import utilz.Universal;
 public class MultiplayerMenu implements ScreenStates {
     BufferedImage multMenuFundo;
     Spritesheet multMenusheet;
-    Buttons[] botoesMenu = new Buttons[3];
+    Buttons[] botoesMenu = new Buttons[4];
     BufferedImage botaoAsServer;
     BufferedImage botaoAsClient;
+    BufferedImage botaoLocal;
     BufferedImage botaoExit;
     
     public MultiplayerMenu(){
         initSpriteMenu();
-        botoesMenu[0] = new Buttons(4*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.SERVER_HOSTING); //servidor
-        botoesMenu[1] = new Buttons(8*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.CLIENT_CONNECTING); //cliente
-        botoesMenu[2] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MENU); //voltar
+        botoesMenu[0] = new Buttons(3*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.SERVER_HOSTING); //servidor
+        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.CLIENT_CONNECTING); //cliente
+        botoesMenu[2] = new Buttons(11*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoLocal, Gamestate.CLIENT_CONNECTING); //cliente
+        botoesMenu[3] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MENU); //voltar
     }
     
     public void initSpriteMenu(){
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
         SpriteData asClientData = SpriteLoader.spriteDataLoader().get("asServerButton");
         SpriteData asServerData = SpriteLoader.spriteDataLoader().get("asClientButton");
+        SpriteData localData = SpriteLoader.spriteDataLoader().get("localButton");
         SpriteData exitData = SpriteLoader.spriteDataLoader().get("exitbutton");
         
         try {
             multMenuFundo = ImageIO.read(getClass().getResource(menuData.getPath()));
             botaoAsServer = ImageIO.read(getClass().getResource(asClientData.getPath()));
             botaoAsClient = ImageIO.read(getClass().getResource(asServerData.getPath()));
+            botaoLocal = ImageIO.read(getClass().getResource(localData.getPath()));
             botaoExit = ImageIO.read(getClass().getResource(exitData.getPath()));
             
         } catch (IOException e) {

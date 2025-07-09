@@ -26,22 +26,22 @@ public class KeyInputs implements KeyListener {
         switch (e.getKeyCode()) {
             /*player1 - Movimentação*/
             case KeyEvent.VK_W:
-                Universal.up = false;
+                Universal.p1up = false;
                 break;
             case KeyEvent.VK_A:
-                Universal.left = false;
+                Universal.p1left = false;
                 break;
             case KeyEvent.VK_S:
-                Universal.down = false;
+                Universal.p1down = false;
                 break; 
             case KeyEvent.VK_D:
-                Universal.right = false;
+                Universal.p1right = false;
                 break;
             case KeyEvent.VK_SPACE:
-                Universal.jump = false;
+                Universal.p1jump = false;
                 break;
             case KeyEvent.VK_SHIFT:
-                Universal.dash = false;
+                Universal.p1dash = false;
                 break;
             case KeyEvent.VK_P:
                 break;    
@@ -58,22 +58,22 @@ public class KeyInputs implements KeyListener {
         switch (e.getKeyCode()) {
             /*player1 - Movimentação*/
             case KeyEvent.VK_W:
-                Universal.up = true;
+                Universal.p1up = true;
                 break;
             case KeyEvent.VK_A:
-                Universal.left = true;
+                Universal.p1left = true;
                 break;
             case KeyEvent.VK_S:
-                Universal.down = true;
+                Universal.p1down = true;
                 break;
             case KeyEvent.VK_D:
-                Universal.right = true;
+                Universal.p1right = true;
                 break;
             case KeyEvent.VK_SPACE:
-                Universal.jump = true;
+                Universal.p1jump = true;
                 break;
             case KeyEvent.VK_SHIFT:
-                Universal.dash = true;
+                Universal.p1dash = true;
                 break;
             case KeyEvent.VK_P:
                 if (Gamestate.state != MENU) {

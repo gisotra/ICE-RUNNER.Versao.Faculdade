@@ -3,6 +3,10 @@
     <sprite name="player1">
         <path>/assets/player/player.png</path>
     </sprite>
+    <!-- Player -->
+    <sprite name="player2">
+        <path>/assets/player/player2.png</path>
+    </sprite>
     <sprite name="shadow">
         <path>/assets/player/shadow.png</path>
     </sprite>
@@ -40,6 +44,7 @@
     <sprite name="cursor">
         <path>/assets/ui/mouse.png</path>
     </sprite>
+    
     <!-- Fundos dos Gamestates -->
     <sprite name="fundoMenu">
         <path>/assets/menu/fundoMenu.png</path>
@@ -66,6 +71,7 @@
     <sprite name="menu_exitButton">
         <path>/assets/ui/menu_exit_button.png</path>
     </sprite>
+    
     <!-- JOGANDO AFK -->
     <sprite name="layer0">
         <path>/assets/environment/fundo.png</path>
@@ -86,6 +92,9 @@
     </sprite>
     <sprite name="asClientButton">
         <path>/assets/ui/playAsClient_button.png</path>
+    </sprite>
+    <sprite name="localButton">
+        <path>/assets/ui/multiplayerLocal_button.png</path>
     </sprite>
     
     

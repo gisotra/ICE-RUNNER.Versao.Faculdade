@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Ground.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/manager/Spawner.java</file>
             <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Universal.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Screen.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/BackgroundSprite.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Tiles.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Environment.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Player1.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Movement.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Entities.java</file>
         </group>
     </open-files>
 </project-private>

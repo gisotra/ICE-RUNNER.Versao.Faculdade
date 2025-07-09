@@ -77,8 +77,9 @@ public class GCanvas extends Canvas {
             if(Gamestate.state == MULTIPLAYER_MENU){
             g2D.setFont(fontInGame);
             g2D.setColor(Color.WHITE);
-            g2D.drawString("Criar Servidor", 4*Universal.TILES_SIZE - 60, 5*Universal.TILES_SIZE + 25);
-            g2D.drawString("Jogar como Cliente", 8*Universal.TILES_SIZE + (Universal.TILES_SIZE/2) - 74, 5*Universal.TILES_SIZE + 25);
+            g2D.drawString("Criar Servidor", 3*Universal.TILES_SIZE - 65, 5*Universal.TILES_SIZE + 25);
+            g2D.drawString("Jogar como Cliente", 7*Universal.TILES_SIZE - 65, 5*Universal.TILES_SIZE + 25);
+            g2D.drawString("Local", 12*Universal.TILES_SIZE - 25, 5*Universal.TILES_SIZE + 25);
     
             }
             

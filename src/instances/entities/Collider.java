@@ -9,14 +9,14 @@ import utilz.Screen;
 import utilz.Universal;
 
 public class Collider {
-    Player1 player1;
+    Player player1;
     protected Rectangle2D.Float collisionArea;
     public float collAreaWidth;
     public float collAreaHeight;
     public float areaXOffset;
     public float areaYOffset;
     
-    public Collider(Player1 player1) {
+    public Collider(Player player1) {
         this.player1 = player1;
         this.collAreaWidth = player1.getHitboxWidth() * 1.2f;
         this.collAreaHeight = player1.getHitboxHeight() * 1.4f;
@@ -65,7 +65,7 @@ public class Collider {
                 Obstacles obstacle = (Obstacles) obj;
 
                 if (player1.getHitbox().intersects(obstacle.obs_hitbox)) {
-                    Universal.dead = true; //MORTE DO PLAYER1 r.i.p
+                    Universal.p1dead = true; //MORTE DO PLAYER1 r.i.p
                 }
             }
         }

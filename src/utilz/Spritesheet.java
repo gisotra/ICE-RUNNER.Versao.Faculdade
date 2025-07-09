@@ -1,6 +1,6 @@
 package utilz;
 
-import instances.entities.Player1;
+import instances.entities.Player;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -107,7 +107,7 @@ public class Spritesheet {
         if (frameAtual >= Universal.GetSpriteAmount(acaoAtual)) {
             frameAtual = 0;
         }
-        if(Universal.dead){
+        if(Universal.p1dead){
             contadorFrames = 0;
         }
 

@@ -11,7 +11,7 @@ import utilz.SpriteLoader;
 import utilz.Spritesheet;
 import utilz.Universal;
 
-public class Player1 extends Entities{
+public class Player extends Entities{
     
     //https://www.youtube.com/watch?v=rTVoyWu8r6g
     /*------------ ATRIBUTOS ------------*/
@@ -24,8 +24,9 @@ public class Player1 extends Entities{
     Spritesheet shadowsprite;
     Spritesheet floormarksprite;
     public int playerAction = Universal.IDLE;
+    SpriteData playerData;
     
-    public Player1(Screen screen, GCanvas gc, int playerCode){
+    public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
         this.playerCode = playerCode;
         try{
@@ -36,14 +37,18 @@ public class Player1 extends Entities{
         movement = new Movement(this);
         collider = new Collider(this);
         initSprite();
-        setX(120);
+        setX(120 * playerCode);
         setY(360);
         movement.isJumping = true; //para ele cair logo de primeira
         setIsActive(true);
     }     
    
     public void initSprite(){
-        SpriteData playerData = SpriteLoader.spriteDataLoader().get("player1");
+        if(playerCode == 1){
+        playerData = SpriteLoader.spriteDataLoader().get("player1");
+        } else if (playerCode == 2){
+        playerData = SpriteLoader.spriteDataLoader().get("player2");    
+        }
         SpriteData shadowData = SpriteLoader.spriteDataLoader().get("shadow");
         SpriteData markData = SpriteLoader.spriteDataLoader().get("mark");
         try {
@@ -63,11 +68,11 @@ public class Player1 extends Entities{
     
     @Override
     public void update(float deltaTime){
-        if(Universal.dash){
+        if(Universal.p1dash && movement.canDash && !movement.isDashing ){
             movement.Dash();
+            Universal.p1dash = false;
         }
-        movement.updatePosY(deltaTime);
-        movement.updatePosX(deltaTime);
+        movement.updateMovement(deltaTime);
         collider.updateCollisionArea();
         
         if(collider.verifyNearby()){ //somente se HÁ um obstáculo dedd asdasdas das dantro da minha range de colisão 

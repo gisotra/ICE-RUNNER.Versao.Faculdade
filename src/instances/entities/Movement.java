@@ -3,11 +3,10 @@ package instances.entities;
 import utilz.Universal;
 
 public class Movement {
-    /*
-    Classe utilizada unicamente para implementação dos movimentos verticais
-    */
     
-    Player1 player1;
+    /*Classe utilizada unicamente para implementação dos movimentos verticais*/
+    
+    Player player1;
 
     /*horizontal*/
     public float speed = 100f*Universal.SCALE;
@@ -28,69 +27,133 @@ public class Movement {
     public boolean isDashing = false;
     public boolean canDash = true; //caso dashTimeCounter > 0  && !hasDashed
     public boolean hasDashed = false;
-    public float dashSpeed = 14f;
-    public float dashDuration = 1f;
-    public float dashLength = .3f;
-    public float dashTimeCounter;
+    public float dashSpeed = 1.5f;
+    public float dashDuration = .2f;
+    public float dashLength = .001f;
+    public float dashTimeCounter = 0f;
     public int horizontalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
     public int verticalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
-
 
     /*morte*/
     public boolean deathJump = false; //usei isso aqui pra animação de morte 
     public float deathJumpPower = -1.8f * Universal.SCALE;
     public int cont = 0;
     
-    public Movement(Player1 player1){
+    public Movement(Player player1){
         this.player1 = player1;
         heightGY = player1.getHitboxHeight();
         groundLvl = Universal.groundY - heightGY + 40; // 5 Tiles - 1 = 4 tiles
     }
     
-    public void updatePosY(float deltaTime){ //ainda vou usar o deltaTime para movimentação horizontal depois
-        
-        if(!Universal.dead){
+    public void updateMovement(float deltaTime){
+        if(!Universal.p1dead){
             deathJump = false;
             
             if(!isDashing){
                 gravity = 0.08f * Universal.SCALE;
+            
                 
-            if(Universal.jump && isGrounded()){
-                player1.playerAction = Universal.JUMP;
-                verticalSpeed = jumpPower;
-                isJumping = true;
-            }
-        
-            if(isJumping){ //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
-                verticalSpeed += gravity;
-                player1.setY(player1.getY() + verticalSpeed); //altero o Y do player
-                    if(verticalSpeed > 0){ //estou caindo
+                // ================ movimentação VERTICAL ================
+                if (Universal.p1jump && isGrounded()) {
+                    player1.playerAction = Universal.JUMP;
+                    verticalSpeed = jumpPower;
+                    isJumping = true;
+                }
+                
+                if (isJumping) { //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
+                    verticalSpeed += gravity;
+                    player1.setY(player1.getY() + verticalSpeed); //altero o Y do player
+                    if (verticalSpeed > 0) { //estou caindo
                         player1.playerAction = Universal.IS_FALLING;
                     }
 
-                //cheguei no chão, então preciso resetar o pulo
-                if (player1.getY() >= groundLvl) {
-                    player1.setY(groundLvl);
-                    verticalSpeed = 0f;
-                    isJumping = false;
-                    hasDashed = false;
-                    canDash = true;
-                    player1.playerAction = Universal.IDLE;
-                
+                    //cheguei no chão, então preciso resetar o pulo
+                    if (player1.getY() >= groundLvl) {
+                        player1.setY(groundLvl);
+                        verticalSpeed = 0f;
+                        isJumping = false;
+                        hasDashed = false;
+                        canDash = true;
+                        player1.playerAction = Universal.IDLE;
+                    }
+                    
+                } else if (!isGrounded()){ //cai de uma plataforma ou qualquer evento alternativo
+                    verticalSpeed += gravity;
+                    player1.setY(player1.getY() + verticalSpeed);
+                    player1.playerAction = Universal.IS_FALLING;
                 }
-            } else if (!isGrounded()){ //cai de uma plataforma ou qualquer evento alternativo
-                verticalSpeed += gravity;
-                player1.setY(player1.getY() + verticalSpeed);
-                player1.playerAction = Universal.IS_FALLING;
-            }
-            } else {
-                player1.setY((player1.getY() + verticalSpeed));
+                
+                // ================ movimentação HORIZONTAL ================
+                
+                if (Universal.p1right && !Universal.p1dead) {
+
+                    horizontalSpeed = (float) speed * deltaTime;
+
+                } else if (Universal.p1left && !Universal.p1dead) {
+
+                    horizontalSpeed = (float) -speed * deltaTime;
+
+                } else if (Universal.p1dead) {
+                    horizontalSpeed = 0;
+                } else {
+
+                    //não estou apertando tecla alguma E estou no chão 
+                    if (horizontalSpeed > 0) { //freio ele na direita
+                        horizontalSpeed -= atrito * deltaTime;
+                        if (horizontalSpeed < 0) {
+                            horizontalSpeed = 0; //paro
+                        }
+                    } else if (horizontalSpeed < 0) {
+                        horizontalSpeed += atrito * deltaTime;
+                        if (horizontalSpeed > 0) {
+                            horizontalSpeed = 0; //paro
+                        }
+                    }
+                }
+            
+                if (horizontalSpeed > MAX_SPEED) {
+                    horizontalSpeed = MAX_SPEED;
+                }
+                if (horizontalSpeed < -MAX_SPEED) {
+                    horizontalSpeed = -MAX_SPEED;
+                }
+
+                //aplico a mudança no player
+                player1.setX(player1.getX() + horizontalSpeed);
+                if (player1.getX() < 0) {
+                    player1.setX(0);
+                } else if (player1.getX() >= Universal.GAME_WIDTH - (Universal.TILES_SIZE) / 2) {
+                    player1.setX((Universal.GAME_WIDTH - (Universal.TILES_SIZE) / 2));
+                }
+                
+            } else { //DASH
+                dashTimeCounter += deltaTime;
+                gravity = 0;
+                hasDashed = true;
+                canDash = false;
+                isDashing = true;
+                float dashVelocity = 300 * Universal.SCALE;
+                float dx = horizontalDirection * dashVelocity * deltaTime;
+                float dy = verticalDirection * dashVelocity * deltaTime;
+
+                player1.setX(player1.getX() + dx);
+                player1.setY(player1.getY() + dy);
+                
+                if (dashTimeCounter >= dashDuration) {
+                    //acaba meu dash
+                    isDashing = false;
+                    dashTimeCounter = 0;
+                    horizontalSpeed = 0;
+                    verticalSpeed = 0;
+                }
+                return;
             }
         } else {
             //player morreu 
             //faço ele pular e corto o limitador vertical do chão
             //quando ele ultrapassar o tamanho da tela, eu setto o state como gameover 
-            if(!deathJump){
+            if(!deathJump || (!deathJump && isDashing)){
+                gravity = 0.08f * Universal.SCALE;
             verticalSpeed = deathJumpPower; //jogo pra cima 
             deathJump = true;
             isJumping = true; //true 
@@ -101,56 +164,6 @@ public class Movement {
                 verticalSpeed += gravity;
                 player1.setY(player1.getY() + verticalSpeed);
             }
-            
-            }
-    }
-    
-    public void updatePosX(float deltaTime) {
-        
-        if(!isDashing){
-        
-        if (Universal.right && !Universal.dead) {
-
-            horizontalSpeed = (float) speed * deltaTime;
-
-        } else if (Universal.left && !Universal.dead) {
-
-            horizontalSpeed = (float) -speed * deltaTime;
-
-        } else if (Universal.dead){
-            horizontalSpeed = 0;
-        } else {
-
-            //não estou apertando tecla alguma E estou no chão 
-            if (horizontalSpeed > 0) { //freio ele na direita
-                horizontalSpeed -= atrito * deltaTime;
-                if (horizontalSpeed < 0) {
-                    horizontalSpeed = 0; //paro
-                }
-            } else if (horizontalSpeed < 0) {
-                horizontalSpeed += atrito * deltaTime;
-                if (horizontalSpeed > 0) {
-                    horizontalSpeed = 0; //paro
-                }
-            }
-        }
-
-        if (horizontalSpeed > MAX_SPEED) {
-            horizontalSpeed = MAX_SPEED;
-        }
-        if (horizontalSpeed < -MAX_SPEED) {
-            horizontalSpeed = -MAX_SPEED;
-        }
-
-        //aplico a mudança no player
-        player1.setX( player1.getX() + horizontalSpeed);
-        if(player1.getX() < 0){
-            player1.setX(0);
-        } else if (player1.getX() >= Universal.GAME_WIDTH - (Universal.TILES_SIZE)/2){
-            player1.setX((Universal.GAME_WIDTH - (Universal.TILES_SIZE)/2));
-        }
-        } else { //estou dando dash
-            player1.setX((player1.getX() + horizontalSpeed));
         }
     }
 
@@ -164,43 +177,45 @@ public class Movement {
 
     
     public int getDirection(){
-        if(Universal.up){
-            return 1;
-        } else if (Universal.down) {
-            return 2;
-        } else if (Universal.right){
-            return 3;
-        } else if (Universal.left){
-            return 4;
-        } else if (Universal.up && Universal.left){
+        if (Universal.p1up && Universal.p1left) {
             return 5;
-        } else if (Universal.up && Universal.right){
+        } else if (Universal.p1up && Universal.p1right) {
             return 6;
-        } else if (Universal.down && Universal. left){
+        } else if (Universal.p1down && Universal.p1left) {
             return 7;
-        } else if (Universal.down && Universal.right){
+        } else if (Universal.p1down && Universal.p1right) {
             return 8;
+        } else if (Universal.p1up) {
+            return 1;
+        } else if (Universal.p1down) {
+            return 2;
+        } else if (Universal.p1right) {
+            return 3;
+        } else if (Universal.p1left) {
+            return 4;
         }
-        //caso nenhuma direção esteja ativada
+        //caso nenhuma direção seja passada
         return 0;
     }
     
     public void Dash(){
-        float dashStartTime = System.currentTimeMillis();
-        hasDashed = true;
-        isDashing = true;
-        isJumping = false;
-        gravity = 0;
+        //usar para ativar o boolean do dash
+        //usar para pegar as direções
+        //mas onde chamar esse método? 
+        //> updateMovement
+        //> update dentro da classe player1 
+        dashTimeCounter = 0f; // reset
         int direction = getDirection();
+        isDashing = true;
         
         switch(direction){
             case 1:{ // UP
             horizontalDirection = 0;
-            verticalDirection = 1;
+            verticalDirection = -1;
             }break;
             case 2:{ //DOWN
             horizontalDirection = 0;
-            verticalDirection = -1;                
+            verticalDirection = 1;                
             }break;
             case 3:{ //RIGHT
             horizontalDirection = 1;
@@ -212,19 +227,19 @@ public class Movement {
             }break;
             case 5:{ //UPPER LEFT
             horizontalDirection = -1;
-            verticalDirection = 1;                    
+            verticalDirection = -1;                    
             }break;
             case 6:{ //UPPER RIGHT
             horizontalDirection = 1;
-            verticalDirection = 1;                    
+            verticalDirection = -1;                    
             }break;
             case 7:{ //LOWER LEFT
             horizontalDirection = -1;
-            verticalDirection = -1;                    
+            verticalDirection = 1;                    
             }break;
             case 8:{ //LOWER RIGHT
             horizontalDirection = 1;
-            verticalDirection = -1;                
+            verticalDirection = 1;                
             }break;
             case 0:{ //DEFAULT PARADO
             horizontalDirection = 1;
@@ -232,14 +247,5 @@ public class Movement {
             break;
             }
         }
-        
-        while(System.currentTimeMillis() < dashStartTime + dashLength){
-            horizontalSpeed = horizontalDirection * speed * dashSpeed;
-            verticalSpeed = verticalDirection * speed * dashSpeed;
-        }
-        isDashing = false;
     }
-
-
-
 }
