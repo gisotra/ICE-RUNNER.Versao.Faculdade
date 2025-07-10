@@ -26,6 +26,9 @@ public class Player extends Entities{
     public int playerAction = Universal.IDLE;
     SpriteData playerData;
     
+    public long lastDash = 0;
+    public long dashCooldown = 250; //evita spam
+    
     public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
         this.playerCode = playerCode;
@@ -68,9 +71,14 @@ public class Player extends Entities{
     
     @Override
     public void update(float deltaTime){
-        if(Universal.p1dash && movement.canDash && !movement.isDashing ){
+        long currentTime = System.currentTimeMillis();
+        if(Universal.p1dash 
+                && movement.canDash 
+                    && !movement.isDashing 
+                        && currentTime - lastDash >= dashCooldown){
             movement.Dash();
             Universal.p1dash = false;
+            lastDash = currentTime;
         }
         movement.updateMovement(deltaTime);
         collider.updateCollisionArea();
