@@ -41,23 +41,6 @@ public class Universal {
     public static final int IS_FALLING = 2;
     public static final int IS_DEAD = 3;
     //inserir uma de DASH
-    
-    /*flags de direção para usar no player e na classe KeyInputs*/
-    public static boolean p1right = false;
-    public static boolean p1left = false;
-    public static boolean p1up = false;
-    public static boolean p1down = false;
-    public static boolean p1dead = false;
-    public static boolean p1dash = false;
-    public static boolean p1jump = false;
-    
-    public static boolean p2right = false;
-    public static boolean p2left = false;
-    public static boolean p2up = false;
-    public static boolean p2down = false;
-    public static boolean p2dead = false;
-    public static boolean p2dash = false;
-    public static boolean p2jump = false;
 
     /*Direções de movimento para o SPRITE do player*/
     public static final int LEFT = 0;
@@ -133,7 +116,6 @@ public class Universal {
         BASE_SPEED = -100f * SCALE;
         globalCooldown = 2000;
         SCORE = 0;
-        p1dead = false;
         lastSpeedUpScore = 0;
         speedUpgrades = 0;
     }

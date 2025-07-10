@@ -2,18 +2,22 @@ package loop;
 
 import gamestates.Gamestate;
 import static gamestates.Gamestate.*;
+import instances.Objects;
+import instances.entities.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 import utilz.Screen;
-import static utilz.Screen.resetCoordenates;
 import utilz.Universal;
 
 public class KeyInputs implements KeyListener {
 
     private GCanvas gameCanvas;
+    private List<Objects> listOfObjects;
 
-    public KeyInputs(GCanvas gameCanvas) {
+    public KeyInputs(GCanvas gameCanvas, List<Objects> listOfObjects) {
         this.gameCanvas = gameCanvas;
+        this.listOfObjects = listOfObjects;
     }
 
     @Override
@@ -23,83 +27,131 @@ public class KeyInputs implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        Player p1 = getPlayerById(1);
+        Player p2 = getPlayerById(2);
+
         switch (e.getKeyCode()) {
-            /*player1 - Movimentação*/
+            /*player 1*/
             case KeyEvent.VK_W:
-                Universal.p1up = false;
+                p1.up = false;
                 break;
             case KeyEvent.VK_A:
-                Universal.p1left = false;
+                p1.left = false;
                 break;
             case KeyEvent.VK_S:
-                Universal.p1down = false;
-                break; 
+                p1.down = false;
+                break;
             case KeyEvent.VK_D:
-                Universal.p1right = false;
+                p1.right = false;
                 break;
             case KeyEvent.VK_SPACE:
-                Universal.p1jump = false;
+                p1.jump = false;
                 break;
             case KeyEvent.VK_SHIFT:
-                Universal.p1dash = false;
+                p1.dash = false;
                 break;
+
+            /*player 2*/
+            case KeyEvent.VK_UP:
+                p2.up = false;
+                break;
+            case KeyEvent.VK_LEFT:
+                p2.left = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                p2.down = false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                p2.right = false;
+                break;
+            case KeyEvent.VK_NUMPAD1: {
+                p2.jump = false;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD2: {
+                p2.dash = false;
+                break;
+            }
+
+            /*Geral*/
             case KeyEvent.VK_P:
-                break;    
-                /*DEBUG*/
+                //em breve um pause button
+                break;
+            /*DEBUG*/
             case KeyEvent.VK_U:
                 //Toggle Grid 
                 Universal.showGrid = !Universal.showGrid;
-                break;    
+                break; 
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        Player p1 = getPlayerById(1);
+        Player p2 = getPlayerById(2);
+        
         switch (e.getKeyCode()) {
-            /*player1 - Movimentação*/
+            /*player 1*/
             case KeyEvent.VK_W:
-                Universal.p1up = true;
+                p1.up = true;
                 break;
             case KeyEvent.VK_A:
-                Universal.p1left = true;
+                p1.left = true;
                 break;
             case KeyEvent.VK_S:
-                Universal.p1down = true;
+                p1.down = true;
                 break;
             case KeyEvent.VK_D:
-                Universal.p1right = true;
+                p1.right = true;
                 break;
             case KeyEvent.VK_SPACE:
-                Universal.p1jump = true;
+                p1.jump = true;
                 break;
             case KeyEvent.VK_SHIFT:
-                Universal.p1dash = true;
+                p1.dash = true;
                 break;
-            case KeyEvent.VK_P:
-                if (Gamestate.state != MENU) {
-                    Gamestate.state = MENU;
-                } else {
-                    Gamestate.state = PLAYING_OFFLINE;
-                }
+
+            /*player 2*/
+            case KeyEvent.VK_UP:
+                p2.up = true;
                 break;
-            case KeyEvent.VK_I:
-                //meu player morreu, e eu apertei i (provisorio)
-                if (Gamestate.state == GAME_OVER) {
-                    Gamestate.state = PLAYING_OFFLINE;
-                    Screen.resetCoordenates();
-                    Screen.startCoordenates();
-                }
-                
+            case KeyEvent.VK_LEFT:
+                p2.left = true;
                 break;
-            /*DEBUG*/    
+            case KeyEvent.VK_DOWN:
+                p2.down = true;
+                break;
+            case KeyEvent.VK_RIGHT:
+                p2.right = true;
+                break;
+            case KeyEvent.VK_NUMPAD1: {
+                p2.jump = true;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD2: {
+                p2.dash = true;
+                break;
+            }
+            /*DEBUG*/
             case KeyEvent.VK_U:
                 //Toggle Grid 
-                break;   
+                break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
                 break;
-             
-                
+
         }
+    }
+    
+    public Player getPlayerById(int Index){
+        for(Objects obj : listOfObjects){
+            if(obj instanceof Player){
+                if(((Player)obj).getPlayerIndex() == Index){
+                Player p = (Player)obj;
+                return p;                    
+                }
+            }
+        }
+        return null;
     }
 }

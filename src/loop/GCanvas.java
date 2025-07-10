@@ -35,7 +35,7 @@ public class GCanvas extends Canvas {
         setFocusable(true);
         requestFocus();
         initMouseSprites();
-        addKeyListener(new KeyInputs(this)); 
+        addKeyListener(new KeyInputs(this, Screen.objectsOnScreen)); 
         addMouseListener(new MouseInputs(this));
         try {
             InputStream is = getClass().getResourceAsStream("/assets/font/Chicken Font.ttf");

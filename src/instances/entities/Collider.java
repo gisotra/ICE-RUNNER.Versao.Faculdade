@@ -9,7 +9,7 @@ import utilz.Screen;
 import utilz.Universal;
 
 public class Collider {
-    Player player1;
+    Player player;
     protected Rectangle2D.Float collisionArea;
     public float collAreaWidth;
     public float collAreaHeight;
@@ -17,7 +17,7 @@ public class Collider {
     public float areaYOffset;
     
     public Collider(Player player1) {
-        this.player1 = player1;
+        this.player = player1;
         this.collAreaWidth = player1.getHitboxWidth() * 1.2f;
         this.collAreaHeight = player1.getHitboxHeight() * 1.4f;
         this.areaXOffset = Universal.TILES_SIZE * 0.23f;
@@ -33,12 +33,12 @@ public class Collider {
     }
     
     public void initCollisionArea(float x, float y, float width, float height) {
-        collisionArea = new Rectangle2D.Float(player1.x - this.areaXOffset, player1.y - this.areaYOffset, collAreaWidth, collAreaHeight);
+        collisionArea = new Rectangle2D.Float(player.x - this.areaXOffset, player.y - this.areaYOffset, collAreaWidth, collAreaHeight);
     }
     
     public void updateCollisionArea() {
-        collisionArea.x = player1.x - this.areaXOffset; //atualizo a posição horizontal
-        collisionArea.y = player1.y - this.areaYOffset; //atualizo a posição vertical
+        collisionArea.x = player.x - this.areaXOffset; //atualizo a posição horizontal
+        collisionArea.y = player.y - this.areaYOffset; //atualizo a posição vertical
     }
     
     public boolean verifyNearby(){
@@ -64,8 +64,8 @@ public class Collider {
             if (obj instanceof Obstacles) {
                 Obstacles obstacle = (Obstacles) obj;
 
-                if (player1.getHitbox().intersects(obstacle.obs_hitbox)) {
-                    Universal.p1dead = true; //MORTE DO PLAYER1 r.i.p
+                if (player.getHitbox().intersects(obstacle.obs_hitbox)) {
+                    player.dead = true; //MORTE DO PLAYER1 r.i.p
                 }
             }
         }

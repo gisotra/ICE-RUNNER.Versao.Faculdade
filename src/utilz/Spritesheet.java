@@ -107,9 +107,7 @@ public class Spritesheet {
         if (frameAtual >= Universal.GetSpriteAmount(acaoAtual)) {
             frameAtual = 0;
         }
-        if(Universal.p1dead){
-            contadorFrames = 0;
-        }
+       
 
             g2d.drawImage(spritesEscalonados[acaoAtual][frameAtual], x, y, null);
         }

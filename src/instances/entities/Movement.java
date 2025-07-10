@@ -48,7 +48,7 @@ public class Movement {
     
     public void updateMovement(float deltaTime){
         
-        if(!Universal.p1dead){
+        if(!player.dead){
             deathJump = false;
             
             if(!isDashing){
@@ -56,7 +56,7 @@ public class Movement {
             
                 
                 // ================ movimentação VERTICAL ================
-                if (Universal.p1jump && isGrounded()) {
+                if (player.jump && isGrounded()) {
                     player.playerAction = Universal.JUMP;
                     verticalSpeed = jumpPower;
                     isJumping = true;
@@ -87,15 +87,15 @@ public class Movement {
                 
                 // ================ movimentação HORIZONTAL ================
                 
-                if (Universal.p1right && !Universal.p1dead) {
+                if (player.right && !player.dead) {
 
                     horizontalSpeed = (float) speed * deltaTime;
 
-                } else if (Universal.p1left && !Universal.p1dead) {
+                } else if (player.left && !player.dead) {
 
                     horizontalSpeed = (float) -speed * deltaTime;
 
-                } else if (Universal.p1dead) {
+                } else if (player.dead) {
                     horizontalSpeed = 0;
                 } else {
 
@@ -208,21 +208,21 @@ public class Movement {
 
     
     public int getDirection(){
-        if (Universal.p1up && Universal.p1left) {
+        if (player.up && player.left) {
             return 5;
-        } else if (Universal.p1up && Universal.p1right) {
+        } else if (player.up && player.right) {
             return 6;
-        } else if (Universal.p1down && Universal.p1left) {
+        } else if (player.down && player.left) {
             return 7;
-        } else if (Universal.p1down && Universal.p1right) {
+        } else if (player.down && player.right) {
             return 8;
-        } else if (Universal.p1up) {
+        } else if (player.up) {
             return 1;
-        } else if (Universal.p1down) {
+        } else if (player.down) {
             return 2;
-        } else if (Universal.p1right) {
+        } else if (player.right) {
             return 3;
-        } else if (Universal.p1left) {
+        } else if (player.left) {
             return 4;
         }
         //caso nenhuma direção seja passada

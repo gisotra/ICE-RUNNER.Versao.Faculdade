@@ -40,7 +40,7 @@ public class Screen {
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
     
     Player player1;
-    Player player2;
+    //Player player2;
     Spawner spawner;
     /*--- camadas do cenário ---*/
     Layer1 layer1;
@@ -75,9 +75,9 @@ public class Screen {
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
         player1 = new Player(this, this.gc, 1);
-        player2 = new Player(this, this.gc, 2);
+        //player2 = new Player(this, this.gc, 2);
         objectsOnScreen.add(player1);
-        objectsOnScreen.add(player2);
+        //objectsOnScreen.add(player2);
     }
     
     /*------------ MÉTODO RENDER ------------*/
@@ -95,9 +95,6 @@ public class Screen {
                         }
                         if (obj instanceof Environment) { 
                         obj.render(g2d);
-                        if(obj instanceof Entities && ((Player)obj).getPlayerCode() == 2){
-                            continue;
-                        }
                     }
                 }
                 break;
@@ -115,9 +112,6 @@ public class Screen {
             case GAME_OVER:{
                 pofflinescreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                    if (obj instanceof Entities && ((Player) obj).getPlayerCode() == 2) {
-                        continue;
-                    }
                     if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
                         obj.render(g2d);
                     }
@@ -153,14 +147,15 @@ public class Screen {
                         obj.setIsActive(false);
                         continue;
                     }
-                    if (obj instanceof Entities && ((Player) obj).getPlayerCode() == 2) {
+                    
+                    /*if (obj instanceof Entities && ((Player) obj).getPlayerIndex() == 2) {
                         obj.setIsActive(false);
                         continue;
-                    }
+                    }*/ //faz o player 2 sumir
                     obj.update(variacaoTempo);
                 }
                 spawner.play();
-                if(Universal.p1dead){
+                if(player1.dead){
                     
                     for (Objects obj : objectsOnScreen){
                         if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
@@ -185,7 +180,7 @@ public class Screen {
                     obj.update(variacaoTempo);
                 }
                 spawner.play();
-                if(Universal.p1dead){
+                if(player1.dead){
                     
                     for (Objects obj : objectsOnScreen){
                         if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
@@ -217,6 +212,7 @@ public class Screen {
                 obj.setX(120);
                 obj.setY(360);
                 ((Player)obj).movement.isJumping = true;
+                ((Player)obj).dead = false;
             }
             if(obj instanceof Environment){
                 obj.setIsActive(true);
@@ -226,7 +222,6 @@ public class Screen {
                 ((Obstacles)obj).updateObstHitbox();
             }
         }
-        Universal.p1dead = false;
     }
     
     public static void resetCoordenates(){

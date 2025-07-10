@@ -15,7 +15,7 @@ public class Player extends Entities{
     
     //https://www.youtube.com/watch?v=rTVoyWu8r6g
     /*------------ ATRIBUTOS ------------*/
-    private int playerCode;
+    private int playerIndex;
     public Movement movement;
     public Collider collider;
     BufferedImage playerSpriteSheet;
@@ -26,17 +26,23 @@ public class Player extends Entities{
     public int playerAction = Universal.IDLE;
     SpriteData playerData;
     
+    /*Controle de Dash*/
     public long lastDash = 0;
     public long dashCooldown = 250; //evita spam
     
+    /*Flags booleanas de Movimento*/
+    public boolean right = false;
+    public boolean left = false;
+    public boolean up = false;
+    public boolean down = false;
+    public boolean dead = false;
+    public boolean dash = false;
+    public boolean jump = false;
+    
     public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
-        this.playerCode = playerCode;
-        try{
-            setPlayerCode(playerCode);
-        } catch(Exception ex){
-            ex.printStackTrace();
-        }
+        this.playerIndex = playerCode;
+        setPlayerIndex(playerCode);
         movement = new Movement(this);
         collider = new Collider(this);
         initSprite();
@@ -47,9 +53,9 @@ public class Player extends Entities{
     }     
    
     public void initSprite(){
-        if(playerCode == 1){
+        if(playerIndex == 1){
         playerData = SpriteLoader.spriteDataLoader().get("player1");
-        } else if (playerCode == 2){
+        } else if (playerIndex == 2){
         playerData = SpriteLoader.spriteDataLoader().get("player2");    
         }
         SpriteData shadowData = SpriteLoader.spriteDataLoader().get("shadow");
@@ -72,12 +78,12 @@ public class Player extends Entities{
     @Override
     public void update(float deltaTime){
         long currentTime = System.currentTimeMillis();
-        if(Universal.p1dash 
+        if(dash 
                 && movement.canDash 
                     && !movement.isDashing 
                         && currentTime - lastDash >= dashCooldown){
             movement.Dash();
-            Universal.p1dash = false;
+            dash = false;
             lastDash = currentTime;
         }
         movement.updateMovement(deltaTime);
@@ -119,20 +125,26 @@ public class Player extends Entities{
         this.y = y;
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    
+    
     public int getHeight() {
         return heightO;
     }
 
-    public int getPlayerCode(){
-        return playerCode;
+    public int getPlayerIndex(){
+        return playerIndex;
     }
 
-    public void setPlayerCode(int playerCode) throws Exception{
-        if(playerCode >= 1 && playerCode <= 2){
-            this.playerCode = playerCode;
-        } else {
-            throw new Exception("Nao pode haver mais de 2 players");
-        }
+    public void setPlayerIndex(int playerIndex){
+        this.playerIndex = playerIndex;
     }
 
     public Movement getMovement(){
