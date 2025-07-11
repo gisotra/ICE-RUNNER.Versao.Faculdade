@@ -1,5 +1,6 @@
 package instances.entities;
 
+import instances.entities.Player.PlayerAnimation;
 import utilz.Universal;
 
 public class Movement {
@@ -57,7 +58,7 @@ public class Movement {
                 
                 // ================ movimentação VERTICAL ================
                 if (player.jump && isGrounded()) {
-                    player.playerAction = Universal.JUMP;
+                    player.playerAction = PlayerAnimation.JUMP;
                     verticalSpeed = jumpPower;
                     isJumping = true;
                 }
@@ -66,7 +67,7 @@ public class Movement {
                     verticalSpeed += gravity;
                     player.setY(player.getY() + verticalSpeed); //altero o Y do player
                     if (verticalSpeed > 0) { //estou caindo
-                        player.playerAction = Universal.IS_FALLING;
+                        player.playerAction = PlayerAnimation.FALLING;
                     }
 
                     //cheguei no chão, então preciso resetar o pulo
@@ -76,13 +77,13 @@ public class Movement {
                         isJumping = false;
                         hasDashed = false;
                         canDash = true;
-                        player.playerAction = Universal.IDLE;
+                        player.playerAction = PlayerAnimation.IDLE;
                     }
                     
                 } else if (!isGrounded()){ //cai de uma plataforma ou qualquer evento alternativo
                     verticalSpeed += gravity;
                     player.setY(player.getY() + verticalSpeed);
-                    player.playerAction = Universal.IS_FALLING;
+                    player.playerAction = PlayerAnimation.FALLING;
                 }
                 
                 // ================ movimentação HORIZONTAL ================
@@ -148,7 +149,7 @@ public class Movement {
                     isJumping = false;
                     hasDashed = false;
                     canDash = true;
-                    player.playerAction = Universal.IDLE;
+                    player.playerAction = PlayerAnimation.IDLE;
                 } 
 
                 //impeço ele de atravessar as bordas do cenário
@@ -174,7 +175,7 @@ public class Movement {
                         isJumping = false;
                         hasDashed = false;
                         canDash = true;
-                        player.playerAction = Universal.IDLE;
+                        player.playerAction = PlayerAnimation.IDLE;
                     }
                 }
                 return;
@@ -188,7 +189,7 @@ public class Movement {
             verticalSpeed = deathJumpPower; //jogo pra cima 
             deathJump = true;
             isJumping = true; //true 
-            player.playerAction = Universal.IS_DEAD; //muda a animação
+            player.playerAction = PlayerAnimation.DEAD; //muda a animação
             }
             
             if (isJumping) {

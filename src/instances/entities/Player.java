@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import loop.GCanvas;
+import utilz.AnimationType;
 import utilz.Screen;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
 import utilz.Spritesheet;
@@ -21,11 +23,7 @@ public class Player extends Entities{
     BufferedImage playerSpriteSheet;
     BufferedImage shadow;
     BufferedImage floormark;
-    Spritesheet shadowsprite;
-    Spritesheet floormarksprite;
-    public int playerAction = Universal.IDLE;
     SpriteData playerData;
-    
     
     /*Controle de Dash*/
     public long lastDash = 0;
@@ -39,6 +37,12 @@ public class Player extends Entities{
     public boolean dead = false;
     public boolean dash = false;
     public boolean jump = false;
+    
+    /*Sprites*/
+    Sprite<PlayerAnimation> playerSprite;
+    Sprite<ShadowAnimation> shadowSprite;
+    Sprite<MarkAnimation> markSprite;
+    public PlayerAnimation playerAction = PlayerAnimation.IDLE;
     
     public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
@@ -71,9 +75,10 @@ public class Player extends Entities{
         //inicio as propriedades do meu sprite player
         setWidth(32);
         setHeight(32);
-        setSpritesheet(playerSpriteSheet, Universal.SCALE);
-        shadowsprite = new Spritesheet(shadow, 32, 32, 0, Universal.SCALE);
-        floormarksprite = new Spritesheet(floormark, 32, 32, 0, Universal.SCALE);
+        /*Inicio as Sprites*/
+        playerSprite = new Sprite<>(playerSpriteSheet, this.heightO, this.widthO, PlayerAnimation.class, 15);
+        shadowSprite = new Sprite<>(shadow, 32, 32, ShadowAnimation.class, 1);
+        markSprite = new Sprite<>(floormark, 32, 32, MarkAnimation.class, 1);
     }
     
     @Override
@@ -98,14 +103,18 @@ public class Player extends Entities{
 
     @Override
     public void render(Graphics2D g2d){
-        spritesheet.setAtion(playerAction); // altero ou mantenho a linha do spritesheet
-        shadowsprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
-        spritesheet.render(g2d, (int) getX() - 12, (int) getY());
+        playerSprite.setAction(playerAction);
+        playerSprite.update(); //altero o state da minha animacao
+        
+        playerSprite.render(g2d, (int) getX() - 12, (int) getY());
+        
+        //Renderizo a sombra
+        shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
         
         if(Universal.showGrid){
             drawHitbox(g2d);
             collider.drawCollisionArea(g2d);
-            floormarksprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
+            markSprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
         }
     }
     
@@ -134,8 +143,6 @@ public class Player extends Entities{
         this.dead = dead;
     }
 
-    
-    
     public int getHeight() {
         return heightO;
     }
@@ -151,9 +158,63 @@ public class Player extends Entities{
     public Movement getMovement(){
         return movement;
     }
+    
+    /*========== Classes internas Para os Sprites ==========*/ 
+    /*Player*/
+    public enum PlayerAnimation implements AnimationType{
+        IDLE(0, 2),
+        RUNNING(0, 2),
+        JUMP(1, 3),
+        FALLING(2, 1),
+        DEAD(3, 1);
+        //DASH(4, 2);
+
+        private final int index;
+        private final int frameCount;
+    
+        PlayerAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+
+        @Override
+        public int getIndex(){
+            return index;
+        }
+    
+        @Override
+        public int getFrameCount(){
+            return frameCount;
+       }
+    }
+    
+    /*Sombra*/
+    public enum ShadowAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
+    }
+    
+    /*FloorMark*/
+    public enum MarkAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
+    }
 }
-    
-    
-
-
-

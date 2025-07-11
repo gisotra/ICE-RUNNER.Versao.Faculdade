@@ -30,27 +30,6 @@ public class Universal {
     */
     public static final float groundY = GAME_HEIGHT - (2 * TILES_SIZE); //usado para achar a posição Y em que o player tá "no chão"
     
-    /*---------------- PLAYER1 ----------------*/
-    /*-----------------------------------------*/
-    /*-----------------------------------------*/
-    /*Índices das animações dos sprites do player (vertical)*/
-    public static final int IDLE = 0;
-    public static final int RUNNING = 0;
-    public static final int JUMP = 1;
-    public static final int LANDING = 2;
-    public static final int IS_FALLING = 2;
-    public static final int IS_DEAD = 3;
-    //inserir uma de DASH
-
-    /*Direções de movimento para o SPRITE do player*/
-    public static final int LEFT = 0;
-    public static final int UP = 1;
-    public static final int RIGHT = 2;
-    public static final int DOWN = 3;
-    
-    /*-------------- OBSTÁCULOS ---------------*/
-    /*-----------------------------------------*/
-    /*-----------------------------------------*/
     
     /*Posição de spawn dos obstáculos do player2 + flags de spawn no KeyInputs*/
     // =============== Wall =============== 
@@ -90,23 +69,6 @@ public class Universal {
     public static int lastSpeedUpScore = 0;
     public static int speedUpgrades = 0;
     public static final int MAX_SPEED_UPGRADES = 7;
-    
-    /*Método que retorna quantos frames cada ação possui*/
-    public static int GetSpriteAmount(int player_action) {
-        switch (player_action) {
-
-            case RUNNING:
-                return 2;
-            case IS_FALLING:
-                return 1;
-            case IS_DEAD:
-                return 1;
-            case JUMP:
-                return 3;
-            default:
-                return 1;
-        }
-    }
     
     /*-------------- GAME LOOP ---------------*/
     /*-----------------------------------------*/

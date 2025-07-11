@@ -9,7 +9,7 @@ public class Sprite<T extends Enum<T> & AnimationType> {  //restringe o tipo do 
     private BufferedImage[][] spritesEscalonados;
     private int frameAtual;
     private int contadorDeFrames;
-    private int trocaDeFrames;
+    private int trocaDeFrames; //velocidade da animação, basicamente
     private int alturaFrame, larguraFrame;
     
     public Sprite(BufferedImage sprite, int alturaFrame, int larguraFrame, Class<T> enumClass, int trocaDeFrames){
@@ -80,4 +80,6 @@ public class Sprite<T extends Enum<T> & AnimationType> {  //restringe o tipo do 
     public BufferedImage getFrameAtual() {
         return spritesEscalonados[currentState.getIndex()][frameAtual];
     }
+    
+    
 }

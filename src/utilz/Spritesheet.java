@@ -19,7 +19,7 @@ public class Spritesheet {
     int totalIndices;
     int trocaDeFrames;
     
-    int acaoAtual = Universal.IDLE;
+    //int acaoAtual = Universal.IDLE;
     
     // Construtor do Sprite: carrega a sprite sheet e separa os frames
     public Spritesheet(BufferedImage spriteOriginal, int frameHeightOriginal, int frameWidthOriginal, double time, float scale) {
@@ -84,11 +84,11 @@ public class Spritesheet {
     }
     
     public void setAtion(int acao){
-        if(this.acaoAtual != acao){
+        /*if(this.acaoAtual != acao){
             acaoAtual = acao;
             frameAtual = 0; //como eu mudei de animacao, reseto a contagem
             contadorFrames = 0;
-        }
+        }*/
     }
     
     public BufferedImage getSpriteFromSheet(BufferedImage image, int x, int y, int largura, int altura) {
@@ -97,19 +97,19 @@ public class Spritesheet {
     
     public void render(Graphics2D g2d, int x, int y) {
         if(totalIndices == 0 && totalFrames == 0 && trocaDeFrames == 0){ //é um obstáculo estático
-            g2d.drawImage(spritesEscalonados[acaoAtual][frameAtual], x, y, null);
+            g2d.drawImage(spritesEscalonados[0][frameAtual], x, y, null);
             
         } else {
         contadorFrames++;
         if (contadorFrames % trocaDeFrames == 0) {
             frameAtual++;
         }
-        if (frameAtual >= Universal.GetSpriteAmount(acaoAtual)) {
+        if (frameAtual >= 1) {
             frameAtual = 0;
         }
        
 
-            g2d.drawImage(spritesEscalonados[acaoAtual][frameAtual], x, y, null);
+            g2d.drawImage(spritesEscalonados[0][frameAtual], x, y, null);
         }
     }
 

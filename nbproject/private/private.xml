@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Sprite.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/AnimationType.java</file>
             <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Spritesheet.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Universal.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Screen.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Movement.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Entities.java</file>
             <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/Player.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/instances/entities/PlayerAnimation.java</file>
         </group>
     </open-files>
 </project-private>

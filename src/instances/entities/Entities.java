@@ -39,10 +39,6 @@ public abstract class Entities extends Objects{
     public Rectangle2D.Float getHitbox(){
         return hitbox;
     }
-    
-    public void setSpritesheet(BufferedImage spritesheet, float renderScale) { //criação da sprite + settar a velocidade
-        this.spritesheet = new Spritesheet(spritesheet, widthO, heightO, 0.85, renderScale); 
-    }
 
     
     @Override
