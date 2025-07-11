@@ -26,6 +26,7 @@ public class Player extends Entities{
     public int playerAction = Universal.IDLE;
     SpriteData playerData;
     
+    
     /*Controle de Dash*/
     public long lastDash = 0;
     public long dashCooldown = 250; //evita spam
