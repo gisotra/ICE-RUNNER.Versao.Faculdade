@@ -26,7 +26,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gc.getScreen().getMenu().mouseMoved(e);
             }
                 break;
-            case PLAYING_OFFLINE:{
+            case PLAYING:{
                 
             }
                 break;
@@ -49,7 +49,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gc.getScreen().getMenu().mouseClicked(e);            
             }
                 break;
-            case PLAYING_OFFLINE:{
+            case PLAYING:{
             //
             }
                 break;
@@ -72,7 +72,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gc.getScreen().getMenu().mousePressed(e);
             }
             break;
-            case PLAYING_OFFLINE: {
+            case PLAYING: {
                 //
             }
             break;
@@ -94,7 +94,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gc.getScreen().getMenu().mouseReleased(e);
             }
             break;
-            case PLAYING_OFFLINE: {
+            case PLAYING: {
 
             }
             break;

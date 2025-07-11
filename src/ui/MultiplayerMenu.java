@@ -7,15 +7,15 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import utilz.Screen;
+import utilz.AnimationType;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
 import utilz.Universal;
 
 public class MultiplayerMenu implements ScreenStates {
     BufferedImage multMenuFundo;
-    Spritesheet multMenusheet;
+    Sprite<MultiplayerMenuAnimation> multMenuSprite;
     Buttons[] botoesMenu = new Buttons[4];
     BufferedImage botaoAsServer;
     BufferedImage botaoAsClient;
@@ -48,7 +48,7 @@ public class MultiplayerMenu implements ScreenStates {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.multMenusheet = new Spritesheet(multMenuFundo, 288, 512, 0.0, Universal.SCALE); 
+        this.multMenuSprite = new Sprite<>(multMenuFundo, 288, 512, MultiplayerMenuAnimation.class, 1); 
     }
 
     /*-------------- MÉTODOS HERDADOS --------------*/
@@ -59,7 +59,7 @@ public class MultiplayerMenu implements ScreenStates {
 
     @Override
     public void render(Graphics2D g2D) {
-        multMenusheet.render(g2D, 0, 0);
+        multMenuSprite.render(g2D, 0, 0);
         for (Buttons but : botoesMenu) {
             but.render(g2D);
         }
@@ -125,5 +125,20 @@ public class MultiplayerMenu implements ScreenStates {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    
+    /*========== Classe interna Para o Sprite ==========*/
+    public enum MultiplayerMenuAnimation implements AnimationType {
+        STATIC;
+
+        @Override
+        public int getIndex() {
+            return 0;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return 1;
+        }
     }
 }

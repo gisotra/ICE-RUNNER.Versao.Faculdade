@@ -9,11 +9,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+import utilz.AnimationType;
 import utilz.Screen;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
-import static utilz.Universal.SCALE;
 
 public class GCanvas extends Canvas {
 
@@ -26,7 +26,7 @@ public class GCanvas extends Canvas {
     Point mousePoint;
     Cursor cursor;
     BufferedImage cursorMouse;
-    Spritesheet spriteMouse;
+    Sprite<CursorAnimation> spriteMouse;
     
 
     /*------------ CONSTRUTOR ------------*/
@@ -67,9 +67,9 @@ public class GCanvas extends Canvas {
             screen.renderAll(g2D);
             mousePoint = getMousePosition();
             if(mousePoint != null){
-                spriteMouse.render(g2D, (int) mousePoint.getX(), (int)mousePoint.getY());
+                spriteMouse.render(g2D, (int) mousePoint.getX(), (int)mousePoint.getY());            
             }
-            if(Gamestate.state == PLAYING_OFFLINE){
+            if(Gamestate.state == PLAYING){
             g2D.setFont(fontInGame);
             g2D.setColor(Color.BLACK);
             g2D.drawString("SCORE:   " + String.valueOf(Universal.SCORE), Universal.GAME_WIDTH - 500, 40);
@@ -135,7 +135,7 @@ public class GCanvas extends Canvas {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.spriteMouse = new Spritesheet(cursorMouse, 32, 32, 0.85, Universal.SCALE);
+        this.spriteMouse = new Sprite<>(cursorMouse, 32, 32, CursorAnimation.class, 1);
         
         cursor = Toolkit.getDefaultToolkit().createCustomCursor(
         new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank cursor");
@@ -153,5 +153,21 @@ public class GCanvas extends Canvas {
     
     public void sleepGame(){
         this.room.sleepEngine();
+    }
+    
+    /*========== Classe interna Para os Sprites ==========*/ 
+    public enum CursorAnimation implements AnimationType{
+        
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

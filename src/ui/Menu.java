@@ -7,15 +7,16 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import utilz.AnimationType;
 import utilz.Screen;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
+import utilz.Sprite;
 import utilz.Universal;
 
 public class Menu implements ScreenStates {
     BufferedImage menuFundo;
-    Spritesheet menusheet;
+    Sprite<MenuScreenAnimation> menuSprite;
     Buttons[] botoesMenu = new Buttons[3];
     BufferedImage botaoOfflineSprite;
     BufferedImage botaoOnlineSprite;
@@ -23,7 +24,7 @@ public class Menu implements ScreenStates {
     
     public Menu(){
         initSpriteMenu();
-        botoesMenu[0] = new Buttons(2 * Universal.TILES_SIZE, 1 * Universal.TILES_SIZE, 64, 48, botaoOfflineSprite, Gamestate.PLAYING_OFFLINE); //OFFLINE
+        botoesMenu[0] = new Buttons(2 * Universal.TILES_SIZE, 1 * Universal.TILES_SIZE, 64, 48, botaoOfflineSprite, Gamestate.PLAYING); //OFFLINE
         botoesMenu[1] = new Buttons(2 * Universal.TILES_SIZE, 3 * Universal.TILES_SIZE, 64, 48, botaoOnlineSprite, Gamestate.MULTIPLAYER_MENU); //ONLINE
         botoesMenu[2] = new Buttons(2 * Universal.TILES_SIZE, 5 * Universal.TILES_SIZE, 64, 48, botaoExitSprite, Gamestate.END); //EXIT
     }
@@ -43,7 +44,7 @@ public class Menu implements ScreenStates {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.menusheet = new Spritesheet(menuFundo,288, 512, 0.0, Universal.SCALE); 
+        this.menuSprite = new Sprite<>(menuFundo,288, 512, MenuScreenAnimation.class, 1); 
     }
 
     /*-------------- MÉTODOS HERDADOS --------------*/
@@ -54,7 +55,7 @@ public class Menu implements ScreenStates {
 
     @Override
     public void render(Graphics2D g2D) {
-        menusheet.render(g2D, 0, 0);
+        menuSprite.render(g2D, 0, 0);
         for (Buttons but : botoesMenu) {
             but.render(g2D);
         }
@@ -84,7 +85,7 @@ public class Menu implements ScreenStates {
         for (Buttons but : botoesMenu) {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
-                    if (but.getState() == Gamestate.PLAYING_OFFLINE) {
+                    if (but.getState() == Gamestate.PLAYING) {
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
@@ -126,5 +127,20 @@ public class Menu implements ScreenStates {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    
+    /*========== Classe interna Para o Sprite ==========*/ 
+    public enum MenuScreenAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

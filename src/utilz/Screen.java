@@ -23,7 +23,7 @@ import java.util.List;
 import ui.GameOver;
 import ui.Menu;
 import ui.MultiplayerMenu;
-import ui.POffline;
+import ui.Playing;
 
 public class Screen { 
     /*
@@ -50,7 +50,7 @@ public class Screen {
     Menu menuscreen;
     GameOver gameoverscreen;
     MultiplayerMenu multmenuscreen;
-    POffline pofflinescreen;
+    Playing playingscreen;
     //para debug
     
     /*------------ CONSTRUTOR ------------*/
@@ -59,7 +59,7 @@ public class Screen {
         menuscreen = new Menu();
         gameoverscreen = new GameOver();
         multmenuscreen = new MultiplayerMenu();
-        pofflinescreen = new POffline();
+        playingscreen = new Playing();
             
         layer3 = new Layer3(this, this.gc);
         objectsOnScreen.add(layer3);
@@ -87,8 +87,8 @@ public class Screen {
                 menuscreen.render(g2d);
                 break;
             }
-            case PLAYING_OFFLINE:{
-                pofflinescreen.render(g2d);
+            case PLAYING:{
+                playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
                         if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
                             obj.render(g2d);
@@ -110,7 +110,7 @@ public class Screen {
                 break;
             }
             case GAME_OVER:{
-                pofflinescreen.render(g2d);
+                playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
                     if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
                         obj.render(g2d);
@@ -135,7 +135,7 @@ public class Screen {
             case MENU:{
             break;
             }
-            case PLAYING_OFFLINE:{
+            case PLAYING:{
                 for(Objects obj : objectsOnScreen){
                     if(!obj.getIsActive()){
                         continue; //se estiver desativado, nada acontece, nao é atualizado

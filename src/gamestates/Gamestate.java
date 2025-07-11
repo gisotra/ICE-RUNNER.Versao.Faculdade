@@ -12,7 +12,7 @@ public enum Gamestate {
     MENU, 
     TUTORIAL, 
     ABOUT, 
-    PLAYING_OFFLINE, 
+    PLAYING, 
     GAME_OVER, 
     MULTIPLAYER_MENU, 
     SERVER_HOSTING, //botão "criar servidor"

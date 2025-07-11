@@ -7,15 +7,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import loop.GCanvas;
+import utilz.AnimationType;
 import utilz.Screen;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
 import utilz.Universal;
 
 public class Bird extends Obstacles{ //extends Obstacles{
     /*------------ ATRIBUTOS ------------*/
+    Sprite<BirdAnimation> birdSprite;
     BufferedImage birdSpriteSheet;
+    BirdAnimation birdAction = BirdAnimation.FLYING;
     /*------------ CONSTRUTOR ------------*/
     public Bird(Screen screen, GCanvas gc) {
         super(screen, gc);
@@ -36,7 +39,7 @@ public class Bird extends Obstacles{ //extends Obstacles{
         //altura e largura do meu passarinho
         setWidth(32); //largura em px do FRAME ORIGINAL 
         setHeight(32); //altura em px do FRAME ORIGINAL
-        setSpritesheet(birdSpriteSheet, Universal.SCALE);
+        birdSprite = new Sprite<>(birdSpriteSheet, this.heightO, this.widthO, BirdAnimation.class, 10);
     }
     
     @Override
@@ -50,17 +53,38 @@ public class Bird extends Obstacles{ //extends Obstacles{
         this.obs_hitbox = new Rectangle2D.Float(getX(), getY(), Universal.BIRD_HITBOX_WIDTH, Universal.BIRD_HITBOX_HEIGHT); //metade do tamanho
     }
     
-    //coloquei em cada classe pois, por exemplo, o passaro pode ter diferentes frames
-    @Override
-    public void setSpritesheet(BufferedImage spritesheet, float renderScale) {
-        this.spritesheet = new Spritesheet(spritesheet, heightO, widthO, 1.0, renderScale); 
-    }
-    
     @Override
     public void render(Graphics2D g2d) {
-        spritesheet.render(g2d, (int) getX() - 5, (int) getY() - 16);
+        
+        birdSprite.setAction(birdAction);
+        birdSprite.update();
+        birdSprite.render(g2d, (int) getX() - 5, (int) getY() - 16);
         if (Universal.showGrid) {
             drawObstHitbox(g2d);
         }
+    }
+    
+    /*========== Classe interna Para os Sprites ==========*/ 
+    public enum BirdAnimation implements AnimationType{
+        FLYING(0, 2);
+        
+        private final int index;
+        private final int frameCount;
+
+        BirdAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+
+        @Override
+        public int getIndex() {
+            return index;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return frameCount;
+        }
+        
     }
 }

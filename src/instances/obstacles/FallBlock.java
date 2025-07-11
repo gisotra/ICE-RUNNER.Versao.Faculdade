@@ -7,23 +7,29 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import loop.GCanvas;
+import utilz.AnimationType;
 import utilz.Screen;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
 import utilz.Universal;
 
 public class FallBlock extends Obstacles{ //extends Obstacles
     /*------------ ATRIBUTOS ------------*/
-    BufferedImage BlockSpriteSheet;
+    /*Movimento*/
     public boolean shouldFall;
     public float block_speed = 0;
     public float block_gravity = 0.095f * Universal.SCALE;
     public float block_levitate = -0.85f * Universal.SCALE;
     public float block_heightGY; //usado para achar a posição Y em que o bloco tá "no chão"
     public float groundLvl;
-    BufferedImage blockshadow;
-    Spritesheet blockshadowsprite;
+    
+    /*Animação*/
+    BufferedImage BlockSpriteSheet;
+    Sprite<BlockAnimation> blockSprite;
+    BufferedImage blockShadow;
+    Sprite<ShadowAnimation> shadowSprite;
+    BlockAnimation blockAction = BlockAnimation.FALLING;
     
     /*------------ CONSTRUTOR ------------*/
     public FallBlock(Screen screen, GCanvas gc) {
@@ -43,15 +49,15 @@ public class FallBlock extends Obstacles{ //extends Obstacles
         SpriteData shadowData = SpriteLoader.spriteDataLoader().get("blockshadow");
         try {
             BlockSpriteSheet = ImageIO.read(getClass().getResource(blockData.getPath()));
-            blockshadow = ImageIO.read(getClass().getResource(shadowData.getPath()));
+            blockShadow = ImageIO.read(getClass().getResource(shadowData.getPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         
         setWidth(64); //largura em px do FRAME ORIGINAL 
         setHeight(48); //altura em px do FRAME ORIGINAL
-        setSpritesheet(BlockSpriteSheet, Universal.SCALE);
-        blockshadowsprite = new Spritesheet(blockshadow, 32, 64, 0, Universal.SCALE);
+        blockSprite = new Sprite<>(BlockSpriteSheet, this.heightO, this.widthO, BlockAnimation.class, 1);
+        shadowSprite = new Sprite<>(blockShadow, 32, 64, ShadowAnimation.class, 1);
     }
     
     @Override
@@ -66,14 +72,13 @@ public class FallBlock extends Obstacles{ //extends Obstacles
     }
     
     @Override
-    public void setSpritesheet(BufferedImage spritesheet, float renderScale) {
-        this.spritesheet = new Spritesheet(spritesheet, heightO, widthO, 1.0, renderScale);
-    }
-    
-    @Override
     public void render(Graphics2D g2d) {
-        blockshadowsprite.render(g2d, (int) getX() - 45, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 25) ;
-        spritesheet.render(g2d, (int) getX() - 32, (int) getY() - 21);
+        /*Altero o estado da animação*/
+        blockSprite.setAction(blockAction);
+        blockSprite.update();
+        
+        shadowSprite.render(g2d, (int) getX() - 45, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 25) ;
+        blockSprite.render(g2d, (int) getX() - 32, (int) getY() - 21);
         if (Universal.showGrid) {
             drawObstHitbox(g2d);
         }
@@ -93,6 +98,7 @@ public class FallBlock extends Obstacles{ //extends Obstacles
     public void updateY(){
         if(shouldFall){
             //se ele não está no chão, a gravidade exponencial o afeta
+            blockAction = BlockAnimation.FALLING;
             block_speed -= block_gravity;
             setY(getY() - block_speed);
             
@@ -108,6 +114,7 @@ public class FallBlock extends Obstacles{ //extends Obstacles
         
         if(!shouldFall){
             block_speed = block_levitate;
+            blockAction = BlockAnimation.LEVITATING;
             setY(getY() + block_speed);
             if(getY() <= (Universal.BLOCK_SKY_LEVEL)){
                 setY(Universal.BLOCK_SKY_LEVEL);
@@ -129,5 +136,43 @@ public class FallBlock extends Obstacles{ //extends Obstacles
 
     public float getHitboxWidth() {
         return (float) obs_hitbox.height;
+    }
+    
+    /*========== Classe interna Para os Sprites ==========*/ 
+    public enum BlockAnimation implements AnimationType{
+        FALLING(0, 1),
+        LEVITATING(1, 1);
+        
+        public int index;
+        public int frameCount;
+        
+        BlockAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+        
+        @Override
+        public int getIndex(){
+            return index;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return frameCount;
+        }
+    }
+    
+    public enum ShadowAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

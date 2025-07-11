@@ -1,24 +1,23 @@
 package ui;
 
-import gamestates.Gamestate;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import utilz.Screen;
+import utilz.AnimationType;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
+import utilz.Sprite;
 import utilz.Universal;
 
 
-public class POffline implements ScreenStates {
-    BufferedImage menuFundo;
-    Spritesheet menusheet;
+public class Playing implements ScreenStates {
+    BufferedImage fundoLoop;
+    Sprite<PlayingScreenAnimation> fundoSprite;
     
-    public POffline(){
+    public Playing(){
         initSpriteMenu();
     }
     
@@ -26,12 +25,12 @@ public class POffline implements ScreenStates {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("layer0");
         
         try {
-            menuFundo = ImageIO.read(getClass().getResource(menuData.getPath()));
+            fundoLoop = ImageIO.read(getClass().getResource(menuData.getPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.menusheet = new Spritesheet(menuFundo, 224, 512, 0.0, Universal.SCALE); 
+        this.fundoSprite = new Sprite<>(fundoLoop, 224, 512, PlayingScreenAnimation.class, 1); 
     }
 
     /*-------------- MÉTODOS HERDADOS --------------*/
@@ -42,7 +41,7 @@ public class POffline implements ScreenStates {
 
     @Override
     public void render(Graphics2D g2D) {
-        menusheet.render(g2D, 0, 0);
+        fundoSprite.render(g2D, 0, 0);
     }
 
     @Override
@@ -82,5 +81,20 @@ public class POffline implements ScreenStates {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    
+    /*========== Classe interna Para o Sprite ==========*/ 
+    public enum PlayingScreenAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

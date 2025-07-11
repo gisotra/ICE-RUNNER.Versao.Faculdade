@@ -8,8 +8,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import loop.GCanvas;
 import utilz.Screen;
-import utilz.Spritesheet;
-import utilz.Universal;
 
 public abstract class Entities extends Objects{
     

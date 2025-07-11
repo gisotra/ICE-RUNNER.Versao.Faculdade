@@ -55,7 +55,7 @@ public class GRoom implements Runnable {
                 updates++;
                 accumulator -= fixedStep;
 
-                if (Gamestate.state == PLAYING_OFFLINE) {
+                if (Gamestate.state == PLAYING) {
                     Universal.SCORE += (int) (100 * fixedStep);
 
                     if (Universal.SCORE - Universal.lastSpeedUpScore >= 1000) {

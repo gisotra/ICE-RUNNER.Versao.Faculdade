@@ -8,7 +8,6 @@ import loop.GCanvas;
 import utilz.Screen;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
 import utilz.Universal;
 
 public class Layer3 extends Environment {

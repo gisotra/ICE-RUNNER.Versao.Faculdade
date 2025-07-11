@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import loop.GCanvas;
 import utilz.Screen;
-import utilz.Spritesheet;
 
 /*Objects vai ser uma classe que todos os elementos do meu jogo vão herdar, tanto
 o player1, quantos os obstáculos quanto o chão.*/
@@ -15,7 +14,6 @@ public abstract class Objects {
     public GCanvas gc;
     public float x, y;
     public int widthO, heightO;
-    public Spritesheet spritesheet;
     public boolean isActive = false;
     
     public Objects(Screen screen, GCanvas gc){
@@ -46,10 +44,6 @@ public abstract class Objects {
 
     public int getHeight() {
         return heightO;
-    }
-
-    public Spritesheet getSprite() {
-        return spritesheet;
     }
     
     public void setWidth(int width) {

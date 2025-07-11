@@ -1,10 +1,10 @@
 package ui;
 
 import gamestates.Gamestate;
-import static gamestates.Gamestate.state;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import utilz.Spritesheet;
+import utilz.AnimationType;
+import utilz.Sprite;
 import utilz.Universal;
 
 public class Buttons {
@@ -12,8 +12,8 @@ public class Buttons {
     /*---------- ATRIBUTOS ----------*/
     public int x, y, width, height;
     public Rectangle dimensoes; //vou usar isso pra inserir o click do mouse
-    public BufferedImage spriteButton;
-    public Spritesheet spritesheetB;
+    public BufferedImage spritesheetButton;
+    public Sprite<ButtonAnimation> buttonSprite;
     public boolean cursorOver, cursorPressed;
     public Gamestate state;
     
@@ -23,7 +23,7 @@ public class Buttons {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.spriteButton = image;
+        this.spritesheetButton = image;
         this.state = state;
         initRectangle();
         initSpritesheet(image);
@@ -36,11 +36,11 @@ public class Buttons {
     }
     
     public void initSpritesheet(BufferedImage image){
-        this.spritesheetB = new Spritesheet(spriteButton, image.getHeight(), image.getWidth(), 0, Universal.SCALE);
+        this.buttonSprite = new Sprite<>(spritesheetButton, image.getHeight(), image.getWidth(), ButtonAnimation.class, 1);
     }
 
     public void render(Graphics2D g2d){
-        this.spritesheetB.render(g2d, this.x, this.y);
+        this.buttonSprite.render(g2d, this.x, this.y);
     }
 
     /*------------- GETTERS & SETTERS -------------*/
@@ -76,5 +76,20 @@ public class Buttons {
     public void resetBooleans(){
         this.cursorOver = false;
         this.cursorPressed = false;
+    }
+    
+    /*========== Classe interna Para o Sprite ==========*/ 
+    public enum ButtonAnimation implements AnimationType{
+        STATIC;
+        
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+        
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

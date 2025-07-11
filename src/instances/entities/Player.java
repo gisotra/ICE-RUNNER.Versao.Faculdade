@@ -10,7 +10,6 @@ import utilz.Screen;
 import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
 import utilz.Universal;
 
 public class Player extends Entities{
@@ -117,7 +116,6 @@ public class Player extends Entities{
             markSprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
         }
     }
-    
 
     /*------------ GETTERS AND SETTERS ------------*/
     public float getX() {

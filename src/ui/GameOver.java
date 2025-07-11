@@ -7,16 +7,18 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import utilz.AnimationType;
 import utilz.Screen;
+import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
-import utilz.Spritesheet;
+import utilz.Sprite;
 import utilz.Universal;
 
 public class GameOver implements ScreenStates{
     /*Imagens do fundo da tela de Game Over*/
     BufferedImage gameOverFundo;
-    Spritesheet gameoversheet;
+    Sprite<GameOverScreenAnimation> gameoverSprite;
     /*Botões e seus respectivos sprites*/
     Buttons[] botoes = new Buttons[2];
     BufferedImage botaoMenuSprite;
@@ -26,7 +28,7 @@ public class GameOver implements ScreenStates{
     public GameOver(){
         initSpriteGameOver();
         botoes[0] = new Buttons(5*Universal.TILES_SIZE, 4*Universal.TILES_SIZE - (Universal.TILES_SIZE/4), 48, 48, botaoMenuSprite, Gamestate.MENU); //botão de voltar ao menu
-        botoes[1] = new Buttons(9*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 4*Universal.TILES_SIZE - (Universal.TILES_SIZE/4), 48, 48, botaoRestartSprite, Gamestate.PLAYING_OFFLINE); //botao de voltar ao loop do jogo
+        botoes[1] = new Buttons(9*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 4*Universal.TILES_SIZE - (Universal.TILES_SIZE/4), 48, 48, botaoRestartSprite, Gamestate.PLAYING); //botao de voltar ao loop do jogo
     }
     
     public void initSpriteGameOver(){
@@ -42,7 +44,7 @@ public class GameOver implements ScreenStates{
             throw new RuntimeException(e);
         }
         //inicio as propriedades do meu sprite player
-        this.gameoversheet = new Spritesheet(gameOverFundo, 288, 512, 0.0, Universal.SCALE);
+        this.gameoverSprite = new Sprite<>(gameOverFundo, 288, 512, GameOverScreenAnimation.class, 1);
     }
     
     /*-------------- MÉTODOS HERDADOS --------------*/
@@ -58,7 +60,7 @@ public class GameOver implements ScreenStates{
 
     @Override
     public void render(Graphics2D g2D) {
-        gameoversheet.render(g2D, 0, 0);
+        gameoverSprite.render(g2D, 0, 0);
         for(Buttons but : botoes){
             but.render(g2D);
         }
@@ -88,7 +90,7 @@ public class GameOver implements ScreenStates{
         for(Buttons but : botoes){
             if(isIn(e, but)) {
                 if(but.isCursorPressed()){
-                    if(but.getState() == Gamestate.PLAYING_OFFLINE){
+                    if(but.getState() == Gamestate.PLAYING){
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
@@ -131,5 +133,20 @@ public class GameOver implements ScreenStates{
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    
+    /*========== Classe interna Para o Sprite ==========*/
+    public enum GameOverScreenAnimation implements AnimationType {
+        STATIC;
+
+        @Override
+        public int getIndex() {
+            return 0;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return 1;
+        }
     }
 }
