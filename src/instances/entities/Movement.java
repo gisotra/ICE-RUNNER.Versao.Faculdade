@@ -16,7 +16,7 @@ public class Movement {
     public float atrito = 25.0f*Universal.SCALE;
 
     /*vertical*/
-    public static boolean isJumping = false;
+    public boolean isJumping = false;
     public float verticalSpeed = 0f; //Y
     public float gravity = 0.08f * Universal.SCALE;
     public float jumpPower = -2.8f * Universal.SCALE; // Força do meu salto

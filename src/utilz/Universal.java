@@ -8,6 +8,7 @@ public class Universal {
     */
     public static int SCORE = 0; 
     public static long globalCooldown = 4000;
+    public static boolean bothPlaying = false;
     
     /*configuração de fps*/
     public static final int FPS_SET = 60;

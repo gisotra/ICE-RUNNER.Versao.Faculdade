@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import utilz.AnimationType;
+import utilz.Screen;
 import utilz.Sprite;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
@@ -26,7 +27,7 @@ public class MultiplayerMenu implements ScreenStates {
         initSpriteMenu();
         botoesMenu[0] = new Buttons(3*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.SERVER_HOSTING); //servidor
         botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.CLIENT_CONNECTING); //cliente
-        botoesMenu[2] = new Buttons(11*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoLocal, Gamestate.CLIENT_CONNECTING); //cliente
+        botoesMenu[2] = new Buttons(11*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoLocal, Gamestate.PLAYING); //multiplayer local
         botoesMenu[3] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MENU); //voltar
     }
     
@@ -89,7 +90,15 @@ public class MultiplayerMenu implements ScreenStates {
         for (Buttons but : botoesMenu) {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
+                    if (but.getState() == Gamestate.PLAYING) {
+                        Universal.bothPlaying = true;
                         but.applyGamestate();
+                        Screen.resetCoordenates();
+                        Screen.startCoordenates();
+                    } else {
+                        Universal.bothPlaying = true;
+                        but.applyGamestate();
+                    }
                 }
             }
         }

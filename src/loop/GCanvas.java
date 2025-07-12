@@ -80,7 +80,12 @@ public class GCanvas extends Canvas {
             g2D.drawString("Criar Servidor", 3*Universal.TILES_SIZE - 65, 5*Universal.TILES_SIZE + 25);
             g2D.drawString("Jogar como Cliente", 7*Universal.TILES_SIZE - 65, 5*Universal.TILES_SIZE + 25);
             g2D.drawString("Local", 12*Universal.TILES_SIZE - 25, 5*Universal.TILES_SIZE + 25);
-    
+            }
+            if(Gamestate.state == GAME_OVER){
+                g2D.setFont(fontInGame);
+                g2D.setColor(Color.WHITE);    
+                g2D.drawString("SCORE:", 6 * Universal.TILES_SIZE + 40, 6 * Universal.TILES_SIZE + 45);
+                g2D.drawString(String.valueOf(Universal.SCORE), 8 * Universal.TILES_SIZE + 15, 6 * Universal.TILES_SIZE + 45);
             }
             
             

@@ -40,7 +40,7 @@ public class Screen {
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
     
     Player player1;
-    //Player player2;
+    Player player2;
     Spawner spawner;
     /*--- camadas do cenário ---*/
     Layer1 layer1;
@@ -75,9 +75,9 @@ public class Screen {
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
         player1 = new Player(this, this.gc, 1);
-        //player2 = new Player(this, this.gc, 2);
+        player2 = new Player(this, this.gc, 2);
         objectsOnScreen.add(player1);
-        //objectsOnScreen.add(player2);
+        objectsOnScreen.add(player2);
     }
     
     /*------------ MÉTODO RENDER ------------*/
@@ -148,14 +148,10 @@ public class Screen {
                         continue;
                     }
                     
-                    /*if (obj instanceof Entities && ((Player) obj).getPlayerIndex() == 2) {
-                        obj.setIsActive(false);
-                        continue;
-                    }*/ //faz o player 2 sumir
                     obj.update(variacaoTempo);
                 }
                 spawner.play();
-                if(player1.dead){
+                if(player1.dead || player2.dead){
                     
                     for (Objects obj : objectsOnScreen){
                         if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
@@ -207,12 +203,26 @@ public class Screen {
     /*------------ MÉTODO QUE RESETA AS COORDENADAS DAS INSTANCIAS NA TELA ------------*/
     public static void startCoordenates(){
         for (Objects obj : objectsOnScreen) {
-            if (obj instanceof Entities) {
-                obj.setIsActive(true);
-                obj.setX(120);
-                obj.setY(360);
-                ((Player)obj).movement.isJumping = true;
-                ((Player)obj).dead = false;
+            if(!Universal.bothPlaying){ //Jogador sozinho
+                if (obj instanceof Entities) {
+                    if(((Player)obj).getPlayerIndex() == 2){ //player 2 inativado
+                        obj.setIsActive(false);
+                    } else { //player 1 continua ativo
+                        obj.setIsActive(true);
+                        obj.setX(120 * ((Player) obj).getPlayerIndex());
+                        obj.setY(360);
+                        ((Player) obj).movement.isJumping = true;
+                        ((Player) obj).dead = false;
+                    }
+                } 
+            } else { //Jogando com um amigo localmente
+                if (obj instanceof Entities) {
+                    obj.setIsActive(true);
+                    obj.setX(120 * ((Player)obj).getPlayerIndex());
+                    obj.setY(360);
+                    ((Player)obj).movement.isJumping = true;
+                    ((Player)obj).dead = false;
+                }
             }
             if(obj instanceof Environment){
                 obj.setIsActive(true);
