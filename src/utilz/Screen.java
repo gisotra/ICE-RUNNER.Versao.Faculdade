@@ -4,6 +4,7 @@ import background.Environment;
 import background.Layer1;
 import background.Layer2;
 import background.Layer3;
+import effects.Emitter;
 import gamestates.Gamestate;
 import static gamestates.Gamestate.*;
 import instances.Objects;
@@ -46,6 +47,7 @@ public class Screen {
     Layer1 layer1;
     Layer2 layer2;
     Layer3 layer3;
+    Emitter snowEmitter;
     /*--- game states ---*/
     Menu menuscreen;
     GameOver gameoverscreen;
@@ -60,7 +62,8 @@ public class Screen {
         gameoverscreen = new GameOver();
         multmenuscreen = new MultiplayerMenu();
         playingscreen = new Playing();
-            
+        snowEmitter = new Emitter(60);    
+        
         layer3 = new Layer3(this, this.gc);
         objectsOnScreen.add(layer3);
         layer2 = new Layer2(this, this.gc);
@@ -97,6 +100,7 @@ public class Screen {
                         obj.render(g2d);
                     }
                 }
+                snowEmitter.render(g2d);
                 break;
             }
             case MULTIPLAYER_MENU: {
@@ -151,6 +155,7 @@ public class Screen {
                     obj.update(variacaoTempo);
                 }
                 spawner.play();
+                snowEmitter.update(variacaoTempo);
                 if(player1.dead || player2.dead){
                     
                     for (Objects obj : objectsOnScreen){

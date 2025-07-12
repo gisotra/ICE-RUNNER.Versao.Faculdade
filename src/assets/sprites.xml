@@ -97,5 +97,20 @@
         <path>/assets/ui/multiplayerLocal_button.png</path>
     </sprite>
     
-    
+    <!-- particulas -->
+    <sprite name="SnowParticle1">
+        <path>/assets/particles/snowP1.png</path>
+    </sprite>
+    <sprite name="SnowParticle2">
+        <path>/assets/particles/snowP2.png</path>
+    </sprite>
+    <sprite name="SnowParticle3">
+        <path>/assets/particles/snowP3.png</path>
+    </sprite>
+    <sprite name="SnowParticle4">
+        <path>/assets/particles/snowP4.png</path>
+    </sprite>
+    <sprite name="SnowParticle5">
+        <path>/assets/particles/snowP5.png</path>
+    </sprite>
 </sprites>
