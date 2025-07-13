@@ -10,11 +10,11 @@ import utilz.Universal;
 
 public class Collider {
     Player player;
-    protected Rectangle2D.Float collisionArea;
-    public float collAreaWidth;
-    public float collAreaHeight;
-    public float areaXOffset;
-    public float areaYOffset;
+    private Rectangle2D.Float collisionArea;
+    private float collAreaWidth;
+    private float collAreaHeight;
+    private float areaXOffset;
+    private float areaYOffset;
     
     public Collider(Player player1) {
         this.player = player1;
@@ -51,7 +51,7 @@ public class Collider {
             if(obj instanceof Obstacles){
                 Obstacles obstacle = (Obstacles) obj;
                 
-                if(collisionArea.intersects(obstacle.obs_hitbox)){
+                if(collisionArea.intersects(obstacle.getObstHitbox())){
                     return true;
                 }
             }
@@ -64,7 +64,7 @@ public class Collider {
             if (obj instanceof Obstacles) {
                 Obstacles obstacle = (Obstacles) obj;
 
-                if (player.getHitbox().intersects(obstacle.obs_hitbox)) {
+                if (player.getHitbox().intersects(obstacle.getObstHitbox())) {
                     player.dead = true; //MORTE DO PLAYER1 r.i.p
                 }
             }

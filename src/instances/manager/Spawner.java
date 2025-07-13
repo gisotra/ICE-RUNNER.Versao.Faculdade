@@ -8,12 +8,12 @@ public class Spawner{
     O que vai ser o player 2:
     Ele vai ter cooldowns próprios para cada obstáculo.
     */
-    SpawnManager spm = new SpawnManager();
-    Random r = new Random();
-    int spawnpoint;
+    private SpawnManager spm = new SpawnManager();
+    private Random r = new Random();
+    private int spawnpoint;
     
     // Cooldown global entre spawns (anti-spam)
-    long lastGlobalSpawn = 0;
+    private long lastGlobalSpawn = 0;
     
     
     public void play(){ //(currentTime - lastSpawn) >= SpawnWall )

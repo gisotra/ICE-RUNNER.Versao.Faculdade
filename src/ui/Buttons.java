@@ -10,12 +10,12 @@ import utilz.Universal;
 public class Buttons {
     
     /*---------- ATRIBUTOS ----------*/
-    public int x, y, width, height;
-    public Rectangle dimensoes; //vou usar isso pra inserir o click do mouse
-    public BufferedImage spritesheetButton;
-    public Sprite<ButtonAnimation> buttonSprite;
-    public boolean cursorOver, cursorPressed;
-    public Gamestate state;
+    private int x, y, width, height;
+    private Rectangle dimensoes; //vou usar isso pra inserir o click do mouse
+    private BufferedImage spritesheetButton;
+    private Sprite<ButtonAnimation> buttonSprite;
+    private boolean cursorOver, cursorPressed;
+    private Gamestate state;
     
     /*---------- CONSTRUTOR ----------*/
     public Buttons(int x, int y, int width, int height, BufferedImage image, Gamestate state) {

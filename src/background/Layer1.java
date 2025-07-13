@@ -12,8 +12,8 @@ import utilz.Universal;
 
 public class Layer1 extends Environment {
     private float speedOffset = 0.5f;
-    BufferedImage groundSpriteSheet;
-    BackgroundSprite bgSprite;
+    private BufferedImage groundSpriteSheet;
+    private BackgroundSprite bgSprite;
     
     public Layer1(Screen screen, GCanvas gc) {
         super(screen, gc);

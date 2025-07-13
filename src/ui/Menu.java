@@ -15,12 +15,12 @@ import utilz.Sprite;
 import utilz.Universal;
 
 public class Menu implements ScreenStates {
-    BufferedImage menuFundo;
-    Sprite<MenuScreenAnimation> menuSprite;
-    Buttons[] botoesMenu = new Buttons[3];
-    BufferedImage botaoOfflineSprite;
-    BufferedImage botaoOnlineSprite;
-    BufferedImage botaoExitSprite;
+    private BufferedImage menuFundo;
+    private Sprite<MenuScreenAnimation> menuSprite;
+    private Buttons[] botoesMenu = new Buttons[3];
+    private BufferedImage botaoOfflineSprite;
+    private BufferedImage botaoOnlineSprite;
+    private BufferedImage botaoExitSprite;
     
     public Menu(){
         initSpriteMenu();

@@ -16,9 +16,9 @@ import utilz.Universal;
 
 public class Bird extends Obstacles{ //extends Obstacles{
     /*------------ ATRIBUTOS ------------*/
-    Sprite<BirdAnimation> birdSprite;
-    BufferedImage birdSpriteSheet;
-    BirdAnimation birdAction = BirdAnimation.FLYING;
+    private Sprite<BirdAnimation> birdSprite;
+    private BufferedImage birdSpriteSheet;
+    private BirdAnimation birdAction = BirdAnimation.FLYING;
     /*------------ CONSTRUTOR ------------*/
     public Bird(Screen screen, GCanvas gc) {
         super(screen, gc);

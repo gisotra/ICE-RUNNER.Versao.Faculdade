@@ -17,12 +17,12 @@ import utilz.Universal;
 
 public class GameOver implements ScreenStates{
     /*Imagens do fundo da tela de Game Over*/
-    BufferedImage gameOverFundo;
-    Sprite<GameOverScreenAnimation> gameoverSprite;
+    private BufferedImage gameOverFundo;
+    private Sprite<GameOverScreenAnimation> gameoverSprite;
     /*Botões e seus respectivos sprites*/
-    Buttons[] botoes = new Buttons[2];
-    BufferedImage botaoMenuSprite;
-    BufferedImage botaoRestartSprite;
+    private Buttons[] botoes = new Buttons[2];
+    private BufferedImage botaoMenuSprite;
+    private BufferedImage botaoRestartSprite;
     
     
     public GameOver(){
@@ -52,7 +52,7 @@ public class GameOver implements ScreenStates{
     @Override
     public void update() {
         for(Buttons but : botoes){
-            if(but.cursorOver){
+            if(but.isCursorOver()){
                 //depois eu quero fazer um efeito de scale quando der hover nele, sei la
             } 
         }

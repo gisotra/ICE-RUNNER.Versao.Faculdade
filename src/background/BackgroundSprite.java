@@ -36,15 +36,15 @@ public class BackgroundSprite {
     anotações: deixar pra inicializar imagem, sprites e tiles SOMENTE 1 VEZ no construtor, e nunca
     no desenvolver do loop do jogo 
     */}
-    BufferedImage spriteOriginal; 
-    BufferedImage spriteEscalonado;
-    List<Tiles> tiles;
-    float x, y;
-    int comprimentoOriginal;
-    int alturaOriginal;
-    int compriPerTile;
-    int alturaEscalonada;
-    int comprimentoEscalonado;
+    private BufferedImage spriteOriginal; 
+    private BufferedImage spriteEscalonado;
+    private List<Tiles> tiles;
+    private float x, y;
+    private int comprimentoOriginal;
+    private int alturaOriginal;
+    private int compriPerTile;
+    private int alturaEscalonada;
+    private int comprimentoEscalonado;
 
     public BackgroundSprite(BufferedImage original, float x, float y, int comprimentoOriginal, int alturaOriginal, float escala){
         this.tiles = new ArrayList<>();

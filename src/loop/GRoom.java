@@ -9,16 +9,16 @@ public class GRoom implements Runnable {
     /*------------ ATRIBUTOS ------------*/
 
     GCanvas gc;
-    public final double tempoPorFrame = 1_000_000_000.0 / Universal.FPS_SET;
-    public double ultimoTempo = System.nanoTime();
-    public long proximoFrame = System.nanoTime() + (long) tempoPorFrame;
-    public double threadSleep;
-    public long threadSleepMS;
-    public int threadSleepNano;
+    private final double tempoPorFrame = 1_000_000_000.0 / Universal.FPS_SET;
+    private double ultimoTempo = System.nanoTime();
+    private long proximoFrame = System.nanoTime() + (long) tempoPorFrame;
+    private double threadSleep;
+    private long threadSleepMS;
+    private int threadSleepNano;
 
-    long timer = System.currentTimeMillis();
-    int frames = 0;
-    int updates = 0;
+    private long timer = System.currentTimeMillis();
+    private int frames = 0;
+    private int updates = 0;
 
     /*------------ CONSTRUTOR ------------*/
     public GRoom(GCanvas gc) {

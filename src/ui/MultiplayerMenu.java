@@ -15,13 +15,13 @@ import utilz.SpriteLoader;
 import utilz.Universal;
 
 public class MultiplayerMenu implements ScreenStates {
-    BufferedImage multMenuFundo;
-    Sprite<MultiplayerMenuAnimation> multMenuSprite;
-    Buttons[] botoesMenu = new Buttons[4];
-    BufferedImage botaoAsServer;
-    BufferedImage botaoAsClient;
-    BufferedImage botaoLocal;
-    BufferedImage botaoExit;
+    private BufferedImage multMenuFundo;
+    private Sprite<MultiplayerMenuAnimation> multMenuSprite;
+    private Buttons[] botoesMenu = new Buttons[4];
+    private BufferedImage botaoAsServer;
+    private BufferedImage botaoAsClient;
+    private BufferedImage botaoLocal;
+    private BufferedImage botaoExit;
     
     public MultiplayerMenu(){
         initSpriteMenu();

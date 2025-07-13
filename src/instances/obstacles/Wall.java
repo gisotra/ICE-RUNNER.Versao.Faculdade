@@ -16,8 +16,8 @@ import utilz.Universal;
 
 public class Wall extends Obstacles{ //extends Obstacles
     /*------------ ATRIBUTOS ------------*/
-    BufferedImage wallSpriteSheet;
-    Sprite<WallAnimation> wallSprite;
+    private BufferedImage wallSpriteSheet;
+    private Sprite<WallAnimation> wallSprite;
     
     /*------------ CONSTRUTOR ------------*/
     public Wall(Screen screen, GCanvas gc) {

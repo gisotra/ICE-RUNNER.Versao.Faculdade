@@ -10,17 +10,17 @@ import utilz.SpriteLoader;
 import utilz.Universal;
 
 public class SnowParticle {
-    public Random r = new Random();
-    public float x;
-    public float y;
-    public float verticalSpeed;
-    public float horizontalSpeed;
-    public BufferedImage snowSprite;
-    public BufferedImage spriteEscalonado;
-    public int altura = 7;
-    public int largura = 7;
-    public float rotation = 0;
-    public float rotationSpeed;
+    private Random r = new Random();
+    private float x;
+    private float y;
+    private float verticalSpeed;
+    private float horizontalSpeed;
+    private BufferedImage snowSprite;
+    private BufferedImage spriteEscalonado;
+    private int altura = 7;
+    private int largura = 7;
+    private float rotation = 0;
+    private float rotationSpeed;
     
     public SnowParticle() { //nao preciso passar nada no construtor pq vai ser tudo aleatorio
         this.x = r.nextFloat() * Universal.GAME_WIDTH + 2 * Universal.TILES_SIZE;

@@ -10,36 +10,36 @@ public class Movement {
     Player player;
 
     /*horizontal*/
-    public float speed = 100f*Universal.SCALE;
-    public float MAX_SPEED = 120f*Universal.SCALE;
-    public float horizontalSpeed;
-    public float atrito = 25.0f*Universal.SCALE;
+    private float speed = 100f*Universal.SCALE;
+    private float MAX_SPEED = 120f*Universal.SCALE;
+    private float horizontalSpeed;
+    private float atrito = 25.0f*Universal.SCALE;
 
     /*vertical*/
-    public boolean isJumping = false;
-    public float verticalSpeed = 0f; //Y
-    public float gravity = 0.08f * Universal.SCALE;
-    public float jumpPower = -2.8f * Universal.SCALE; // Força do meu salto
-    public boolean inAir = false;
-    public float heightGY; //usado para achar a posição Y em que o player tá "no chão"
-    public float groundLvl;
+    private boolean isJumping = false;
+    private float verticalSpeed = 0f; //Y
+    private float gravity = 0.08f * Universal.SCALE;
+    private float jumpPower = -2.8f * Universal.SCALE; // Força do meu salto
+    private boolean inAir = false;
+    private float heightGY; //usado para achar a posição Y em que o player tá "no chão"
+    private float groundLvl;
 
     /*dash*/
-    public boolean isDashing = false;
-    public boolean canDash = true; //caso dashTimeCounter > 0  && !hasDashed
-    public boolean hasDashed = false;
-    public float dashSpeed = 1.9f;
-    public float dashDuration = .2f;
-    public float dashLength = .001f;
-    public float dashTimeCounter = 0f;
-    public float dashSpamLimiter = .5f;
-    public int horizontalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
-    public int verticalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
+    private boolean isDashing = false;
+    private boolean canDash = true; //caso dashTimeCounter > 0  && !hasDashed
+    private boolean hasDashed = false;
+    private float dashSpeed = 1.9f;
+    private float dashDuration = .2f;
+    private float dashLength = .001f;
+    private float dashTimeCounter = 0f;
+    private float dashSpamLimiter = .5f;
+    private int horizontalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
+    private int verticalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
 
     /*morte*/
-    public boolean deathJump = false; //usei isso aqui pra animação de morte 
-    public float deathJumpPower = -1.8f * Universal.SCALE;
-    public int cont = 0;
+    private boolean deathJump = false; //usei isso aqui pra animação de morte 
+    private float deathJumpPower = -1.8f * Universal.SCALE;
+    private int cont = 0;
     
     public Movement(Player player1){
         this.player = player1;
@@ -280,4 +280,32 @@ public class Movement {
             }
         }
     }
+
+    public boolean isIsJumping() {
+        return isJumping;
+    }
+
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
+    }
+
+    public boolean isCanDash() {
+        return canDash;
+    }
+
+    public void setCanDash(boolean canDash) {
+        this.canDash = canDash;
+    }
+
+    public boolean isIsDashing() {
+        return isDashing;
+    }
+
+    public void setIsDashing(boolean isDashing) {
+        this.isDashing = isDashing;
+    }
+    
+    
+    
+    
 }

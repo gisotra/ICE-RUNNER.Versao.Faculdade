@@ -6,10 +6,10 @@ import java.awt.image.BufferedImage;
 import utilz.Universal;
 
 public class Tiles {
-    float x, y;
-    BufferedImage tileImage;
-    int altura;
-    int largura = Universal.spriteEnviroWidthSLICED;
+    private float x, y;
+    private BufferedImage tileImage;
+    private int altura;
+    private int largura = Universal.spriteEnviroWidthSLICED;
     
     public Tiles(BufferedImage spriteOriginal, float x, float y, int altura){
         this.tileImage = spriteOriginal;

@@ -17,16 +17,16 @@ public class Player extends Entities{
     //https://www.youtube.com/watch?v=rTVoyWu8r6g
     /*------------ ATRIBUTOS ------------*/
     private int playerIndex;
-    public Movement movement;
-    public Collider collider;
-    BufferedImage playerSpriteSheet;
-    BufferedImage shadow;
-    BufferedImage floormark;
-    SpriteData playerData;
+    private Movement movement;
+    private Collider collider;
+    private BufferedImage playerSpriteSheet;
+    private BufferedImage shadow;
+    private BufferedImage floormark;
+    private SpriteData playerData;
     
     /*Controle de Dash*/
-    public long lastDash = 0;
-    public long dashCooldown = 250; //evita spam
+    private long lastDash = 0;
+    private long dashCooldown = 250; //evita spam
     
     /*Flags booleanas de Movimento*/
     public boolean right = false;
@@ -38,10 +38,12 @@ public class Player extends Entities{
     public boolean jump = false;
     
     /*Sprites*/
-    Sprite<PlayerAnimation> playerSprite;
-    Sprite<ShadowAnimation> shadowSprite;
-    Sprite<MarkAnimation> markSprite;
+    private Sprite<PlayerAnimation> playerSprite;
+    private Sprite<ShadowAnimation> shadowSprite;
+    private Sprite<MarkAnimation> markSprite;
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
+    //private ScarfRope scarf;
+    
     
     public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
@@ -52,7 +54,8 @@ public class Player extends Entities{
         initSprite();
         setX(120 * playerCode);
         setY(360);
-        movement.isJumping = true; //para ele cair logo de primeira
+        movement.setIsJumping(true); //para ele cair logo de primeira
+        //scarf = new ScarfRope(this, 1.5f * Universal.SCALE);
         setIsActive(true);
     }     
    
@@ -83,9 +86,10 @@ public class Player extends Entities{
     @Override
     public void update(float deltaTime){
         long currentTime = System.currentTimeMillis();
+        //scarf.update(deltaTime);
         if(dash 
-                && movement.canDash 
-                    && !movement.isDashing 
+                && movement.isCanDash() 
+                    && !movement.isIsDashing() 
                         && currentTime - lastDash >= dashCooldown){
             movement.Dash();
             dash = false;
@@ -105,6 +109,7 @@ public class Player extends Entities{
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
+        //scarf.render(g2d);
         playerSprite.render(g2d, (int) getX() - 12, (int) getY());
         
         //Renderizo a sombra

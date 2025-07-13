@@ -8,7 +8,7 @@ import utilz.Universal;
 
 public class Emitter {
     public static List<SnowParticle> snow;
-    public Random r = new Random(); //usado para respawnar os flocos horizontalmente de forma aleatoria no topo da tela
+    private Random r = new Random(); //usado para respawnar os flocos horizontalmente de forma aleatoria no topo da tela
 
     public Emitter(int particles) {
         this.snow = new ArrayList<>();

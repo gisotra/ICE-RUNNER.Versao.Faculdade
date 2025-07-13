@@ -17,8 +17,8 @@ import utilz.Universal;
 
 public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     /*------------ ATRIBUTOS ------------*/
-    BufferedImage sawSpriteSheet;
-    Sprite<SawAnimation> sawSprite;
+    private BufferedImage sawSpriteSheet;
+    private Sprite<SawAnimation> sawSprite;
     
     /*------------ CONSTRUTOR ------------*/
     public Saw(Screen screen, GCanvas gc) {

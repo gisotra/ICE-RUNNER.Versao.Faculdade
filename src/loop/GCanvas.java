@@ -19,14 +19,14 @@ public class GCanvas extends Canvas {
 
     /*------------ ATRIBUTOS ------------*/
     private GRoom room;
-    Thread loop; 
-    Font chickenFont;
-    Font fontInGame;
-    public Screen screen = new Screen(this);
-    Point mousePoint;
-    Cursor cursor;
-    BufferedImage cursorMouse;
-    Sprite<CursorAnimation> spriteMouse;
+    private Thread loop; 
+    private Font chickenFont;
+    private Font fontInGame;
+    private Screen screen = new Screen(this);
+    private Point mousePoint;
+    private Cursor cursor;
+    private BufferedImage cursorMouse;
+    private Sprite<CursorAnimation> spriteMouse;
     
 
     /*------------ CONSTRUTOR ------------*/

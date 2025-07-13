@@ -17,19 +17,19 @@ import utilz.Universal;
 public class FallBlock extends Obstacles{ //extends Obstacles
     /*------------ ATRIBUTOS ------------*/
     /*Movimento*/
-    public boolean shouldFall;
-    public float block_speed = 0;
-    public float block_gravity = 0.095f * Universal.SCALE;
-    public float block_levitate = -0.85f * Universal.SCALE;
-    public float block_heightGY; //usado para achar a posição Y em que o bloco tá "no chão"
-    public float groundLvl;
+    private boolean shouldFall;
+    private float block_speed = 0;
+    private float block_gravity = 0.095f * Universal.SCALE;
+    private float block_levitate = -0.85f * Universal.SCALE;
+    private float block_heightGY; //usado para achar a posição Y em que o bloco tá "no chão"
+    private float groundLvl;
     
     /*Animação*/
-    BufferedImage BlockSpriteSheet;
-    Sprite<BlockAnimation> blockSprite;
-    BufferedImage blockShadow;
-    Sprite<ShadowAnimation> shadowSprite;
-    BlockAnimation blockAction = BlockAnimation.FALLING;
+    private BufferedImage BlockSpriteSheet;
+    private Sprite<BlockAnimation> blockSprite;
+    private BufferedImage blockShadow;
+    private Sprite<ShadowAnimation> shadowSprite;
+    private BlockAnimation blockAction = BlockAnimation.FALLING;
     
     /*------------ CONSTRUTOR ------------*/
     public FallBlock(Screen screen, GCanvas gc) {

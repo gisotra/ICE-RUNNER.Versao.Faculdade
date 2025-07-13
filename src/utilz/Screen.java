@@ -37,22 +37,22 @@ public class Screen {
     o jogo com um desempenho mais leve e amigável com a CPU.
     */
     /*------------ ATRIBUTOS ------------*/
-    public GCanvas gc;
+    private GCanvas gc;
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
     
-    Player player1;
-    Player player2;
-    Spawner spawner;
+    private Player player1;
+    private Player player2;
+    private Spawner spawner;
     /*--- camadas do cenário ---*/
-    Layer1 layer1;
-    Layer2 layer2;
-    Layer3 layer3;
-    Emitter snowEmitter;
+    private Layer1 layer1;
+    private Layer2 layer2;
+    private Layer3 layer3;
+    private Emitter snowEmitter;
     /*--- game states ---*/
-    Menu menuscreen;
-    GameOver gameoverscreen;
-    MultiplayerMenu multmenuscreen;
-    Playing playingscreen;
+    private Menu menuscreen;
+    private GameOver gameoverscreen;
+    private MultiplayerMenu multmenuscreen;
+    private Playing playingscreen;
     //para debug
     
     /*------------ CONSTRUTOR ------------*/
@@ -216,7 +216,7 @@ public class Screen {
                         obj.setIsActive(true);
                         obj.setX(120 * ((Player) obj).getPlayerIndex());
                         obj.setY(360);
-                        ((Player) obj).movement.isJumping = true;
+                        ((Player) obj).getMovement().setIsJumping(true);
                         ((Player) obj).dead = false;
                     }
                 } 
@@ -225,7 +225,7 @@ public class Screen {
                     obj.setIsActive(true);
                     obj.setX(120 * ((Player)obj).getPlayerIndex());
                     obj.setY(360);
-                    ((Player)obj).movement.isJumping = true;
+                    ((Player)obj).getMovement().setIsJumping(true);
                     ((Player)obj).dead = false;
                 }
             }

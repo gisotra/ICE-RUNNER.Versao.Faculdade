@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/effects/SnowParticle.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/effects/Emitter.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Screen.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/Universal.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/ui/About.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/BackgroundSprite.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Layer3.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/utilz/SpriteLoader.java</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Layer2.java</file>
             <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Tiles.java</file>
-            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/assets/sprites.xml</file>
+            <file>file:/C:/Users/chern/OneDrive/Área%20de%20Trabalho/ICE-RUNNER/src/background/Environment.java</file>
         </group>
     </open-files>
 </project-private>

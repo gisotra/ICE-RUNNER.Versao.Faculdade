@@ -1,11 +1,18 @@
 <sprites>
-    <!-- Player -->
+    <!-- Player 1 -->
     <sprite name="player1">
         <path>/assets/player/player.png</path>
     </sprite>
-    <!-- Player -->
+    <sprite name="scarf1">
+        <path>/assets/player/scarfSegmentP1.png</path>
+    </sprite>
+    
+    <!-- Player 2 -->
     <sprite name="player2">
         <path>/assets/player/player2.png</path>
+    </sprite>
+    <sprite name="scarf2">
+        <path>/assets/player/scarfSegmentP2.png</path>
     </sprite>
     <sprite name="shadow">
         <path>/assets/player/shadow.png</path>
@@ -31,7 +38,7 @@
         <path>/assets/obstacles/bird.png</path>
     </sprite>
     <sprite name="layer1">
-        <path>/assets/environment/ground2.png</path>
+        <path>/assets/environment/ground3.png</path>
     </sprite>
     <sprite name="layer2">
         <path>/assets/environment/mountains.png</path>

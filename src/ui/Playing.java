@@ -14,8 +14,8 @@ import utilz.Universal;
 
 
 public class Playing implements ScreenStates {
-    BufferedImage fundoLoop;
-    Sprite<PlayingScreenAnimation> fundoSprite;
+    private BufferedImage fundoLoop;
+    private Sprite<PlayingScreenAnimation> fundoSprite;
     
     public Playing(){
         initSpriteMenu();
