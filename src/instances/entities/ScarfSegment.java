@@ -19,11 +19,12 @@ public class ScarfSegment {
     private float y;
     private float lastXPosition;
     private float lastYPosition;
-    private float gravity = 1.4f;
-    private float wind = 0.8f;
+    private float gravity = 0.5f;
+    private float wind = -2.0f;
     
 
     public ScarfSegment(float x, float y, Player player) {
+        //verlet integration
         this.x = x;
         this.y = y;
         lastXPosition = x;
@@ -69,12 +70,8 @@ public class ScarfSegment {
         float currentY = y;
 
         // calcula a velocidade
-        float velocityX = (x - lastXPosition) * 0;
-        float velocityY = (y - lastYPosition) * 0; 
-
-        // aplica forças externas na "velocidade"
-        velocityY += gravity * deltaTime;
-        velocityX += wind * deltaTime;
+        float velocityX = (x - lastXPosition);
+        float velocityY = (y - lastYPosition); 
 
         // atualiza posição com base na nova velocidade
         x += velocityX;
@@ -102,16 +99,14 @@ public class ScarfSegment {
         
         float OffSetX = deltaX * percent;
         float OffSetY = deltaY * percent;
-        /*
-        Divide o erro de distância pela distância total,
-        e depois por 2, para distribuir o ajuste igualmente entre os dois segmentos (meio pra cada lado).
-        */
         
-        setX(getX() + OffSetX);
-        setY(getY() + OffSetY);
-        segmentoAncora.setX(getX() - OffSetX);
-        segmentoAncora.setY(getY() - OffSetY);
+        setX(getX() + OffSetX + wind);
+        setY(getY() + OffSetY + gravity);
+        //segmentoAncora.setX(getX() - OffSetX); //fazia o cachecol estourar
+        //segmentoAncora.setY(getY() - OffSetY); //fazia o cachecol estourar
     }
+    
+    //lerp ->  
 
     public float getX() {
         return x;

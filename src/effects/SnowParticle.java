@@ -39,29 +39,10 @@ public class SnowParticle {
     }
     
     public void initSprite(){
-        int randomParticle = r.nextInt(5);
-        SpriteData snowData = null;
+        int randomParticle = r.nextInt(5) + 1;
+
+        SpriteData snowData = SpriteLoader.spriteDataLoader().get("SnowParticle" + String.valueOf(randomParticle));
         
-        switch(randomParticle){
-            case 0:{
-                snowData = SpriteLoader.spriteDataLoader().get("SnowParticle1");
-            }break;
-            case 1:{
-                snowData = SpriteLoader.spriteDataLoader().get("SnowParticle2");
-            }break;
-            case 2:{
-                snowData = SpriteLoader.spriteDataLoader().get("SnowParticle3");
-            }break;
-            case 3:{
-                snowData = SpriteLoader.spriteDataLoader().get("SnowParticle4");
-            }break;
-            case 4:{
-                snowData = SpriteLoader.spriteDataLoader().get("SnowParticle5");
-            }break;
-            default:{
-                break;
-            }
-        }
         if (snowData == null) {
             throw new RuntimeException("Erro: snowData retornou null. Verifique se todos os 'snowParticleX' estão carregados corretamente no SpriteLoader.");
         }

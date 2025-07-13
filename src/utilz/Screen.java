@@ -62,7 +62,7 @@ public class Screen {
         gameoverscreen = new GameOver();
         multmenuscreen = new MultiplayerMenu();
         playingscreen = new Playing();
-        snowEmitter = new Emitter(60);    
+        snowEmitter = new Emitter(70);    
         
         layer3 = new Layer3(this, this.gc);
         objectsOnScreen.add(layer3);

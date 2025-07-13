@@ -42,7 +42,7 @@ public class Player extends Entities{
     private Sprite<ShadowAnimation> shadowSprite;
     private Sprite<MarkAnimation> markSprite;
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
-    //private ScarfRope scarf;
+    private ScarfRope scarf;
     
     
     public Player(Screen screen, GCanvas gc, int playerCode){
@@ -55,7 +55,7 @@ public class Player extends Entities{
         setX(120 * playerCode);
         setY(360);
         movement.setIsJumping(true); //para ele cair logo de primeira
-        //scarf = new ScarfRope(this, 1.5f * Universal.SCALE);
+        scarf = new ScarfRope(this, 1.5f * Universal.SCALE);
         setIsActive(true);
     }     
    
@@ -86,7 +86,6 @@ public class Player extends Entities{
     @Override
     public void update(float deltaTime){
         long currentTime = System.currentTimeMillis();
-        //scarf.update(deltaTime);
         if(dash 
                 && movement.isCanDash() 
                     && !movement.isIsDashing() 
@@ -101,6 +100,7 @@ public class Player extends Entities{
         if(collider.verifyNearby()){ //somente se HÁ um obstáculo dedd asdasdas das dantro da minha range de colisão 
             collider.verifyCollission();
         }
+        scarf.update(deltaTime);
         updateHitbox();
     }
 
@@ -109,8 +109,8 @@ public class Player extends Entities{
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
-        //scarf.render(g2d);
         playerSprite.render(g2d, (int) getX() - 12, (int) getY());
+        scarf.render(g2d);
         
         //Renderizo a sombra
         shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);

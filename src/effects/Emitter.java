@@ -24,7 +24,7 @@ public class Emitter {
     public void update(float deltaTime){
         for(SnowParticle snowP : snow){
             if(snowP.getX() <= 0 || snowP.getY() > Universal.GAME_HEIGHT){
-                snowP.setY(-30);
+                snowP.setY(-30); //pooling 
                 snowP.setX(r.nextFloat() * Universal.GAME_WIDTH + 2 * Universal.TILES_SIZE);
             }
             snowP.update(deltaTime);
@@ -45,5 +45,4 @@ public class Emitter {
             snowP.setX(r.nextFloat() * Universal.GAME_WIDTH + 2 * Universal.TILES_SIZE);
         }
     }
-    
 }

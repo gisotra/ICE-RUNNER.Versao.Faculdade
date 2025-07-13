@@ -24,7 +24,7 @@ public class ScarfRope {
     }
     
     public void initScarf(){
-        scarf[0] = new ScarfSegment(player.getX() + 15, player.getY() + 17, this.player);
+        scarf[0] = new ScarfSegment(player.getX() + 7, player.getY() + 20, this.player);
         for (int i = 1; i < scarf.length; i++) {
             scarf[i] = new ScarfSegment(scarf[i - 1].getX(), scarf[i - 1].getY() + distanceY, this.player);
         }
@@ -32,13 +32,13 @@ public class ScarfRope {
     
     public void update(float deltaTime) {
         // âncora segue o jogador
-        scarf[0].setX(player.getX() + 15);
-        scarf[0].setY(player.getY() + 17);
+        scarf[0].setX(player.getX() + 7);
+        scarf[0].setY(player.getY() + 20);
 
         // atualiza todos os outros segmentos
-        for (int i = 1; i < scarf.length; i++) {
-            scarf[i].update(deltaTime);
-        }
+        //for (int i = 1; i < scarf.length; i++) {
+        //    scarf[i].update(deltaTime);
+        //}
 
         // aplica múltiplas iterações de constraint
         //int constraintIterations = 4;
