@@ -21,6 +21,27 @@
         <path>/assets/player/floormark.png</path>
     </sprite>
     
+    <!--Power Ups-->
+    <sprite name = "powerUp1">
+        <path>/assets/powerUps/muramasa.png</path>
+    </sprite>
+    <sprite name = "powerUp2">
+        <path>/assets/powerUps/shield.png</path>
+    </sprite>
+    <sprite name = "powerUp3">
+        <path>/assets/powerUps/vanishCap.png</path>
+    </sprite>
+    <sprite name = "particle1">
+        <path>/assets/powerUps/particle1.png</path>
+    </sprite>
+    <sprite name = "particle2">
+        <path>/assets/powerUps/particle2.png</path>
+    </sprite>
+    <sprite name = "particle3">
+        <path>/assets/powerUps/particle3.png</path>
+    </sprite>
+    
+    
     <!-- Obstáculos -->
     <sprite name="wall">
         <path>/assets/obstacles/wall.png</path>

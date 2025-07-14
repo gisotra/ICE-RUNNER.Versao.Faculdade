@@ -44,6 +44,13 @@ public class Player extends Entities{
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
     private ScarfRope scarf;
     
+    /*Power Ups*/
+    private boolean isPowered = false;
+    private boolean sword = false;
+    private boolean marioCap = true;
+    private boolean shielded = false;
+    
+    
     
     public Player(Screen screen, GCanvas gc, int playerCode){
         super(screen, gc);
@@ -109,9 +116,13 @@ public class Player extends Entities{
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
+        if(!marioCap){
         playerSprite.render(g2d, (int) getX() - 12, (int) getY());
         scarf.render(g2d);
-        
+        } else {
+            //renderizo com 50% de transparencia
+            
+        }
         //Renderizo a sombra
         shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
         
@@ -161,6 +172,16 @@ public class Player extends Entities{
     public Movement getMovement(){
         return movement;
     }
+
+    public boolean isMarioCap() {
+        return marioCap;
+    }
+
+    public void setMarioCap(boolean marioCap) {
+        this.marioCap = marioCap;
+    }
+    
+    
     
     /*========== Classes internas Para os Sprites ==========*/ 
     /*Player*/
@@ -220,4 +241,7 @@ public class Player extends Entities{
             return 1;
         }
     }
+    
+    
+    
 }

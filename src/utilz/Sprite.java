@@ -11,14 +11,15 @@ public class Sprite<T extends Enum<T> & AnimationType> {  //restringe o tipo do 
     private int contadorDeFrames;
     private int trocaDeFrames; //velocidade da animação, basicamente
     private int alturaFrame, larguraFrame;
+    private int alturaFrameEscalonado, larguraFrameEscalonado;
     
     public Sprite(BufferedImage sprite, int alturaFrame, int larguraFrame, Class<T> enumClass, int trocaDeFrames){
         this.alturaFrame = alturaFrame;
         this.larguraFrame = larguraFrame;
         this.trocaDeFrames = trocaDeFrames;
         
-        int alturaFrameEscalonado = alturaFrame * (int)Universal.SCALE;
-        int larguraFrameEscalonado = larguraFrame * (int)Universal.SCALE;
+        alturaFrameEscalonado = alturaFrame * (int)Universal.SCALE;
+        larguraFrameEscalonado = larguraFrame * (int)Universal.SCALE;
 
         T[] actions = enumClass.getEnumConstants();
         spritesEscalonados = new BufferedImage[actions.length][];
@@ -69,17 +70,34 @@ public class Sprite<T extends Enum<T> & AnimationType> {  //restringe o tipo do 
             contadorDeFrames = 0;
         }
     }
-    
     public void render(Graphics2D g2d, int x, int y){
         g2d.drawImage(spritesEscalonados[currentState.getIndex()][frameAtual],
                 x, y,
                 null
         );
+        //g2d.drawImage(spritesEscalonados[currentState.getIndex()][frameAtual], transparency, x, y);
     }
     
     public BufferedImage getFrameAtual() {
         return spritesEscalonados[currentState.getIndex()][frameAtual];
     }
+
+    public int getAlturaFrameEscalonado() {
+        return alturaFrameEscalonado;
+    }
+
+    public void setAlturaFrameEscalonado(int alturaFrameEscalonado) {
+        this.alturaFrameEscalonado = alturaFrameEscalonado;
+    }
+
+    public int getLarguraFrameEscalonado() {
+        return larguraFrameEscalonado;
+    }
+
+    public void setLarguraFrameEscalonado(int larguraFrameEscalonado) {
+        this.larguraFrameEscalonado = larguraFrameEscalonado;
+    }
+    
     
     
 }

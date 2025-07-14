@@ -65,6 +65,9 @@ public class Collider {
                 Obstacles obstacle = (Obstacles) obj;
 
                 if (player.getHitbox().intersects(obstacle.getObstHitbox())) {
+                    if(player.isMarioCap()){
+                        continue;
+                    } 
                     player.dead = true; //MORTE DO PLAYER1 r.i.p
                 }
             }

@@ -10,6 +10,7 @@ import static gamestates.Gamestate.*;
 import instances.Objects;
 import instances.entities.Entities;
 import instances.entities.Player;
+import instances.entities.PowerUps;
 import instances.manager.Spawner;
 import instances.obstacles.Bird;
 import instances.obstacles.FallBlock;
@@ -39,6 +40,8 @@ public class Screen {
     /*------------ ATRIBUTOS ------------*/
     private GCanvas gc;
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
+    public static List<PowerUps> powerUpList = new ArrayList<>();
+    public static boolean thereIsAPowerUpOnTheScreen = false;
     
     private Player player1;
     private Player player2;

@@ -19,7 +19,7 @@ public class Spawner{
     public void play(){ //(currentTime - lastSpawn) >= SpawnWall )
         long currentTime = System.currentTimeMillis();
         
-        if(currentTime - lastGlobalSpawn < Universal.globalCooldown){ //evita spam do player2 
+        if(currentTime - lastGlobalSpawn < Universal.globalCooldown){ //evita spam 
             return;
         }
         spawnpoint = r.nextInt(9);
