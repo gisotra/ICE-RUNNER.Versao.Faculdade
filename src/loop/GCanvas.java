@@ -28,7 +28,6 @@ public class GCanvas extends Canvas {
     private BufferedImage cursorMouse;
     private Sprite<CursorAnimation> spriteMouse;
     
-
     /*------------ CONSTRUTOR ------------*/
     public GCanvas() {
         setPreferredSize(new Dimension(Universal.GAME_WIDTH, Universal.GAME_HEIGHT));
@@ -86,6 +85,23 @@ public class GCanvas extends Canvas {
                 g2D.setColor(Color.WHITE);    
                 g2D.drawString("SCORE:", 6 * Universal.TILES_SIZE + 40, 6 * Universal.TILES_SIZE + 45);
                 g2D.drawString(String.valueOf(Universal.SCORE), 8 * Universal.TILES_SIZE + 15, 6 * Universal.TILES_SIZE + 45);
+            }
+            if(Gamestate.state == HOSTING){
+                g2D.setFont(fontInGame);
+                g2D.setColor(Color.WHITE);
+                g2D.drawString("SEU", Universal.GAME_WIDTH / 2 - 75, 200);
+                g2D.drawString("IP:", Universal.GAME_WIDTH / 2 + 10, 200);
+                g2D.drawString(Universal.IPString, Universal.GAME_WIDTH / 2 - 140, 250);
+                g2D.drawString("CRIAR", Universal.GAME_WIDTH / 2 - 50, 500);
+                g2D.drawString("SERVIDOR", Universal.GAME_WIDTH / 2 -90, 540);
+            }
+            if(Gamestate.state == WAITING){
+                g2D.setFont(fontInGame);
+                g2D.setColor(Color.WHITE);
+                g2D.drawString("DIGITE", Universal.GAME_WIDTH / 2 - 120, 400);
+                g2D.drawString("O", Universal.GAME_WIDTH / 2 + 20, 400);
+                g2D.drawString("IP:", Universal.GAME_WIDTH / 2 + 60, 400);
+
             }
             
             

@@ -21,6 +21,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import loop.GCanvas;
 import java.util.List;
+import network.ClientConnector;
 
 import network.Hosting;
 import ui.GameOver;
@@ -63,7 +64,8 @@ public class Screen {
     private MultiplayerMenu multmenuscreen;
     private Playing playingscreen;
     private Hosting hostingscreen;
-    //private ClientConnector waitingscreen;
+    private ClientConnector connector;
+    private ClientConnector waitingscreen;
     
     /*------------ CONSTRUTOR ------------*/
     public Screen(GCanvas gc){
@@ -73,7 +75,7 @@ public class Screen {
         multmenuscreen = new MultiplayerMenu();
         playingscreen = new Playing();
         hostingscreen = new Hosting();
-        //waitingscreen = new ClientConnector();
+        waitingscreen = new ClientConnector();
         snowEmitter = new Emitter(70);
 
         
@@ -153,8 +155,8 @@ public class Screen {
             }break;
 
             /*Tela ao tentar logar no servidor de outro jogador*/
-            case WAITING_TO_CONNECT:{
-                //waitingscreen.render(g2d);
+            case WAITING:{
+                waitingscreen.render(g2d);
             }break;
 
             /*Sai do jogo*/
@@ -278,6 +280,14 @@ public class Screen {
 
     public MultiplayerMenu getMultMenu(){
         return multmenuscreen;
+    }
+    
+    public Hosting getHosting(){
+        return hostingscreen;
+    }
+    
+    public ClientConnector getConnector(){
+        return connector;
     }
     
 }

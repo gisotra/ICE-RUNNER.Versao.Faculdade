@@ -1,5 +1,8 @@
 package utilz;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class Universal {
      
     /*
@@ -9,6 +12,8 @@ public class Universal {
     public static int SCORE = 0; 
     public static long globalCooldown = 4000;
     public static boolean bothPlayingLocal = false;
+    public static boolean youAreAHost = false;
+    public static boolean youAreAClient = false;
     
     /*configuração de fps*/
     public static final int FPS_SET = 60;
@@ -90,7 +95,20 @@ public class Universal {
         }
     }
     
-        
+    /*Sockets*/   
+    public static InetAddress ip;
+    public static String IPString;
+    
+    public static void initIP(){
+        try{
+            ip = InetAddress.getLocalHost();
+            IPString = ip.getHostAddress();
+        } catch (UnknownHostException e){
+            e.printStackTrace();
+        }
+    }
+    
+    
     /*-------------- SPRITES CENÁRIO ----------*/
     /*-----------------------------------------*/
     /*-----------------------------------------*/

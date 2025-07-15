@@ -1,14 +1,14 @@
 package network;
 
 import gamestates.Gamestate;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.UnknownHostException;
+import java.net.Socket;
 import javax.imageio.ImageIO;
 
 import ui.Buttons;
@@ -30,10 +30,9 @@ public class Hosting implements ScreenStates {
     private Buttons[] botoesMenu = new Buttons[2];
     private BufferedImage botaoStartServer;
     private BufferedImage botaoExit;
+    private boolean waitingConnection = false;
 
     /*Sockets*/
-    private InetAddress ip;
-    String IP;
     private int porta = 1000;
     private ServerSocket gameserver;
 
@@ -44,9 +43,29 @@ public class Hosting implements ScreenStates {
         Socket(ip, porta)
         */
         initSpriteMenu();
-        initIP();
+        botoesMenu[0] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MULTIPLAYER_MENU); 
+        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoStartServer, null);
     }
     
+    public void initGameServer(){
+        if (gameserver != null && !gameserver.isClosed()) {
+            return;
+        }
+        Thread server = new Thread(() -> {
+            try{    
+                gameserver = new ServerSocket(porta);
+                this.waitingConnection = true;
+                Socket clientSocket = gameserver.accept();    
+                Universal.youAreAHost = true;
+                Gamestate.state = Gamestate.PLAYING;
+            } catch (IOException ex){
+                ex.printStackTrace();
+            }
+            
+        });
+        server.start();
+    }
+
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
         SpriteData serverData = SpriteLoader.spriteDataLoader().get("hosting");
@@ -65,26 +84,23 @@ public class Hosting implements ScreenStates {
         this.multMenuSprite = new Sprite<>(multMenuFundo, 288, 512, MultiplayerMenu.MultiplayerMenuAnimation.class, 1);
     }
 
-    public void initIP(){
-        try{
-            ip = InetAddress.getLocalHost();
-        } catch (UnknownHostException e){
-            e.printStackTrace();
-        }
-    }
-
-
-    /*-------------- MÉTODOS HERDADOS (parte gráfica) --------------*/
+    /*-------------- MÉTODOS HERDADOS --------------*/
     @Override
     public void update() {
 
     }
 
     @Override
-    public void render(Graphics2D g2D) {
+    public void render(Graphics2D g2D){
         multMenuSprite.render(g2D, 0, 0);
         for (Buttons but : botoesMenu) {
             but.render(g2D);
+        }
+        if(waitingConnection){
+                    g2D.setColor(Color.WHITE);
+                    g2D.drawString("ESPERANDO", Universal.GAME_WIDTH / 2 - 110, 700);
+                    g2D.drawString("CONEXAO", Universal.GAME_WIDTH / 2 - 20, 700);
+                    
         }
     }
 
@@ -117,6 +133,9 @@ public class Hosting implements ScreenStates {
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
+                    } if (but.getState() == null){
+                        initGameServer();
+                        continue;
                     } else {
                         Universal.bothPlayingLocal = true;
                         but.applyGamestate();
@@ -157,7 +176,7 @@ public class Hosting implements ScreenStates {
     public void keyReleased(KeyEvent e) {
 
     }
-
+    
     /*========== Classe interna Para o Sprite ==========*/
     public enum HostingAnimation implements AnimationType {
         STATIC;
@@ -172,4 +191,15 @@ public class Hosting implements ScreenStates {
             return 1;
         }
     }
+
+    public boolean isWaitingConnection() {
+        return waitingConnection;
+    }
+
+    public void setWaitingConnection(boolean waitingConnection) {
+        this.waitingConnection = waitingConnection;
+    }
+
+    
+    
 }

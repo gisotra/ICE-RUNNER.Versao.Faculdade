@@ -9,7 +9,7 @@ public class GWindow {
     private JFrame janela;
     private GCanvas gc;
     private JProgressBar bar;
-    private JTextField inputIPField;
+    public static JTextField inputIPField;
 
     public GWindow() {
         gc = new GCanvas();
@@ -18,11 +18,11 @@ public class GWindow {
         janela.setLayout(null);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setSize(Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
-        janela.setResizable(false);
+        janela.setResizable(true);
         gc.setBounds(0, 0, Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
         inputIPField = new JTextField();
         inputIPField.setBounds(Universal.GAME_WIDTH / 2 - 150, Universal.GAME_HEIGHT / 2 - 15, 300, 30);
-        inputIPField.setVisible(true);
+        inputIPField.setVisible(false);
         janela.add(inputIPField);
         janela.add(gc);
 
@@ -31,5 +31,9 @@ public class GWindow {
 
         gc.initCanvas();
         gc.initGame();
+    }
+    
+    public static JTextField getInputIPField(){
+        return inputIPField;
     }
 }

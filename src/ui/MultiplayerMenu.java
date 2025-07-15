@@ -26,7 +26,7 @@ public class MultiplayerMenu implements ScreenStates {
     public MultiplayerMenu(){
         initSpriteMenu();
         botoesMenu[0] = new Buttons(3*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.HOSTING); //servidor
-        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.WAITING_TO_CONNECT); //cliente
+        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.WAITING); //cliente
         botoesMenu[2] = new Buttons(11*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoLocal, Gamestate.PLAYING); //multiplayer local
         botoesMenu[3] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MENU); //voltar
     }
