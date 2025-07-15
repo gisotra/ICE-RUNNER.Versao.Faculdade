@@ -89,6 +89,12 @@
         <path>/assets/ui/exit_button.png</path>
     </sprite>
     
+    <sprite name="hostingbutton">
+        <path>/assets/ui/hosting.png</path>
+    </sprite>
+    
+    
+    
     <!-- tela de menu -->
     <sprite name="menu_playOfflineButton">
         <path>/assets/ui/menu_playOffline_button.png</path>
