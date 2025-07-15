@@ -1,4 +1,4 @@
-package ui;
+package network;
 
 import gamestates.Gamestate;
 import java.awt.Graphics2D;
@@ -6,7 +6,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import javax.imageio.ImageIO;
+
+import ui.Buttons;
+import ui.MultiplayerMenu;
+import ui.ScreenStates;
 import utilz.AnimationType;
 import utilz.Screen;
 import utilz.Sprite;
@@ -14,8 +21,9 @@ import utilz.SpriteData;
 import utilz.SpriteLoader;
 import utilz.Universal;
 
-public class Hosting implements ScreenStates{
-    
+public class Hosting implements ScreenStates {
+
+    /*Parte gráfica*/
     private BufferedImage multMenuFundo;
     private Sprite<MultiplayerMenu.MultiplayerMenuAnimation> multMenuSprite;
     //adicionar o sprite pro loading 
@@ -23,17 +31,31 @@ public class Hosting implements ScreenStates{
     private BufferedImage botaoStartServer;
     private BufferedImage botaoExit;
 
+    /*Sockets*/
+    private InetAddress ip;
+    String IP;
+    private int porta = 1000;
+    private ServerSocket gameserver;
+
     public Hosting(){
-        
+        /*conceito:
+        quando o host iniciar o server e entrar na tela de espera, eu vou printar o ip dele na tela, e ele fala pro outro cara no outro pc
+        serverSocket(porta)
+        Socket(ip, porta)
+        */
+        initSpriteMenu();
+        initIP();
     }
     
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
+        SpriteData serverData = SpriteLoader.spriteDataLoader().get("hosting");
         SpriteData exitData = SpriteLoader.spriteDataLoader().get("exitbutton");
 
         try {
             
             multMenuFundo = ImageIO.read(getClass().getResource(menuData.getPath()));
+            botaoStartServer = ImageIO.read(getClass().getResource(serverData.getPath()));
             botaoExit = ImageIO.read(getClass().getResource(exitData.getPath()));
             
         } catch (IOException e) {
@@ -42,8 +64,17 @@ public class Hosting implements ScreenStates{
         //inicio as propriedades do meu sprite player
         this.multMenuSprite = new Sprite<>(multMenuFundo, 288, 512, MultiplayerMenu.MultiplayerMenuAnimation.class, 1);
     }
-    
-    /*-------------- MÉTODOS HERDADOS --------------*/
+
+    public void initIP(){
+        try{
+            ip = InetAddress.getLocalHost();
+        } catch (UnknownHostException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    /*-------------- MÉTODOS HERDADOS (parte gráfica) --------------*/
     @Override
     public void update() {
 
@@ -82,12 +113,12 @@ public class Hosting implements ScreenStates{
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
                     if (but.getState() == Gamestate.PLAYING) {
-                        Universal.bothPlaying = true;
+                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
                     } else {
-                        Universal.bothPlaying = true;
+                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                     }
                 }

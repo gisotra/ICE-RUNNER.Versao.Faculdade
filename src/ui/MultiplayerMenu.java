@@ -25,8 +25,8 @@ public class MultiplayerMenu implements ScreenStates {
     
     public MultiplayerMenu(){
         initSpriteMenu();
-        botoesMenu[0] = new Buttons(3*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.SERVER_HOSTING); //servidor
-        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.CLIENT_CONNECTING); //cliente
+        botoesMenu[0] = new Buttons(3*Universal.TILES_SIZE, 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsServer, Gamestate.HOSTING); //servidor
+        botoesMenu[1] = new Buttons(7*Universal.TILES_SIZE + (Universal.TILES_SIZE/4)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoAsClient, Gamestate.WAITING_TO_CONNECT); //cliente
         botoesMenu[2] = new Buttons(11*Universal.TILES_SIZE + (Universal.TILES_SIZE/2)  , 3*Universal.TILES_SIZE + (Universal.TILES_SIZE/4), 48, 48, botaoLocal, Gamestate.PLAYING); //multiplayer local
         botoesMenu[3] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MENU); //voltar
     }
@@ -91,12 +91,12 @@ public class MultiplayerMenu implements ScreenStates {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
                     if (but.getState() == Gamestate.PLAYING) {
-                        Universal.bothPlaying = true;
+                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
                     } else {
-                        Universal.bothPlaying = true;
+                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                     }
                 }

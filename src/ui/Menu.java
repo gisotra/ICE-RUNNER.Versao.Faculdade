@@ -89,10 +89,10 @@ public class Menu implements ScreenStates {
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
-                        Universal.bothPlaying = false;
+                        Universal.bothPlayingLocal = false;
                     } else {
                         but.applyGamestate();
-                        Universal.bothPlaying = false;
+                        Universal.bothPlayingLocal = false;
                     }
                 }
             }

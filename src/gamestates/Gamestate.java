@@ -14,9 +14,9 @@ public enum Gamestate {
     ABOUT, 
     PLAYING, 
     GAME_OVER, 
-    MULTIPLAYER_MENU, 
-    SERVER_HOSTING, //botão "criar servidor"
-    CLIENT_CONNECTING, //botão "jogar como cliente"
+    MULTIPLAYER_MENU,
+    HOSTING, //botão "criar servidor"
+    WAITING_TO_CONNECT, //botão "jogar como cliente"
     PLAYING_ONLINE,
     LOCAL_MULTIPLAYER,
     END;

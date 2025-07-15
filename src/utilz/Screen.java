@@ -45,6 +45,8 @@ public class Screen {
     
     private Player player1;
     private Player player2;
+    private Player dummy1;
+    private Player dummy2;
     private Spawner spawner;
     /*--- camadas do cenário ---*/
     private Layer1 layer1;
@@ -80,10 +82,14 @@ public class Screen {
             objectsOnScreen.add(new Saw(this, this.gc));
             objectsOnScreen.add(new FallBlock(this, this.gc));
         }
-        player1 = new Player(this, this.gc, 1);
-        player2 = new Player(this, this.gc, 2);
+        player1 = new Player(this, this.gc, 1, false);
+        player2 = new Player(this, this.gc, 2, false);
+        dummy1 = new Player(this, this.gc, 1, true);
+        dummy2 = new Player(this, this.gc, 2, true);
         objectsOnScreen.add(player1);
         objectsOnScreen.add(player2);
+        objectsOnScreen.add(dummy1);
+        objectsOnScreen.add(dummy2);
     }
     
     /*------------ MÉTODO RENDER ------------*/
@@ -108,12 +114,6 @@ public class Screen {
             }
             case MULTIPLAYER_MENU: {
                 multmenuscreen.render(g2d);
-                break;
-            }
-            case PLAYING_ONLINE:{
-                break;
-            }
-            case ABOUT:{
                 break;
             }
             case GAME_OVER:{
@@ -169,31 +169,6 @@ public class Screen {
                     break;
                 }
             }break;
-            case LOCAL_MULTIPLAYER:{
-                for(Objects obj : objectsOnScreen){
-                    if(!obj.getIsActive()){
-                        continue; //se estiver desativado, nada acontece, nao é atualizado
-                    }
-                    if (obj instanceof Environment) {
-                        obj.update(variacaoTempo);
-                    }
-                    if (!(obj instanceof Environment) &&obj.getX() < -Universal.TILES_SIZE * 4) {
-                        obj.setIsActive(false);
-                        continue;
-                    }
-                    obj.update(variacaoTempo);
-                }
-                spawner.play();
-                if(player1.dead){
-                    
-                    for (Objects obj : objectsOnScreen){
-                        if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
-                            Gamestate.state = GAME_OVER;
-                        }
-                    }
-                    break;
-                }
-            }break;
             case GAME_OVER:{
                 for (Objects obj : objectsOnScreen) {
                         obj.setIsActive(false);
@@ -211,9 +186,12 @@ public class Screen {
     /*------------ MÉTODO QUE RESETA AS COORDENADAS DAS INSTANCIAS NA TELA ------------*/
     public static void startCoordenates(){
         for (Objects obj : objectsOnScreen) {
-            if(!Universal.bothPlaying){ //Jogador sozinho
+            /*Loop de jogo alone/default */
+            if(!Universal.bothPlayingLocal){ //Jogador sozinho
                 if (obj instanceof Entities) {
                     if(((Player)obj).getPlayerIndex() == 2){ //player 2 inativado
+                        obj.setIsActive(false);
+                    } else if(((Player)obj).isDummy()){
                         obj.setIsActive(false);
                     } else { //player 1 continua ativo
                         obj.setIsActive(true);
@@ -223,13 +201,18 @@ public class Screen {
                         ((Player) obj).dead = false;
                     }
                 } 
-            } else { //Jogando com um amigo localmente
+            } else if(Universal.bothPlayingLocal){
+                /*Loop de jogo multiplayer no mesmo PC*/
                 if (obj instanceof Entities) {
+                    if(((Player)obj).isDummy()){
+                        obj.setIsActive(false);
+                    } else {
                     obj.setIsActive(true);
                     obj.setX(120 * ((Player)obj).getPlayerIndex());
                     obj.setY(360);
                     ((Player)obj).getMovement().setIsJumping(true);
                     ((Player)obj).dead = false;
+                    }
                 }
             }
             if(obj instanceof Environment){

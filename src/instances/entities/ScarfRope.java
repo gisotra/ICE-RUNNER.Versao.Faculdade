@@ -15,7 +15,7 @@ public class ScarfRope {
 
     public ScarfRope(Player player, float distanceBetween) {
         this.player = player;
-        this.scarf = new ScarfSegment[8];
+        this.scarf = new ScarfSegment[12];
         this.distanceX = distanceBetween;
         this.distanceY = distanceBetween;
         this.anchorX = player.getX() + 15;

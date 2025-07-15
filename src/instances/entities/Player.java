@@ -17,6 +17,7 @@ public class Player extends Entities{
     //https://www.youtube.com/watch?v=rTVoyWu8r6g
     /*------------ ATRIBUTOS ------------*/
     private int playerIndex;
+    private boolean isDummy = false;
     private Movement movement;
     private Collider collider;
     private BufferedImage playerSpriteSheet;
@@ -47,15 +48,16 @@ public class Player extends Entities{
     /*Power Ups*/
     private boolean isPowered = false;
     private boolean sword = false;
-    private boolean marioCap = true;
+    private boolean marioCap = false;
     private boolean shielded = false;
     
     
     
-    public Player(Screen screen, GCanvas gc, int playerCode){
+    public Player(Screen screen, GCanvas gc, int playerCode, boolean isDummy){
         super(screen, gc);
         this.playerIndex = playerCode;
         setPlayerIndex(playerCode);
+        setIsDummy(isDummy);
         movement = new Movement(this);
         collider = new Collider(this);
         initSprite();
@@ -180,7 +182,14 @@ public class Player extends Entities{
     public void setMarioCap(boolean marioCap) {
         this.marioCap = marioCap;
     }
-    
+
+    public boolean isDummy(){
+        return isDummy;
+    }
+
+    public void setIsDummy(boolean isDummy){
+        this.isDummy = isDummy;
+    }
     
     
     /*========== Classes internas Para os Sprites ==========*/ 
