@@ -89,7 +89,7 @@
         <path>/assets/ui/exit_button.png</path>
     </sprite>
     
-    <sprite name="hostingbutton">
+    <sprite name="hosting">
         <path>/assets/ui/hosting.png</path>
     </sprite>
     

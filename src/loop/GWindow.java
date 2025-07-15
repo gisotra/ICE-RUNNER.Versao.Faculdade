@@ -1,35 +1,35 @@
 package loop;
 
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
+import javax.swing.*;
+
 import utilz.Universal;
 
 public class GWindow {
-    
+
     private JFrame janela;
     private GCanvas gc;
-    private JProgressBar bar; 
+    private JProgressBar bar;
+    private JTextField inputIPField;
 
     public GWindow() {
-        gc = new GCanvas(); // Inicia a thread
-        janela = new JFrame();        
-        
-        // Configurações da janela antes de exibi-la
+        gc = new GCanvas();
+        janela = new JFrame();
+        janela.setUndecorated(false);
+        janela.setLayout(null);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janela.setUndecorated(true);  // Defina isso antes de setVisible(true)
-        
+        janela.setSize(Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
+        janela.setResizable(false);
+        gc.setBounds(0, 0, Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
+        inputIPField = new JTextField();
+        inputIPField.setBounds(Universal.GAME_WIDTH / 2 - 150, Universal.GAME_HEIGHT / 2 - 15, 300, 30);
+        inputIPField.setVisible(true);
+        janela.add(inputIPField);
         janela.add(gc);
 
-        janela.pack();  // Ajusta o layout
-        janela.setLocationRelativeTo(null);  // Centraliza a janela
-        
-        gc.initCanvas();  // Inicializa o canvas
-        gc.initGame();  // Inicializa o jogo
-        
-        janela.setVisible(true);  // Por fim, torna a janela visível
-    }
+        janela.setLocationRelativeTo(null); // Centraliza a janela
+        janela.setVisible(true); // Mostra tudo
 
-    public JFrame getJanela() {
-        return janela;
+        gc.initCanvas();
+        gc.initGame();
     }
 }

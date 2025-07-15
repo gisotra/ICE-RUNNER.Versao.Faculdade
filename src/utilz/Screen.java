@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import loop.GCanvas;
 import java.util.List;
 
+import network.Hosting;
 import ui.GameOver;
 import ui.Menu;
 import ui.MultiplayerMenu;
@@ -43,22 +44,26 @@ public class Screen {
     public static List<PowerUps> powerUpList = new ArrayList<>();
     public static boolean thereIsAPowerUpOnTheScreen = false;
     
+    /* elementos principais */
     private Player player1;
     private Player player2;
     private Player dummy1;
     private Player dummy2;
     private Spawner spawner;
+
     /*--- camadas do cenário ---*/
     private Layer1 layer1;
     private Layer2 layer2;
     private Layer3 layer3;
     private Emitter snowEmitter;
+
     /*--- game states ---*/
     private Menu menuscreen;
     private GameOver gameoverscreen;
     private MultiplayerMenu multmenuscreen;
     private Playing playingscreen;
-    //para debug
+    private Hosting hostingscreen;
+    //private ClientConnector waitingscreen;
     
     /*------------ CONSTRUTOR ------------*/
     public Screen(GCanvas gc){
@@ -67,7 +72,10 @@ public class Screen {
         gameoverscreen = new GameOver();
         multmenuscreen = new MultiplayerMenu();
         playingscreen = new Playing();
-        snowEmitter = new Emitter(70);    
+        hostingscreen = new Hosting();
+        //waitingscreen = new ClientConnector();
+        snowEmitter = new Emitter(70);
+
         
         layer3 = new Layer3(this, this.gc);
         objectsOnScreen.add(layer3);
@@ -95,10 +103,14 @@ public class Screen {
     /*------------ MÉTODO RENDER ------------*/
     public void renderAll(Graphics2D g2d) {
         switch (Gamestate.state) {
+
+            /*Menu principal*/
             case MENU: {
                 menuscreen.render(g2d);
                 break;
             }
+
+            /*Loop de jogo*/
             case PLAYING:{
                 playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
@@ -112,10 +124,14 @@ public class Screen {
                 snowEmitter.render(g2d);
                 break;
             }
+
+            /*Menu Opção Multiplayer*/
             case MULTIPLAYER_MENU: {
                 multmenuscreen.render(g2d);
                 break;
             }
+
+            /*Tela de Game Over*/
             case GAME_OVER:{
                 playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
@@ -130,6 +146,18 @@ public class Screen {
                 gameoverscreen.render(g2d);
                 break;
             }
+
+            /*Tela ao criar um servidor*/
+            case HOSTING:{
+                hostingscreen.render(g2d);
+            }break;
+
+            /*Tela ao tentar logar no servidor de outro jogador*/
+            case WAITING_TO_CONNECT:{
+                //waitingscreen.render(g2d);
+            }break;
+
+            /*Sai do jogo*/
             case END:{
                 System.exit(0);
             }
@@ -139,9 +167,8 @@ public class Screen {
     /*------------ MÉTODO UPDATE ------------*/
     public void updateAll(float variacaoTempo) {
         switch(Gamestate.state){
-            case MENU:{
-            break;
-            }
+
+            /*Loop de jogo*/
             case PLAYING:{
                 for(Objects obj : objectsOnScreen){
                     if(!obj.getIsActive()){
@@ -169,6 +196,8 @@ public class Screen {
                     break;
                 }
             }break;
+
+            /*Tela de Game Over*/
             case GAME_OVER:{
                 for (Objects obj : objectsOnScreen) {
                         obj.setIsActive(false);
