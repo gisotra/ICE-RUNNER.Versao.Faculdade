@@ -58,9 +58,17 @@ public class Hosting implements ScreenStates {
                 gameserver = new ServerSocket(porta);
                 this.hostWaitingConnection = true;
                 Socket clientSocket = gameserver.accept();
+                
+                PlayerNetworkReceiver receiver = new PlayerNetworkReceiver(clientSocket, 2);
+                new Thread(receiver).start();
+                
+                PlayerNetworkSender sender = new PlayerNetworkSender(clientSocket, 1);
+                new Thread(sender).start();
 
                 // cliente conectou, muda estado
                 Universal.youAreAHost = true;
+                Universal.bothPlayingLocal = false;
+                Universal.youAreAClient = false;
                 Screen.startCoordenates();
                 Gamestate.state = Gamestate.PLAYING;
 
@@ -161,6 +169,9 @@ public class Hosting implements ScreenStates {
                         killThread(); //reseto ela 
                         //caso o player mude de ideia e volte para essa tela, ele faz tudo do zero 
                         this.hostWaitingConnection = false;
+                        Universal.youAreAHost = false;
+                        Universal.bothPlayingLocal = false;
+                        Universal.youAreAClient = false;
                     }
                     if (but.getState() == null){
                         initGameServer();

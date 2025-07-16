@@ -149,7 +149,10 @@ public class Screen {
                                     continue;
                                 }
                             } else if (Universal.youAreAHost) {
-                                if ((p.isDummy() && p.getPlayerIndex() == 1) || (!p.isDummy() && p.getPlayerIndex() == 2)) {
+                                if ((p.isDummy() && p.getPlayerIndex() == 1)) {
+                                    continue;
+                                }
+                                if ((!p.isDummy() && p.getPlayerIndex() == 2)){
                                     continue;
                                 }
                             } else if (Universal.youAreAClient) {

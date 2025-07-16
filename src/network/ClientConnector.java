@@ -58,9 +58,17 @@ public class ClientConnector implements ScreenStates{
 
                 // conectado com sucesso
                 System.out.println("Conectado ao servidor com sucesso.");
+                PlayerNetworkReceiver receiver = new PlayerNetworkReceiver(clientSocket, 1); // client recebe dummy1
+                new Thread(receiver).start();
+
+                PlayerNetworkSender sender = new PlayerNetworkSender(clientSocket, 2); // client envia player2
+                new Thread(sender).start();
+                
                 waitingConnection = false;
                 Universal.youAreAClient = true;
-
+                Universal.bothPlayingLocal = false;
+                Universal.youAreAHost = false;
+                
                 // oculta o campo e troca o estado do jogo
                 GWindow.getInputIPField().setVisible(false);
                 Screen.startCoordenates();

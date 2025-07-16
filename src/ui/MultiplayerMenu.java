@@ -101,7 +101,14 @@ public class MultiplayerMenu implements ScreenStates {
                     } else if (but.getState() == Gamestate.WAITING){
                         ClientConnector.waitingConnection = true;
                         but.applyGamestate();
-                    } else {
+                    } else if (but.getState() == Gamestate.HOSTING) {
+                        Universal.bothPlayingLocal = false;
+                        Universal.youAreAClient = false;
+                        Universal.youAreAHost = true;
+                        but.applyGamestate();
+                    } 
+                    
+                    else {
                         but.applyGamestate();
                     }
                 }
