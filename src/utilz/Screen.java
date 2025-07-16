@@ -137,12 +137,32 @@ public class Screen {
                 playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
                     if (!(obj instanceof Environment) && (obj.getX() >= -Universal.TILES_SIZE * 4 && !obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
+                        if (obj instanceof Player) {
+                            Player p = (Player) obj;
+
+                            if (!Universal.bothPlayingLocal) {
+                                if (p.getPlayerIndex() == 2 || p.isDummy()) {
+                                    continue;
+                                }
+                            } else if (Universal.bothPlayingLocal) {
+                                if (p.isDummy()) {
+                                    continue;
+                                }
+                            } else if (Universal.youAreAHost) {
+                                if ((p.isDummy() && p.getPlayerIndex() == 1) || (!p.isDummy() && p.getPlayerIndex() == 2)) {
+                                    continue;
+                                }
+                            } else if (Universal.youAreAClient) {
+                                if ((!p.isDummy() && p.getPlayerIndex() == 1) || (p.isDummy() && p.getPlayerIndex() == 2)) {
+                                    continue;
+                                }
+                            }
+                        }
                         obj.render(g2d);
                     }
                     if (obj instanceof Environment) {
                         obj.render(g2d);
                     }
-                    
                 }
                 gameoverscreen.render(g2d);
                 break;
@@ -217,7 +237,8 @@ public class Screen {
     public static void startCoordenates(){
         for (Objects obj : objectsOnScreen) {
             /*Loop de jogo alone/default */
-            if(!Universal.bothPlayingLocal){ //Jogador sozinho
+            /*===========================================================*/
+            if(!Universal.bothPlayingLocal){ 
                 if (obj instanceof Entities) {
                     if(((Player)obj).getPlayerIndex() == 2){ //player 2 inativado
                         obj.setIsActive(false);
@@ -230,9 +251,10 @@ public class Screen {
                         ((Player) obj).getMovement().setIsJumping(true);
                         ((Player) obj).dead = false;
                     }
-                } 
-            } else if(Universal.bothPlayingLocal){
-                /*Loop de jogo multiplayer no mesmo PC*/
+                }
+            }   /*Loop de jogo multiplayer no mesmo PC*/
+            /*===========================================================*/
+            else if(Universal.bothPlayingLocal){
                 if (obj instanceof Entities) {
                     if(((Player)obj).isDummy()){
                         obj.setIsActive(false);
@@ -244,7 +266,39 @@ public class Screen {
                     ((Player)obj).dead = false;
                     }
                 }
-            }
+            }   /*Loop de jogo em que você é um Host de um servidor*/
+            /*===========================================================*/
+            else if(Universal.youAreAHost){
+                if (obj instanceof Entities) {
+                    if(((Player)obj).isDummy() && ((Player)obj).getPlayerIndex() == 1){ //desativo o dummy 1
+                        obj.setIsActive(false);
+                    } else if(!((Player)obj).isDummy() && ((Player)obj).getPlayerIndex() == 2){ //desativo o player2
+                        obj.setIsActive(false);
+                    } else {
+                        obj.setIsActive(true);
+                        obj.setX(120 * ((Player) obj).getPlayerIndex());
+                        obj.setY(360);
+                        ((Player) obj).getMovement().setIsJumping(true);
+                        ((Player) obj).dead = false;
+                    }
+                }
+            }   /*Loop de jogo em que você é o Cliente de um servidor*/
+            /*===========================================================*/
+            else if(Universal.youAreAClient){
+                if (obj instanceof Entities) {
+                    if (((Player) obj).isDummy() && ((Player) obj).getPlayerIndex() == 1) { //desativo o dummy 1
+                        obj.setIsActive(false);
+                    } else if (!((Player) obj).isDummy() && ((Player) obj).getPlayerIndex() == 2) { //desativo o player2
+                        obj.setIsActive(false);
+                    } else {
+                        obj.setIsActive(true);
+                        obj.setX(120 * ((Player) obj).getPlayerIndex());
+                        obj.setY(360);
+                        ((Player) obj).getMovement().setIsJumping(true);
+                        ((Player) obj).dead = false;
+                    }  
+                }
+            }   
             if(obj instanceof Environment){
                 obj.setIsActive(true);
             }
@@ -252,8 +306,10 @@ public class Screen {
             if(obj instanceof Obstacles){
                 ((Obstacles)obj).updateObstHitbox();
             }
+            }
         }
-    }
+    
+    
     
     public static void resetCoordenates(){
         for (Objects obj : objectsOnScreen) {

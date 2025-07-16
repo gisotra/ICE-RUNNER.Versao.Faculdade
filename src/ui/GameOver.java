@@ -94,7 +94,10 @@ public class GameOver implements ScreenStates{
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
-                    } else {
+                    } else if(but.getState() == Gamestate.MENU){
+                        Universal.bothPlayingLocal = false;
+                        Universal.youAreAClient = false;
+                        Universal.youAreAHost= false;
                         but.applyGamestate();
                     }
                     break;

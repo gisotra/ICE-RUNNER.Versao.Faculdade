@@ -90,9 +90,10 @@ public class Menu implements ScreenStates {
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
                         Universal.bothPlayingLocal = false;
+                        Universal.youAreAClient = false;
+                        Universal.youAreAHost = false;
                     } else {
                         but.applyGamestate();
-                        Universal.bothPlayingLocal = false;
                     }
                 }
             }

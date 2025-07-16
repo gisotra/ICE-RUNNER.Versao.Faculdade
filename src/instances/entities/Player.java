@@ -123,10 +123,11 @@ public class Player extends Entities{
         scarf.render(g2d);
         } else {
             //renderizo com 50% de transparencia
-            
         }
         //Renderizo a sombra
-        shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
+        if(!dead){    
+            shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
+        }
         
         if(Universal.showGrid){
             drawHitbox(g2d);

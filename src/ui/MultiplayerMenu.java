@@ -90,13 +90,14 @@ public class MultiplayerMenu implements ScreenStates {
         for (Buttons but : botoesMenu) {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
-                    if (but.getState() == Gamestate.PLAYING) {
-                        Universal.bothPlayingLocal = true;
+                    if (but.getState() == Gamestate.PLAYING) { 
                         but.applyGamestate();
+                        Universal.bothPlayingLocal = true;
+                        Universal.youAreAClient = false;
+                        Universal.youAreAHost = false;
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
                     } else {
-                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                     }
                 }
