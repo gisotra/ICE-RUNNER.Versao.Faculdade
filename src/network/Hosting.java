@@ -31,6 +31,7 @@ public class Hosting implements ScreenStates {
     private BufferedImage botaoStartServer;
     private BufferedImage botaoExit;
     private boolean waitingConnection = false;
+    private Thread server;
 
     /*Sockets*/
     private int porta = 1000;
@@ -51,7 +52,7 @@ public class Hosting implements ScreenStates {
         if (gameserver != null && !gameserver.isClosed()) {
             return;
         }
-        Thread server = new Thread(() -> {
+        server = new Thread(() -> {
             try{    
                 gameserver = new ServerSocket(porta);
                 this.waitingConnection = true;
@@ -66,6 +67,10 @@ public class Hosting implements ScreenStates {
         server.start();
     }
 
+    public void killThread(){
+        //server.destroy();
+    }
+    
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
         SpriteData serverData = SpriteLoader.spriteDataLoader().get("hosting");
@@ -128,16 +133,14 @@ public class Hosting implements ScreenStates {
         for (Buttons but : botoesMenu) {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
-                    if (but.getState() == Gamestate.PLAYING) {
-                        Universal.bothPlayingLocal = true;
-                        but.applyGamestate();
-                        Screen.resetCoordenates();
-                        Screen.startCoordenates();
-                    } if (but.getState() == null){
+                    if (but.getState() == Gamestate.MULTIPLAYER_MENU){ //botao de voltar
+                        killThread();
+                        this.waitingConnection = false;
+                    }
+                    if (but.getState() == null){
                         initGameServer();
                         continue;
                     } else {
-                        Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                     }
                 }

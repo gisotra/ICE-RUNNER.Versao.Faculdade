@@ -93,6 +93,9 @@
         <path>/assets/ui/hosting.png</path>
     </sprite>
     
+    <sprite name="submit"> 
+        <path>/assets/ui/enviar_button.png</path>
+    </sprite>
     
     
     <!-- tela de menu -->

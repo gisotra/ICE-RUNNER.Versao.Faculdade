@@ -26,29 +26,32 @@ public class ClientConnector implements ScreenStates{
     private BufferedImage multMenuFundo;
     private Sprite<MultiplayerMenu.MultiplayerMenuAnimation> multMenuSprite;
     //adicionar o sprite pro loading 
-    private Buttons[] botoesMenu = new Buttons[1];
+    private Buttons[] botoesMenu = new Buttons[2];
     private BufferedImage botaoEnviar;
     private BufferedImage botaoExit;
     private boolean waitingConnection = true;
 
     /*Sockets*/
     private int porta = 1000;
-    private ServerSocket gameserver;
+    private Socket clientSocket;
+    private String IPdoServidorhost;
 
     public ClientConnector() {
         initSpriteMenu();
         botoesMenu[0] = new Buttons(20, 20, 48, 48, botaoExit, Gamestate.MULTIPLAYER_MENU);
+        botoesMenu[1] = new Buttons(Universal.GAME_WIDTH / 2 - 60, Universal.GAME_HEIGHT / 2 +50, 40, 22, botaoEnviar, null);
    }
-
 
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
         SpriteData exitData = SpriteLoader.spriteDataLoader().get("exitbutton");
+        SpriteData submitData = SpriteLoader.spriteDataLoader().get("submit");
 
         try {
 
             multMenuFundo = ImageIO.read(getClass().getResource(menuData.getPath()));
             botaoExit = ImageIO.read(getClass().getResource(exitData.getPath()));
+            botaoEnviar = ImageIO.read(getClass().getResource(submitData.getPath()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -71,8 +74,8 @@ public class ClientConnector implements ScreenStates{
         }
         if (waitingConnection) {
             g2D.setColor(Color.WHITE);
-            g2D.drawString("ESPERANDO", Universal.GAME_WIDTH / 2 - 110, 700);
-            g2D.drawString("CONEXAO", Universal.GAME_WIDTH / 2 - 20, 700);
+            g2D.drawString("ESPERANDO", Universal.GAME_WIDTH / 2 - 75, 600);
+            g2D.drawString("CONEXAO", Universal.GAME_WIDTH / 2 + 15, 600);
             GWindow.getInputIPField().setVisible(true);
         } else {
             GWindow.getInputIPField().setVisible(false);
@@ -110,7 +113,7 @@ public class ClientConnector implements ScreenStates{
                         Screen.startCoordenates();
                     }
                     if (but.getState() == null) {
-                        
+                        //aplico o que foi escrito pra minha variável String local no meu IPServidorHost
                         continue;
                     } else {
                         Universal.bothPlayingLocal = true;

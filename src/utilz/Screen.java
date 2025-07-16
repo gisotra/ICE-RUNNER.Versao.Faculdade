@@ -65,7 +65,6 @@ public class Screen {
     private Playing playingscreen;
     private Hosting hostingscreen;
     private ClientConnector connector;
-    private ClientConnector waitingscreen;
     
     /*------------ CONSTRUTOR ------------*/
     public Screen(GCanvas gc){
@@ -75,7 +74,7 @@ public class Screen {
         multmenuscreen = new MultiplayerMenu();
         playingscreen = new Playing();
         hostingscreen = new Hosting();
-        waitingscreen = new ClientConnector();
+        connector = new ClientConnector();
         snowEmitter = new Emitter(70);
 
         
@@ -156,7 +155,7 @@ public class Screen {
 
             /*Tela ao tentar logar no servidor de outro jogador*/
             case WAITING:{
-                waitingscreen.render(g2d);
+                connector.render(g2d);
             }break;
 
             /*Sai do jogo*/
