@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import network.ClientConnector;
 import utilz.AnimationType;
 import utilz.Screen;
 import utilz.Sprite;
@@ -97,6 +98,9 @@ public class MultiplayerMenu implements ScreenStates {
                         Universal.youAreAHost = false;
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
+                    } else if (but.getState() == Gamestate.WAITING){
+                        ClientConnector.waitingConnection = true;
+                        but.applyGamestate();
                     } else {
                         but.applyGamestate();
                     }

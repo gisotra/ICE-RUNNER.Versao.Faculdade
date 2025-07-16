@@ -29,7 +29,7 @@ public class ClientConnector implements ScreenStates{
     private Buttons[] botoesMenu = new Buttons[2];
     private BufferedImage botaoEnviar;
     private BufferedImage botaoExit;
-    private boolean waitingConnection = true;
+    public static boolean waitingConnection = false;
 
     /*Sockets*/
     private int porta = 1000;
@@ -42,6 +42,41 @@ public class ClientConnector implements ScreenStates{
         botoesMenu[1] = new Buttons(Universal.GAME_WIDTH / 2 - 60, Universal.GAME_HEIGHT / 2 +50, 40, 22, botaoEnviar, null);
    }
 
+    public void connectToServer() {
+        // captura o texto do campo de input
+        IPdoServidorhost = GWindow.getInputIPField().getText().trim();
+
+        if (IPdoServidorhost.isEmpty()) {
+            System.out.println("Campo de IP está vazio.");
+            return;
+        }
+
+        new Thread(() -> {
+            try {
+                waitingConnection = true;
+                clientSocket = new Socket(IPdoServidorhost, porta);
+
+                // conectado com sucesso
+                System.out.println("Conectado ao servidor com sucesso.");
+                waitingConnection = false;
+                Universal.youAreAClient = true;
+
+                // oculta o campo e troca o estado do jogo
+                GWindow.getInputIPField().setVisible(false);
+                Screen.startCoordenates();
+                Gamestate.state = Gamestate.PLAYING;
+            } catch (IOException e) {
+                System.out.println("Erro ao conectar com o servidor: " + e.getMessage());
+                waitingConnection = false;
+            }
+        }).start();
+    }
+    
+    
+    
+    
+    
+    
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");
         SpriteData exitData = SpriteLoader.spriteDataLoader().get("exitbutton");
@@ -77,8 +112,6 @@ public class ClientConnector implements ScreenStates{
             g2D.drawString("ESPERANDO", Universal.GAME_WIDTH / 2 - 75, 600);
             g2D.drawString("CONEXAO", Universal.GAME_WIDTH / 2 + 15, 600);
             GWindow.getInputIPField().setVisible(true);
-        } else {
-            GWindow.getInputIPField().setVisible(false);
         }
     }
 
@@ -111,11 +144,19 @@ public class ClientConnector implements ScreenStates{
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
-                    }
-                    if (but.getState() == null) {
+                    } 
+                    else if (but.getState() == null) {
                         //aplico o que foi escrito pra minha variável String local no meu IPServidorHost
+                        connectToServer();
                         continue;
-                    } else {
+                    } 
+                    else if (but.getState() == Gamestate.MULTIPLAYER_MENU){ //voltar
+                        waitingConnection = false;
+                        GWindow.getInputIPField().setVisible(false);
+                        but.applyGamestate();
+                    }
+                    
+                    else {
                         Universal.bothPlayingLocal = true;
                         but.applyGamestate();
                     }

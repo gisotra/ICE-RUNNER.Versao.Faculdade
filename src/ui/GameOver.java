@@ -98,6 +98,7 @@ public class GameOver implements ScreenStates{
                         Universal.bothPlayingLocal = false;
                         Universal.youAreAClient = false;
                         Universal.youAreAHost= false;
+                        Screen.resetCoordenates();
                         but.applyGamestate();
                     }
                     break;

@@ -30,7 +30,7 @@ public class Hosting implements ScreenStates {
     private Buttons[] botoesMenu = new Buttons[2];
     private BufferedImage botaoStartServer;
     private BufferedImage botaoExit;
-    private boolean waitingConnection = false;
+    private boolean hostWaitingConnection = false;
     private Thread server;
 
     /*Sockets*/
@@ -49,26 +49,50 @@ public class Hosting implements ScreenStates {
     }
     
     public void initGameServer(){
-        if (gameserver != null && !gameserver.isClosed()) {
+        if ((gameserver != null && !gameserver.isClosed()) || (server != null && server.isAlive())) {
             return;
         }
+
         server = new Thread(() -> {
-            try{    
+            try {
                 gameserver = new ServerSocket(porta);
-                this.waitingConnection = true;
-                Socket clientSocket = gameserver.accept();    
+                this.hostWaitingConnection = true;
+                Socket clientSocket = gameserver.accept();
+
+                // cliente conectou, muda estado
                 Universal.youAreAHost = true;
+                Screen.startCoordenates();
                 Gamestate.state = Gamestate.PLAYING;
-            } catch (IOException ex){
-                ex.printStackTrace();
+
+                // encerrar server após conexão
+                gameserver.close();
+            } catch (IOException ex) {
+                System.out.println("Servidor interrompido ou erro: " + ex.getMessage());
+            } finally {
+                hostWaitingConnection = false;
+                gameserver = null;
+                server = null;
             }
-            
         });
+
         server.start();
     }
 
     public void killThread(){
-        //server.destroy();
+        try {
+            if (gameserver != null && !gameserver.isClosed()) {
+                gameserver.close(); // isso automaticamente faz o accept() lançar IOException
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (server != null && server.isAlive()) {
+            server.interrupt(); // marca a thread para encerrar
+        }
+
+        server = null; // libera referência
+        gameserver = null;
     }
     
     public void initSpriteMenu() {
@@ -101,7 +125,7 @@ public class Hosting implements ScreenStates {
         for (Buttons but : botoesMenu) {
             but.render(g2D);
         }
-        if(waitingConnection){
+        if(hostWaitingConnection){
                     g2D.setColor(Color.WHITE);
                     g2D.drawString("ESPERANDO", Universal.GAME_WIDTH / 2 - 110, 700);
                     g2D.drawString("CONEXAO", Universal.GAME_WIDTH / 2 - 20, 700);
@@ -134,8 +158,9 @@ public class Hosting implements ScreenStates {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
                     if (but.getState() == Gamestate.MULTIPLAYER_MENU){ //botao de voltar
-                        killThread();
-                        this.waitingConnection = false;
+                        killThread(); //reseto ela 
+                        //caso o player mude de ideia e volte para essa tela, ele faz tudo do zero 
+                        this.hostWaitingConnection = false;
                     }
                     if (but.getState() == null){
                         initGameServer();
@@ -196,11 +221,11 @@ public class Hosting implements ScreenStates {
     }
 
     public boolean isWaitingConnection() {
-        return waitingConnection;
+        return hostWaitingConnection;
     }
 
     public void setWaitingConnection(boolean waitingConnection) {
-        this.waitingConnection = waitingConnection;
+        this.hostWaitingConnection = waitingConnection;
     }
 
     
