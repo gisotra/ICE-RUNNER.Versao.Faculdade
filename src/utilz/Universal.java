@@ -1,7 +1,10 @@
 package utilz;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 public class Universal {
      
@@ -97,17 +100,31 @@ public class Universal {
     
     /*Sockets*/   
     public static InetAddress ip;
-    public static String IPString;
+    public static String IPString = initIP();
     
-    public static void initIP(){
-        try{
-            ip = InetAddress.getLocalHost();
-            IPString = ip.getHostAddress();
-        } catch (UnknownHostException e){
+    public static String initIP() {
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                // ignora interfaces que estão desligadas ou loopback
+                if (iface.isLoopback() || !iface.isUp()) {
+                    continue;
+                }
+
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                        return addr.getHostAddress(); // Aqui está o IP local correto
+                    }
+                }
+            }
+        } catch (SocketException e) {
             e.printStackTrace();
         }
+        return "IP não encontrado";
     }
-    
     
     /*-------------- SPRITES CENÁRIO ----------*/
     /*-----------------------------------------*/

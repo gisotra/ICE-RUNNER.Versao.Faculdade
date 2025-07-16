@@ -34,7 +34,7 @@ public class Hosting implements ScreenStates {
     private Thread server;
 
     /*Sockets*/
-    private int porta = 1000;
+    private int porta = 8888;
     private ServerSocket gameserver;
 
     public Hosting(){
