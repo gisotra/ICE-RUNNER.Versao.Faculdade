@@ -1,5 +1,7 @@
 package network;
 
+import gamestates.Gamestate;
+import static gamestates.Gamestate.PLAYING;
 import instances.Objects;
 import instances.entities.Player;
 import java.io.DataInputStream;
@@ -43,12 +45,18 @@ public class PlayerNetworkReceiver implements Runnable{
                 float x = dis.readFloat();
                 float y = dis.readFloat();
                 byte animIndex = dis.readByte();
+                int shouldRetry = dis.readInt();
                 
                 /*
                 dummy.setX(x);
                 dummy.setY(y);
                 dummy.playerAction = Player.PlayerAnimation.values()[animIndex];*/
                 dummy.updateNetworkState(x, y, Player.PlayerAnimation.values()[animIndex]);
+                if(shouldRetry == 1){
+                    Screen.resetCoordenates();
+                    Screen.startCoordenates();
+                    Gamestate.state = PLAYING;
+                }
             }
         } catch(IOException e){
             if(running){

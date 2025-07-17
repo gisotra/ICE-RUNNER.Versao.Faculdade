@@ -210,7 +210,7 @@ public class Screen {
                 }
                 spawner.play();
                 snowEmitter.update(variacaoTempo);
-                if(player1.dead || player2.dead){
+                if(player1.dead || player2.dead || dummy1.dead || dummy2.dead){
                     
                     for (Objects obj : objectsOnScreen){
                         if(obj instanceof Entities && obj.getY() > Universal.GAME_HEIGHT){
@@ -319,6 +319,9 @@ public class Screen {
                 if(obj instanceof Obstacles){
                     obj.setX(Universal.OBST_SPAWN_X);
                 }
+                if(obj instanceof Player){
+                    ((Player) obj).setDead(false);
+                } 
         }
         Universal.resetGameValues();
     }

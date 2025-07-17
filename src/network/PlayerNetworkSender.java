@@ -11,6 +11,7 @@ public class PlayerNetworkSender implements Runnable{
     private Socket socket;
     private boolean running = true;
     private int realPlayerIndex;
+    public static volatile int shouldRetry = 0; //10.105.65.75
     
     public PlayerNetworkSender(Socket socket, int realIndex){
         this.socket = socket;
@@ -42,7 +43,10 @@ public class PlayerNetworkSender implements Runnable{
                 dos.writeFloat(player.getX());
                 dos.writeFloat(player.getY());
                 dos.writeByte((byte) player.playerAction.ordinal());
+                dos.writeInt(shouldRetry);
                 dos.flush();
+                
+                shouldRetry = 0;
                 
                 try{
                     Thread.sleep(16);

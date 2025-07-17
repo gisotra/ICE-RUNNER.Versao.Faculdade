@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import network.PlayerNetworkSender;
 import utilz.AnimationType;
 import utilz.Screen;
 import utilz.Sprite;
@@ -91,6 +92,12 @@ public class GameOver implements ScreenStates{
             if(isIn(e, but)) {
                 if(but.isCursorPressed()){
                     if(but.getState() == Gamestate.PLAYING){
+                        if(Universal.youAreAClient){
+                            break;
+                        }
+                        if(Universal.youAreAHost){
+                            PlayerNetworkSender.shouldRetry = 1;
+                        }
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();

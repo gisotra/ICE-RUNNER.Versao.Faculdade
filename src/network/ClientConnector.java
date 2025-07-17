@@ -72,6 +72,7 @@ public class ClientConnector implements ScreenStates{
                 
                 // oculta o campo e troca o estado do jogo
                 GWindow.getInputIPField().setVisible(false);
+                Screen.resetCoordenates();
                 Screen.startCoordenates();
                 Gamestate.state = Gamestate.PLAYING;
             } catch (IOException e) {
