@@ -68,6 +68,12 @@ public class Player extends Entities{
         setIsActive(true);
     }     
    
+    public synchronized void updateNetworkState(float x, float y, PlayerAnimation anim) {
+        this.x = x;
+        this.y = y;
+        this.playerAction = anim;
+    }
+    
     public void initSprite(){
         if(playerIndex == 1){
         playerData = SpriteLoader.spriteDataLoader().get("player1");
@@ -137,42 +143,42 @@ public class Player extends Entities{
     }
 
     /*------------ GETTERS AND SETTERS ------------*/
-    public float getX() {
+    public synchronized float getX() {
         return x;
     }
-    public float getY() {
+    public synchronized float getY() {
         return y;
     }
 
-    public void setX(float x) {
+    public synchronized void setX(float x) {
         this.x = x;
     }
 
-    public void setY(float y) {
+    public synchronized void setY(float y) {
         this.y = y;
     }
 
-    public boolean isDead() {
+    public synchronized boolean isDead() {
         return dead;
     }
 
-    public void setDead(boolean dead) {
+    public synchronized void setDead(boolean dead) {
         this.dead = dead;
     }
 
-    public int getHeight() {
+    public synchronized int getHeight() {
         return heightO;
     }
 
-    public int getPlayerIndex(){
+    public synchronized int getPlayerIndex(){
         return playerIndex;
     }
 
-    public void setPlayerIndex(int playerIndex){
+    public synchronized void setPlayerIndex(int playerIndex){
         this.playerIndex = playerIndex;
     }
 
-    public Movement getMovement(){
+    public synchronized Movement getMovement(){
         return movement;
     }
 

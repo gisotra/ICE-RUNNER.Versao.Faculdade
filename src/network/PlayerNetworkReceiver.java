@@ -29,6 +29,7 @@ public class PlayerNetworkReceiver implements Runnable{
     
     @Override
     public void run(){
+        running = true;
         try{
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             Player dummy = getDummyFromScreen();
@@ -43,10 +44,11 @@ public class PlayerNetworkReceiver implements Runnable{
                 float y = dis.readFloat();
                 byte animIndex = dis.readByte();
                 
+                /*
                 dummy.setX(x);
                 dummy.setY(y);
-                dummy.playerAction = Player.PlayerAnimation.values()[animIndex];
-                
+                dummy.playerAction = Player.PlayerAnimation.values()[animIndex];*/
+                dummy.updateNetworkState(x, y, Player.PlayerAnimation.values()[animIndex]);
             }
         } catch(IOException e){
             if(running){
