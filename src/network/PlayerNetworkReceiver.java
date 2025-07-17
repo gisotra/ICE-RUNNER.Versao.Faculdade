@@ -57,6 +57,7 @@ public class PlayerNetworkReceiver implements Runnable{
                     Screen.startCoordenates();
                     Gamestate.state = PLAYING;
                 }
+                shouldRetry = 0;
             }
         } catch(IOException e){
             if(running){

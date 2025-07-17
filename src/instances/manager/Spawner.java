@@ -15,7 +15,7 @@ public class Spawner{
     // Cooldown global entre spawns (anti-spam)
     private long lastGlobalSpawn = 0;
     
-    
+    /*Método que será chamado somente quando o player estier jogando alone OU for um host*/
     public void play(){ //(currentTime - lastSpawn) >= SpawnWall )
         long currentTime = System.currentTimeMillis();
         
