@@ -99,7 +99,7 @@ public class Player extends Entities{
     }
     
     @Override
-    public void update(float deltaTime){
+    public synchronized void update(float deltaTime){
         long currentTime = System.currentTimeMillis();
         if(dash 
                 && movement.isCanDash() 
@@ -120,7 +120,7 @@ public class Player extends Entities{
     }
 
     @Override
-    public void render(Graphics2D g2d){
+    public synchronized void render(Graphics2D g2d){
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
