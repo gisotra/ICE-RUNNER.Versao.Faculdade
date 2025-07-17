@@ -205,10 +205,11 @@ public class Screen {
                         obj.setIsActive(false);
                         continue;
                     }
-                    
                     obj.update(variacaoTempo);
                 }
-                spawner.play();
+                if(Universal.bothPlayingLocal || !Universal.bothPlayingLocal || Universal.youAreAHost){
+                    spawner.play();                    
+                }
                 snowEmitter.update(variacaoTempo);
                 if(player1.dead || player2.dead || dummy1.dead || dummy2.dead){
                     

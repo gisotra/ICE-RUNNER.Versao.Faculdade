@@ -73,6 +73,26 @@ public class Spawner{
         
     }
     
-    
+    /*Método que será chamado quando você for um cliente*/
+    public void hear(int obstIndex){
+        switch(obstIndex){
+            case 0: { //muro
+              spm.spawnWall();  
+              Universal.wall = false;
+            }break;
+            case 1: { //saw
+              spm.spawnSaw();
+              Universal.saw = false;
+            }break;
+            case 2: { //bird
+              spm.spawnBird();
+              Universal.bird = false;
+            }break;
+            case 3: { //block
+              spm.spawnBlock();
+              Universal.saw = false;
+            }break;
+        }
+    }
 
 }
