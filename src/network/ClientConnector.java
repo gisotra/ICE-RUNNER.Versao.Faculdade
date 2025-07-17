@@ -32,7 +32,7 @@ public class ClientConnector implements ScreenStates{
     public static boolean waitingConnection = false;
 
     /*Sockets*/
-    private int porta = 1000;
+    private int porta = 8888;
     private Socket clientSocket;
     private String IPdoServidorhost;
 
@@ -45,6 +45,7 @@ public class ClientConnector implements ScreenStates{
     public void connectToServer() {
         // captura o texto do campo de input
         IPdoServidorhost = GWindow.getInputIPField().getText().trim();
+        GWindow.getInputIPField().setText("");
 
         if (IPdoServidorhost.isEmpty()) {
             System.out.println("Campo de IP está vazio.");
@@ -79,11 +80,6 @@ public class ClientConnector implements ScreenStates{
             }
         }).start();
     }
-    
-    
-    
-    
-    
     
     public void initSpriteMenu() {
         SpriteData menuData = SpriteLoader.spriteDataLoader().get("fundoMenu");

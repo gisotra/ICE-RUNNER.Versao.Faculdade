@@ -98,7 +98,7 @@ public class Universal {
         }
     }
     
-    /*Sockets*/   
+    /*Sockets Classe universal*/   
     public static InetAddress ip;
     public static String IPString = initIP();
     

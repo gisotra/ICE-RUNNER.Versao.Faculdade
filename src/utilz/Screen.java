@@ -237,80 +237,76 @@ public class Screen {
     }   
     
     /*------------ MÉTODO QUE RESETA AS COORDENADAS DAS INSTANCIAS NA TELA ------------*/
-    public static void startCoordenates(){
+    public static void startCoordenates() {
         for (Objects obj : objectsOnScreen) {
-            /*Loop de jogo alone/default */
-            /*===========================================================*/
-            if(!Universal.bothPlayingLocal){ 
-                if (obj instanceof Entities) {
-                    if(((Player)obj).getPlayerIndex() == 2){ //player 2 inativado
-                        obj.setIsActive(false);
-                    } else if(((Player)obj).isDummy()){
-                        obj.setIsActive(false);
-                    } else { //player 1 continua ativo
-                        obj.setIsActive(true);
-                        obj.setX(120 * ((Player) obj).getPlayerIndex());
-                        obj.setY(360);
-                        ((Player) obj).getMovement().setIsJumping(true);
-                        ((Player) obj).dead = false;
+            if (obj instanceof Entities) {
+                Player player = (Player) obj;
+                int index = player.getPlayerIndex();
+                boolean isDummy = player.isDummy();
+
+                // ============================
+                // MODO HOST
+                // ============================
+                if (Universal.youAreAHost) {
+                    if ((isDummy && index == 1) || (!isDummy && index == 2)) {
+                        obj.setIsActive(false); // desativa dummy1 e player2
+                    } else {
+                        ativarPlayer(player);
                     }
-                }
-            }   /*Loop de jogo multiplayer no mesmo PC*/
-            /*===========================================================*/
-            else if(Universal.bothPlayingLocal){
-                if (obj instanceof Entities) {
-                    if(((Player)obj).isDummy()){
+
+                    // ============================
+                    // MODO CLIENTE
+                    // ============================
+                } else if (Universal.youAreAClient) {
+                    if ((isDummy && index == 2) || (!isDummy && index == 1)) {
+                        obj.setIsActive(false); // desativa dummy2 e player1
+                    } else {
+                        ativarPlayer(player);
+                    }
+
+                    // ============================
+                    // MULTIPLAYER LOCAL
+                    // ============================
+                } else if (Universal.bothPlayingLocal) {
+                    if (isDummy) {
                         obj.setIsActive(false);
                     } else {
-                    obj.setIsActive(true);
-                    obj.setX(120 * ((Player)obj).getPlayerIndex());
-                    obj.setY(360);
-                    ((Player)obj).getMovement().setIsJumping(true);
-                    ((Player)obj).dead = false;
+                        ativarPlayer(player);
                     }
-                }
-            }   /*Loop de jogo em que você é um Host de um servidor*/
-            /*===========================================================*/
-            else if(Universal.youAreAHost){
-                if (obj instanceof Entities) {
-                    if(((Player)obj).isDummy() && ((Player)obj).getPlayerIndex() == 1){ //desativo o dummy 1
-                        obj.setIsActive(false);
-                    } else if(!((Player)obj).isDummy() && ((Player)obj).getPlayerIndex() == 2){ //desativo o player2
+
+                    // ============================
+                    // SINGLEPLAYER
+                    // ============================
+                } else {
+                    if (index == 2 || isDummy) {
                         obj.setIsActive(false);
                     } else {
-                        obj.setIsActive(true);
-                        obj.setX(120 * ((Player) obj).getPlayerIndex());
-                        obj.setY(360);
-                        ((Player) obj).getMovement().setIsJumping(true);
-                        ((Player) obj).dead = false;
+                        ativarPlayer(player);
                     }
                 }
-            }   /*Loop de jogo em que você é o Cliente de um servidor*/
-            /*===========================================================*/
-            else if(Universal.youAreAClient){
-                if (obj instanceof Entities) {
-                    if (((Player) obj).isDummy() && ((Player) obj).getPlayerIndex() == 1) { //desativo o dummy 1
-                        obj.setIsActive(false);
-                    } else if (!((Player) obj).isDummy() && ((Player) obj).getPlayerIndex() == 2) { //desativo o player2
-                        obj.setIsActive(false);
-                    } else {
-                        obj.setIsActive(true);
-                        obj.setX(120 * ((Player) obj).getPlayerIndex());
-                        obj.setY(360);
-                        ((Player) obj).getMovement().setIsJumping(true);
-                        ((Player) obj).dead = false;
-                    }  
-                }
-            }   
-            if(obj instanceof Environment){
+            }
+
+            // ============================
+            // ATIVA AMBIENTE / ATUALIZA OBSTÁCULO
+            // ============================
+            if (obj instanceof Environment) {
                 obj.setIsActive(true);
             }
-            
-            if(obj instanceof Obstacles){
-                ((Obstacles)obj).updateObstHitbox();
-            }
+
+            if (obj instanceof Obstacles) {
+                ((Obstacles) obj).updateObstHitbox();
             }
         }
+    }
+
+// Método auxiliar para ativar jogador corretamente
+    private static void ativarPlayer(Player player) {
+        player.setIsActive(true);
+        player.setX(120 * player.getPlayerIndex());
+        player.setY(360);
+        player.getMovement().setIsJumping(true);
+        player.dead = false;
+    }
     
     
     
