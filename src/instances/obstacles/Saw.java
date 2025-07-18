@@ -19,6 +19,7 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     /*------------ ATRIBUTOS ------------*/
     private BufferedImage sawSpriteSheet;
     private Sprite<SawAnimation> sawSprite;
+    private SawAnimation sawAction = SawAnimation.STATIC;
     
     /*------------ CONSTRUTOR ------------*/
     public Saw(Screen screen, GCanvas gc) {
@@ -38,9 +39,9 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
             throw new RuntimeException(e);
         }
         
-        setWidth(80); //largura em px do FRAME ORIGINAL 
-        setHeight(64); //altura em px do FRAME ORIGINAL
-        sawSprite = new Sprite<>(sawSpriteSheet, this.heightO, this.widthO, SawAnimation.class, 1);
+        setWidth(sawSpriteSheet.getWidth()/3); //largura em px do FRAME ORIGINAL 
+        setHeight(43); //altura em px do FRAME ORIGINAL
+        sawSprite = new Sprite<>(sawSpriteSheet, this.heightO, this.widthO, SawAnimation.class, 2);
         
     }
     
@@ -57,6 +58,8 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     
     @Override
     public void render(Graphics2D g2d){
+        sawSprite.setAction(sawAction);
+        sawSprite.update();
         sawSprite.render(g2d, (int) getX() - 70, (int) getY() - 50);
             if(Universal.showGrid){
                 drawObstHitbox(g2d);
@@ -65,16 +68,29 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     
     /*========== Classe interna Para os Sprites ==========*/ 
     public enum SawAnimation implements AnimationType{
-        STATIC;
+        STATIC(0, 3);
         
-        @Override
-        public int getIndex(){
-            return 0;
+        private final int index;
+        private final int frameCount;
+
+        SawAnimation(int 
+        index,
+        int frameCount
+
+        
+            ){
+            this.index = index;
+            this.frameCount = frameCount;
         }
-        
+
         @Override
-        public int getFrameCount(){
-            return 1;
+        public int getIndex() {
+            return index;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return frameCount;
         }
     }
 
