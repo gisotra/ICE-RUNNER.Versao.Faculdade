@@ -45,6 +45,7 @@ public class Spawner{
             
             lastGlobalSpawn = currentTime;
             Universal.wall = false;
+            Universal.obstSpawnIndex = 1;
             return;
         }
         
@@ -53,6 +54,7 @@ public class Spawner{
             
             lastGlobalSpawn = currentTime;
             Universal.saw = false;
+            Universal.obstSpawnIndex = 2;
             return;
         }
         if(Universal.bird){
@@ -60,6 +62,7 @@ public class Spawner{
             
             lastGlobalSpawn = currentTime;
             Universal.bird = false;
+            Universal.obstSpawnIndex = 3;
             return;
         }
         
@@ -68,6 +71,7 @@ public class Spawner{
             
             lastGlobalSpawn = currentTime;
             Universal.block = false;
+            Universal.obstSpawnIndex = 4;
             return;
         }
         
@@ -76,22 +80,25 @@ public class Spawner{
     /*Método que será chamado quando você for um cliente*/
     public void hear(int obstIndex){
         switch(obstIndex){
-            case 0: { //muro
-              spm.spawnWall();  
+            case 1: { //muro
+              spm.spawnWall();   //eu spawno o obstáculo de acordo
               Universal.wall = false;
             }break;
-            case 1: { //saw
+            case 2: { //saw
               spm.spawnSaw();
               Universal.saw = false;
             }break;
-            case 2: { //bird
+            case 3: { //bird
               spm.spawnBird();
               Universal.bird = false;
             }break;
-            case 3: { //block
+            case 4: { //block
               spm.spawnBlock();
               Universal.saw = false;
             }break;
+            default:{
+                break;
+            }
         }
     }
 

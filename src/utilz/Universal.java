@@ -78,6 +78,7 @@ public class Universal {
     public static int lastSpeedUpScore = 0;
     public static int speedUpgrades = 0;
     public static final int MAX_SPEED_UPGRADES = 7;
+    public static int obstSpawnIndex = 0;
     
     /*-------------- GAME LOOP ---------------*/
     /*-----------------------------------------*/

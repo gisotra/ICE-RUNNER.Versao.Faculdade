@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import utilz.Screen;
+import utilz.Universal;
 
 public class PlayerNetworkSender implements Runnable{
     private Socket socket;
@@ -36,6 +37,7 @@ public class PlayerNetworkSender implements Runnable{
         
             if(player == null){
                 System.out.println("Player real eh nulo");
+                
                 return;
             }
             
@@ -43,6 +45,7 @@ public class PlayerNetworkSender implements Runnable{
                 dos.writeFloat(player.getX());
                 dos.writeFloat(player.getY());
                 dos.writeByte((byte) player.playerAction.ordinal());
+                dos.writeInt(Universal.obstSpawnIndex);
                 dos.writeInt(shouldRetry);
                 dos.flush();
                 

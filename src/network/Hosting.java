@@ -59,7 +59,7 @@ public class Hosting implements ScreenStates {
                 this.hostWaitingConnection = true;
                 Socket clientSocket = gameserver.accept(); //um cliente entrou
                 
-                PlayerNetworkReceiver receiver = new PlayerNetworkReceiver(clientSocket, 2);
+                PlayerNetworkReceiver receiver = new PlayerNetworkReceiver(clientSocket, 2, Screen.spawner);
                 new Thread(receiver).start();
                 
                 PlayerNetworkSender sender = new PlayerNetworkSender(clientSocket, 1);

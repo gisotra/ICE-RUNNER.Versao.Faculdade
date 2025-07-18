@@ -4,6 +4,7 @@ import gamestates.Gamestate;
 import static gamestates.Gamestate.PLAYING;
 import instances.Objects;
 import instances.entities.Player;
+import instances.manager.Spawner;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -14,10 +15,12 @@ public class PlayerNetworkReceiver implements Runnable{
     private Socket socket;
     private boolean running = false;
     private int dummyIndex; // 1 ou 2 
+    private Spawner spawner; 
      
-    public PlayerNetworkReceiver(Socket socket, int dummyIndex){
+    public PlayerNetworkReceiver(Socket socket, int dummyIndex, Spawner spawner){
         this.socket = socket;
         this.dummyIndex = dummyIndex;
+        this.spawner = spawner;
     }
     
     public void stop(){
@@ -45,6 +48,7 @@ public class PlayerNetworkReceiver implements Runnable{
                 float x = dis.readFloat();
                 float y = dis.readFloat();
                 byte animIndex = dis.readByte();
+                int obstSpawnIndex = dis.readInt();
                 int shouldRetry = dis.readInt();
                 
                 /*

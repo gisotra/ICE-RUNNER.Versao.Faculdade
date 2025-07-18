@@ -50,7 +50,7 @@ public class Screen {
     private Player player2;
     private Player dummy1;
     private Player dummy2;
-    private Spawner spawner;
+    public static Spawner spawner = new Spawner();
 
     /*--- camadas do cenário ---*/
     private Layer1 layer1;
@@ -84,7 +84,7 @@ public class Screen {
         objectsOnScreen.add(layer2);
         layer1 = new Layer1(this, this.gc);
         objectsOnScreen.add(layer1);
-        spawner = new Spawner();
+        
         for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
             objectsOnScreen.add(new Bird(this, this.gc));
             objectsOnScreen.add(new Wall(this, this.gc));
@@ -207,9 +207,12 @@ public class Screen {
                     }
                     obj.update(variacaoTempo);
                 }
-                if(Universal.bothPlayingLocal || !Universal.bothPlayingLocal || Universal.youAreAHost){
+                if(Universal.youAreAClient){
+                    
+                } else {    
                     spawner.play();                    
                 }
+               
                 snowEmitter.update(variacaoTempo);
                 if(player1.dead || player2.dead || dummy1.dead || dummy2.dead){
                     
@@ -346,6 +349,10 @@ public class Screen {
     
     public ClientConnector getConnector(){
         return connector;
+    }
+    
+    public Spawner getSpawner(){
+        return spawner;
     }
     
 }
