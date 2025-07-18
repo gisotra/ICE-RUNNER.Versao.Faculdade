@@ -46,6 +46,7 @@ public class PlayerNetworkSender implements Runnable{
                 dos.writeFloat(player.getY());
                 dos.writeByte((byte) player.playerAction.ordinal());
                 dos.writeInt(Universal.obstSpawnIndex);
+                Universal.obstSpawnIndex = 0;
                 dos.writeInt(shouldRetry);
                 dos.flush();
                 

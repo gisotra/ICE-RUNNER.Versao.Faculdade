@@ -96,7 +96,7 @@ public class Spawner{
               spm.spawnBlock();
               Universal.saw = false;
             }break;
-            default:{
+            case 0:{
                 break;
             }
         }

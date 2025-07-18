@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import utilz.Screen;
+import utilz.Universal;
 
 public class PlayerNetworkReceiver implements Runnable{
     
@@ -56,6 +57,9 @@ public class PlayerNetworkReceiver implements Runnable{
                 dummy.setY(y);
                 dummy.playerAction = Player.PlayerAnimation.values()[animIndex];*/
                 dummy.updateNetworkState(x, y, Player.PlayerAnimation.values()[animIndex]);
+                if(Universal.youAreAClient){
+                    spawner.hear(obstSpawnIndex);
+                }
                 if(shouldRetry == 1){
                     Screen.resetCoordenates();
                     Screen.startCoordenates();
