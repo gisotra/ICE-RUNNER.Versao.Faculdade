@@ -66,9 +66,8 @@ public class ClientConnector implements ScreenStates{
                 new Thread(sender).start();
                 
                 waitingConnection = false;
+                Universal.resetBooleans();
                 Universal.youAreAClient = true;
-                Universal.bothPlayingLocal = false;
-                Universal.youAreAHost = false;
                 
                 // oculta o campo e troca o estado do jogo
                 GWindow.getInputIPField().setVisible(false);
@@ -144,13 +143,7 @@ public class ClientConnector implements ScreenStates{
         for (Buttons but : botoesMenu) {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
-                    if (but.getState() == Gamestate.PLAYING) {
-                        Universal.bothPlayingLocal = true;
-                        but.applyGamestate();
-                        Screen.resetCoordenates();
-                        Screen.startCoordenates();
-                    } 
-                    else if (but.getState() == null) {
+                    if (but.getState() == null) {
                         //aplico o que foi escrito pra minha variável String local no meu IPServidorHost
                         connectToServer();
                         continue;

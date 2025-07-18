@@ -309,6 +309,7 @@ public class Screen {
         player.setX(120 * player.getPlayerIndex());
         player.setY(360);
         player.getMovement().setIsJumping(true);
+        player.getMovement().resetMovement();
         player.dead = false;
     }
     
@@ -325,6 +326,7 @@ public class Screen {
                 }
                 if(obj instanceof Player){
                     ((Player) obj).setDead(false);
+                    ((Player)obj).setY(360);
                 } 
         }
         Universal.resetGameValues();

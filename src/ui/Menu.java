@@ -86,12 +86,11 @@ public class Menu implements ScreenStates {
             if (isIn(e, but)) {
                 if (but.isCursorPressed()) {
                     if (but.getState() == Gamestate.PLAYING) {
-                        but.applyGamestate();
+                        Universal.resetBooleans();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
-                        Universal.bothPlayingLocal = false;
-                        Universal.youAreAClient = false;
-                        Universal.youAreAHost = false;
+                        but.applyGamestate();
+                        
                     } else {
                         but.applyGamestate();
                     }

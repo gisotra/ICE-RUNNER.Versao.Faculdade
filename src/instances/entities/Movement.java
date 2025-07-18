@@ -198,6 +198,18 @@ public class Movement {
             }
         }
     }
+    
+    public void resetMovement() {
+        horizontalSpeed = 0;
+        verticalSpeed = 0;
+        inAir = false;
+        isDashing = false;
+        canDash = true;
+        hasDashed = false;
+        dashTimeCounter = 0f;
+        deathJump = false;
+        cont = 0;
+    }
 
     public boolean isGrounded() {
         if (player.getY() >= groundLvl) {
