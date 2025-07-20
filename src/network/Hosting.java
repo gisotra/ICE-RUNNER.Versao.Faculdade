@@ -66,9 +66,8 @@ public class Hosting implements ScreenStates {
                 new Thread(sender).start();
 
                 // cliente conectou, muda estado
+                Universal.resetBooleans();
                 Universal.youAreAHost = true;
-                Universal.bothPlayingLocal = false;
-                Universal.youAreAClient = false;
                 Screen.resetCoordenates();
                 Screen.startCoordenates();
                 Gamestate.state = Gamestate.PLAYING;

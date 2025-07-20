@@ -96,15 +96,15 @@ public class GameOver implements ScreenStates{
                             break;
                         }
                         if(Universal.youAreAHost){
+                            Universal.obstSpawnIndex = 0;
                             PlayerNetworkSender.shouldRetry = 1;
+                            
                         }
                         but.applyGamestate();
                         Screen.resetCoordenates();
                         Screen.startCoordenates();
                     } else if(but.getState() == Gamestate.MENU){
-                        Universal.bothPlayingLocal = false;
-                        Universal.youAreAClient = false;
-                        Universal.youAreAHost= false;
+                        Universal.resetBooleans();
                         Screen.resetCoordenates();
                         but.applyGamestate();
                     }

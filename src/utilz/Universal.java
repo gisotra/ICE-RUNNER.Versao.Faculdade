@@ -99,6 +99,12 @@ public class Universal {
         }
     }
     
+    public static void resetBooleans(){
+        Universal.bothPlayingLocal = false;
+        Universal.youAreAHost = false;
+        Universal.youAreAClient = false;
+    }
+    
     /*Sockets Classe universal*/   
     public static InetAddress ip;
     public static String IPString = initIP();
