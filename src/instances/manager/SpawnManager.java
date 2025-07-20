@@ -1,5 +1,6 @@
 package instances.manager;
 import instances.Objects;
+import instances.entities.PowerUps;
 import instances.obstacles.Bird;
 import instances.obstacles.FallBlock;
 import instances.obstacles.Saw;
@@ -59,7 +60,16 @@ public class SpawnManager {
         }
     }
     
-    
+    public void spawnPowerUp(){
+        for(PowerUps p : Screen.powerUpArray){
+            if(!p.isActive()){
+                p.setX(Universal.OBST_SPAWN_X);
+                p.setY(Universal.BLOCK_SKY_LEVEL);
+                p.setIsActive(true);
+                return;
+            }
+        }
+    }
     /*
     Lógica usada:
     Se eu encontrar na minha Queue um objeto do tipo correspondente do obstáculo

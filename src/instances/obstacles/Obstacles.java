@@ -27,6 +27,7 @@ public abstract class Obstacles extends Objects{ //muito similiar a classe Entit
     
     public void updateObstHitbox(){ //pode tirar e definir no obstacles
         obs_hitbox.x = getX(); //atualizo a posição horizontal
+        obs_hitbox.y = getY();
     }
     
     @Override

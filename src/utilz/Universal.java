@@ -12,18 +12,18 @@ public class Universal {
     largura: 8 * 32 = 256 | OU | 16 * 32 = 512
     altura: 7 * 32 = 224
     */
-    public static int SCORE = 0; 
-    public static long globalCooldown = 4000;
-    public static boolean bothPlayingLocal = false;
-    public static boolean youAreAHost = false;
-    public static boolean youAreAClient = false;
-    
+    public static int SCORE = 0;                       
+    public static long globalCooldown = 4000;         
+    public static boolean bothPlayingLocal = false;    
+    public static boolean youAreAHost = false;        
+    public static boolean youAreAClient = false;     
+                                                     
     /*configuração de fps*/
     public static final int FPS_SET = 60;
     
     /*Configurações de resolução da tela*/
     public final static int TILES_DEFAULT_SIZE = 32;
-    public final static float SCALE = 2.0f;
+    public final static float SCALE = 3.0f;
     public final static int TILES_IN_WIDTH = 16;  //512px de COMPRIMENTO
     public final static int TILES_IN_HEIGHT = 9;  //288px ALTURA
     public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
@@ -139,6 +139,5 @@ public class Universal {
     public final static float layer1YOffset = Universal.GAME_HEIGHT - 98 * Universal.SCALE;
     public final static float layer2YOffset = Universal.GAME_HEIGHT - 130 * Universal.SCALE;
     public final static float layer3YOffset = Universal.GAME_HEIGHT - 125 * Universal.SCALE;
-    //a altura de cada um vai ser variável -> evitar colocar a mesma altura que a tela, pesa em processamento
-    
+    //a altura de cada um vai ser variável -> evitar colocar a mesma altura que a tela, pesa em processamento   
 }

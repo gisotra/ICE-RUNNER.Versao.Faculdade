@@ -10,7 +10,7 @@ public class Movement {
     Player player;
 
     /*horizontal*/
-    private float speed = 100f*Universal.SCALE;
+    private float speed = 140f*Universal.SCALE;
     private float MAX_SPEED = 120f*Universal.SCALE;
     private float horizontalSpeed;
     private float atrito = 25.0f*Universal.SCALE;
@@ -19,7 +19,7 @@ public class Movement {
     private boolean isJumping = false;
     private float verticalSpeed = 0f; //Y
     private float gravity = 0.08f * Universal.SCALE;
-    private float jumpPower = -2.8f * Universal.SCALE; // Força do meu salto
+    private float jumpPower = -5.2f * Universal.SCALE; // Força do meu salto
     private boolean inAir = false;
     private float heightGY; //usado para achar a posição Y em que o player tá "no chão"
     private float groundLvl;
@@ -35,6 +35,8 @@ public class Movement {
     private float dashSpamLimiter = .5f;
     private int horizontalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
     private int verticalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0 
+    
+    /*spritesheet smoke1, smoke2, smoke3*/
 
     /*morte*/
     private boolean deathJump = false; //usei isso aqui pra animação de morte 
@@ -53,7 +55,7 @@ public class Movement {
             deathJump = false;
             
             if(!isDashing){
-                gravity = 0.08f * Universal.SCALE;
+                gravity = 0.25f * Universal.SCALE;
             
                 
                 // ================ movimentação VERTICAL ================

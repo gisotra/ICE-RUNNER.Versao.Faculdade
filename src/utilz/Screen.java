@@ -42,7 +42,7 @@ public class Screen {
     /*------------ ATRIBUTOS ------------*/
     private GCanvas gc;
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
-    public static List<PowerUps> powerUpList = new ArrayList<>();
+    public static PowerUps[] powerUpArray = new PowerUps[3];
     public static boolean thereIsAPowerUpOnTheScreen = false;
     
     /* elementos principais */
@@ -76,6 +76,7 @@ public class Screen {
         hostingscreen = new Hosting();
         connector = new ClientConnector();
         snowEmitter = new Emitter(70);
+        startPowerUps();
 
         
         layer3 = new Layer3(this, this.gc);
@@ -84,13 +85,7 @@ public class Screen {
         objectsOnScreen.add(layer2);
         layer1 = new Layer1(this, this.gc);
         objectsOnScreen.add(layer1);
-        
-        for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
-            objectsOnScreen.add(new Bird(this, this.gc));
-            objectsOnScreen.add(new Wall(this, this.gc));
-            objectsOnScreen.add(new Saw(this, this.gc));
-            objectsOnScreen.add(new FallBlock(this, this.gc));
-        }
+
         player1 = new Player(this, this.gc, 1, false);
         player2 = new Player(this, this.gc, 2, false);
         dummy1 = new Player(this, this.gc, 1, true);
@@ -99,6 +94,13 @@ public class Screen {
         objectsOnScreen.add(player2);
         objectsOnScreen.add(dummy1);
         objectsOnScreen.add(dummy2);
+        
+        for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
+            objectsOnScreen.add(new Wall(this, this.gc));
+            objectsOnScreen.add(new Saw(this, this.gc));
+            objectsOnScreen.add(new FallBlock(this, this.gc));
+            objectsOnScreen.add(new Bird(this, this.gc));
+        }
     }
     
     /*------------ MÉTODO RENDER ------------*/
@@ -115,12 +117,18 @@ public class Screen {
             case PLAYING:{
                 playingscreen.render(g2d);
                 for (Objects obj : objectsOnScreen) {
-                        if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
-                            obj.render(g2d);
-                        }
-                        if (obj instanceof Environment) { 
+                    if (obj instanceof Player && !((Player) obj).isDead() && ((Player) obj).getIsActive()) {
+                        ((Player) obj).renderShadow(g2d);
+                    }
+                    if (obj instanceof Environment) { 
                         obj.render(g2d);
                     }
+                    if ((!(obj instanceof Environment) && obj.getX() >= -Universal.TILES_SIZE * 4 && obj.getIsActive() && obj.getX() < Universal.GAME_WIDTH + Universal.TILES_SIZE)) {
+                            obj.render(g2d);
+                    }
+                }
+                for(PowerUps p : powerUpArray){
+                    p.render(g2d);
                 }
                 snowEmitter.render(g2d);
                 break;
@@ -206,6 +214,9 @@ public class Screen {
                         continue;
                     }
                     obj.update(variacaoTempo);
+                }
+                for (PowerUps p : powerUpArray) {
+                    p.update(variacaoTempo);
                 }
                 if(Universal.youAreAClient){
                     
@@ -328,6 +339,12 @@ public class Screen {
                 } 
         }
         Universal.resetGameValues();
+    }
+    
+    public void startPowerUps(){
+        for(int i = 0; i < powerUpArray.length; i++){
+            powerUpArray[i] = new PowerUps(i);
+        }
     }
     
     /*------------- GETTERS E SETTERS QUE FORAM NECESSARIOS NA JORNADA -------------*/

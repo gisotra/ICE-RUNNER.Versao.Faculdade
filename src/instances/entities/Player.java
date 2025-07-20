@@ -23,7 +23,6 @@ public class Player extends Entities{
     private BufferedImage playerSpriteSheet;
     private BufferedImage shadow;
     private BufferedImage floormark;
-    private SpriteData playerData;
     
     /*Controle de Dash*/
     private long lastDash = 0;
@@ -43,13 +42,25 @@ public class Player extends Entities{
     private Sprite<ShadowAnimation> shadowSprite;
     private Sprite<MarkAnimation> markSprite;
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
-    private ScarfRope scarf;
+    private ScarfRope scarf1, scarf2;
+    private BufferedImage scarfSegV1;
+    private BufferedImage scarfSegV2;
     
-    /*Power Ups*/
+    /*Power Ups Icons*/
     private boolean isPowered = false;
     private boolean sword = false;
     private boolean marioCap = false;
     private boolean shielded = false;
+    
+    /*Power Ups sprites*/
+    private BufferedImage mariocapimage;
+    private BufferedImage mariocapimageSCALED;
+    private SpriteData capData;
+    private SpriteData playerData;
+    private SpriteData scarfV1Data;
+    private SpriteData scarfV2Data;
+
+    //pra fazer o ghost do dash do personagem, eu teria que pegar o frame atual e só repintar ele na posição registrada
     
     
     
@@ -64,7 +75,8 @@ public class Player extends Entities{
         setX(120 * playerCode);
         setY(360);
         movement.setIsJumping(true); //para ele cair logo de primeira
-        scarf = new ScarfRope(this, 1.5f * Universal.SCALE);
+        scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, scarfSegV1, 7, 20, 3, 9);
+        scarf2 = new ScarfRope(this, 0.8f * Universal.SCALE, scarfSegV2, 3, 17, 2f, 12);
         setIsActive(true);
     }     
    
@@ -76,9 +88,15 @@ public class Player extends Entities{
     
     public void initSprite(){
         if(playerIndex == 1){
-        playerData = SpriteLoader.spriteDataLoader().get("player1");
+            playerData = SpriteLoader.spriteDataLoader().get("player1");
+            scarfV1Data = SpriteLoader.spriteDataLoader().get("scarf1.1");
+            scarfV2Data = SpriteLoader.spriteDataLoader().get("scarf1.2");
+            capData = SpriteLoader.spriteDataLoader().get("mario");
         } else if (playerIndex == 2){
-        playerData = SpriteLoader.spriteDataLoader().get("player2");    
+            playerData = SpriteLoader.spriteDataLoader().get("player2");    
+            scarfV1Data = SpriteLoader.spriteDataLoader().get("scarf2.1");
+            scarfV2Data = SpriteLoader.spriteDataLoader().get("scarf2.2");        
+            capData = SpriteLoader.spriteDataLoader().get("luigi");        
         }
         SpriteData shadowData = SpriteLoader.spriteDataLoader().get("shadow");
         SpriteData markData = SpriteLoader.spriteDataLoader().get("mark");
@@ -86,6 +104,10 @@ public class Player extends Entities{
             playerSpriteSheet = ImageIO.read(getClass().getResource(playerData.getPath()));
             shadow = ImageIO.read(getClass().getResource(shadowData.getPath()));
             floormark = ImageIO.read(getClass().getResource(markData.getPath()));
+            scarfSegV1 = ImageIO.read(getClass().getResource(scarfV1Data.getPath()));
+            scarfSegV2 = ImageIO.read(getClass().getResource(scarfV2Data.getPath()));
+            mariocapimage = ImageIO.read(getClass().getResource(capData.getPath()));
+            
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -96,6 +118,13 @@ public class Player extends Entities{
         playerSprite = new Sprite<>(playerSpriteSheet, this.heightO, this.widthO, PlayerAnimation.class, 15);
         shadowSprite = new Sprite<>(shadow, 32, 32, ShadowAnimation.class, 1);
         markSprite = new Sprite<>(floormark, 32, 32, MarkAnimation.class, 1);
+        /*scale de imagens estáticas*/
+        
+        /*mario cap*/
+        mariocapimageSCALED = new BufferedImage(mariocapimage.getWidth()* (int)Universal.SCALE, mariocapimage.getHeight() * (int)Universal.SCALE, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = mariocapimageSCALED.createGraphics();
+        g2d.drawImage(this.mariocapimage, 0, 0, mariocapimage.getWidth()* (int)Universal.SCALE, mariocapimage.getHeight() * (int)Universal.SCALE, null);
+        g2d.dispose();
     }
     
     @Override
@@ -115,7 +144,8 @@ public class Player extends Entities{
         if(collider.verifyNearby()){ //somente se HÁ um obstáculo dedd asdasdas das dantro da minha range de colisão 
             collider.verifyCollission();
         }
-        scarf.update(deltaTime);
+        scarf2.update(deltaTime);
+        scarf1.update(deltaTime);
         updateHitbox();
     }
 
@@ -125,21 +155,26 @@ public class Player extends Entities{
         playerSprite.update(); //altero o state da minha animacao
         
         if(!marioCap){
+        scarf2.render(g2d);
         playerSprite.render(g2d, (int) getX() - 12, (int) getY());
-        scarf.render(g2d);
+        scarf1.render(g2d);
         } else {
-            //renderizo com 50% de transparencia
+            scarf2.render(g2d);
+            playerSprite.render(g2d, (int) getX() - 12, (int) getY());
+            g2d.drawImage(mariocapimageSCALED, (int)getX() - 25, (int)getY() - 39, null);
+            scarf1.render(g2d);
         }
-        //Renderizo a sombra
-        if(!dead){    
-            shadowSprite.render(g2d, (int)getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
-        }
+        
         
         if(Universal.showGrid){
             drawHitbox(g2d);
             collider.drawCollisionArea(g2d);
             markSprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
         }
+    }
+    
+    public void renderShadow(Graphics2D g2d){
+        shadowSprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
     }
 
     /*------------ GETTERS AND SETTERS ------------*/

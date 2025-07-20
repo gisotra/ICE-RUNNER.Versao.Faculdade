@@ -1,6 +1,7 @@
 
 package instances.entities;
 
+import instances.Objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -13,7 +14,7 @@ import utilz.SpriteData;
 import utilz.SpriteLoader;
 import utilz.Universal;
 
-public class PowerUps {
+public class PowerUps{
     /*
     x, y, sprite, spriteScale, index, horizontalSpeed, verticalSpeed
     */
@@ -26,11 +27,11 @@ public class PowerUps {
     private Rectangle2D.Float collisionArea;
     private float collAreaWidth;
     private float collAreaHeight;
+    private boolean isActive = false;
 
-    public PowerUps(int index, int y) {
+    public PowerUps(int index) {
         this.index = index;
         this.x = Universal.OBST_SPAWN_X;
-        this.y = y;
         initProperties();
         
     }
@@ -76,15 +77,24 @@ public class PowerUps {
     
     
     public void update(float deltaTime){
-        setX(getX() + horizontalSpeed * deltaTime);
+        if(isActive){
+            setX(getX() + horizontalSpeed * deltaTime);    
+        }
+        /*pooling*/
+        if(getX() < 0 - 2 * Universal.TILES_SIZE){
+            setIsActive(false);
+        }
+        
     }
     
-    public void render(Graphics2D g2d, float x, float y){
-        int drawX = (int) (x - powerUpSprite.getLarguraFrameEscalonado() / 2);
-        int drawY = (int) (y - powerUpSprite.getAlturaFrameEscalonado() / 2) ;
-        powerUpSprite.render(g2d, drawX, drawY);
-        if(Universal.showGrid){
-            drawCollisionArea(g2d);
+    public void render(Graphics2D g2d){
+        if(isActive){
+            int drawX = (int) (x - powerUpSprite.getLarguraFrameEscalonado() / 2);
+            int drawY = (int) (y - powerUpSprite.getAlturaFrameEscalonado() / 2) ;
+            powerUpSprite.render(g2d, drawX, drawY);
+            if(Universal.showGrid){
+                drawCollisionArea(g2d);
+            }    
         }
     }
  
@@ -118,6 +128,16 @@ public class PowerUps {
     public void setY(float y) {
         this.y = y;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    
     
     
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import utilz.LinearInterp;
 import utilz.SpriteData;
 import utilz.SpriteLoader;
 import utilz.Universal;
@@ -21,34 +22,26 @@ public class ScarfSegment {
     private float lastYPosition;
     private float gravity = 0.5f;
     private float wind = -2.0f;
+    private float time;
+    private float scale;
     
 
-    public ScarfSegment(float x, float y, Player player) {
+    public ScarfSegment(float x, float y, Player player, float scale, BufferedImage scarfSegSprite) {
         //verlet integration
         this.x = x;
         this.y = y;
         lastXPosition = x;
         lastYPosition = y;
+        this.scale = scale;
         
         this.player = player;
+        this.scarfSegSprite = scarfSegSprite;
         initSprite();
     }
     
     public void initSprite() {
-        SpriteData scarfData = null;
-        if(player.getPlayerIndex() == 1){
-            scarfData = SpriteLoader.spriteDataLoader().get("scarf1");
-        } else if (player.getPlayerIndex() == 2){
-            scarfData = SpriteLoader.spriteDataLoader().get("scarf2");
-        }
-        
-        try {
-            scarfSegSprite = ImageIO.read(getClass().getResource(scarfData.getPath()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        int larguraEscalonada = largura * (int)Universal.SCALE;
-        int alturaEscalonada = altura * (int)Universal.SCALE;
+        int larguraEscalonada = largura * (int)scale;
+        int alturaEscalonada = altura * (int)scale;
 
         scarfSegSpriteSCALED = new BufferedImage(larguraEscalonada, alturaEscalonada, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = scarfSegSpriteSCALED.createGraphics();
@@ -82,7 +75,12 @@ public class ScarfSegment {
         lastYPosition = currentY;
     }
     
-    public void applyConstraint(ScarfSegment segmentoAncora, float distanciaIDEALEntreSegmentos){ //limita os meus segmentos de forma que eles pareçam conectados entre si
+    public void applyConstraint(ScarfSegment segmentoAncora, float distanciaIDEALEntreSegmentos, float deltatime){ //limita os meus segmentos de forma que eles pareçam conectados entre si
+        time += deltatime;
+        float t = (float) ((Math.sin(time * Math.PI) + 0.5) / 2.0);
+        float linearY = LinearInterp.lerp(-0.7f, 0.7f, t);
+        gravity = linearY + 0.5f;
+        
         float deltaX = x - segmentoAncora.getX(); 
         float deltaY = y - segmentoAncora.getY();
         

@@ -36,7 +36,8 @@ public class Spawner{
             case 4:
                 Universal.block = true;
                 break;
-            default:
+            case 0:
+                //spm.spawnPowerUp();
                 break;
         }
         

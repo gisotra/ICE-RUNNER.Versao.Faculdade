@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import loop.GCanvas;
 import utilz.AnimationType;
+import utilz.LinearInterp;
 import utilz.Screen;
 import utilz.Sprite;
 import utilz.SpriteData;
@@ -19,6 +20,11 @@ public class Bird extends Obstacles{ //extends Obstacles{
     private Sprite<BirdAnimation> birdSprite;
     private BufferedImage birdSpriteSheet;
     private BirdAnimation birdAction = BirdAnimation.FLYING;
+    private float factorSpeed = 1.9f;
+    private float time;
+    private float verticalspeed = 1.0f;
+    private float MaxHeight = 5 * Universal.TILES_SIZE;
+    private float MinHeight = 7 * Universal.TILES_SIZE;
     /*------------ CONSTRUTOR ------------*/
     public Bird(Screen screen, GCanvas gc) {
         super(screen, gc);
@@ -63,6 +69,19 @@ public class Bird extends Obstacles{ //extends Obstacles{
         if (Universal.showGrid) {
             drawObstHitbox(g2d);
         }
+    }
+    
+    @Override
+    public void update(float deltatime){
+        time += deltatime;
+        
+        float t = (float)((Math.sin(time * Math.PI) + 0.5) / 2.0);
+        float linearY = LinearInterp.lerp(MinHeight, MaxHeight, t);
+        setY(linearY * 1f);
+        
+        setX(getX()  + Universal.BASE_SPEED * factorSpeed * deltatime); //desloca para a esquerda
+        updateObstHitbox();
+    
     }
     
     /*========== Classe interna Para os Sprites ==========*/ 

@@ -3,17 +3,24 @@
     <sprite name="player1">
         <path>/assets/player/player.png</path>
     </sprite>
-    <sprite name="scarf1">
+    <sprite name="scarf1.1">
         <path>/assets/player/scarfSegmentP1.png</path>
+    </sprite>
+    <sprite name="scarf1.2">
+        <path>/assets/player/scarfSegmentP1v2.png</path>
     </sprite>
     
     <!-- Player 2 -->
     <sprite name="player2">
         <path>/assets/player/player2.png</path>
     </sprite>
-    <sprite name="scarf2">
+    <sprite name="scarf2.1">
         <path>/assets/player/scarfSegmentP2.png</path>
     </sprite>
+    <sprite name="scarf2.2">
+        <path>/assets/player/scarfSegmentP2v2.png</path>
+    </sprite>
+    
     <sprite name="shadow">
         <path>/assets/player/shadow.png</path>
     </sprite>
@@ -21,7 +28,7 @@
         <path>/assets/player/floormark.png</path>
     </sprite>
     
-    <!--Power Ups-->
+    <!--Power Ups Icons-->
     <sprite name = "powerUp1">
         <path>/assets/powerUps/muramasa.png</path>
     </sprite>
@@ -41,7 +48,14 @@
         <path>/assets/powerUps/particle3.png</path>
     </sprite>
     
-    
+    <!-- Power Ups -->
+    <sprite name = "mario">
+        <path>/assets/player/mario.png</path>
+    </sprite>
+    <sprite name = "luigi">
+        <path>/assets/player/luigi.png</path>
+    </sprite>
+        
     <!-- Obstáculos -->
     <sprite name="wall">
         <path>/assets/obstacles/wall.png</path>
