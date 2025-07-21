@@ -49,7 +49,7 @@ public class Player extends Entities{
     /*Power Ups Icons*/
     private boolean isPowered = false;
     private boolean sword = false;
-    private boolean marioCap = false;
+    private boolean marioCap = true;
     private boolean shielded = false;
     
     /*Power Ups sprites*/
