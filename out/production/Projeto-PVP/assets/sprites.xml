@@ -55,7 +55,16 @@
     <sprite name = "luigi">
         <path>/assets/player/luigi.png</path>
     </sprite>
-        
+    <sprite name = "sword1">
+        <path>/assets/player/sword1.png</path>
+    </sprite>
+    <sprite name = "sword2">
+        <path>/assets/player/sword2.png</path>
+    </sprite>
+    <sprite name = "axe">
+        <path>/assets/player/throwAxe.png</path>
+    </sprite>
+
     <!-- Obstáculos -->
     <sprite name="wall">
         <path>/assets/obstacles/wall.png</path>

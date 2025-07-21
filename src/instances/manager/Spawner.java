@@ -36,7 +36,7 @@ public class Spawner{
             case 4:
                 Universal.block = true;
                 break;
-            case 0:
+            default:
                 //spm.spawnPowerUp();
                 break;
         }
@@ -75,7 +75,11 @@ public class Spawner{
             Universal.obstSpawnIndex = 4;
             return;
         }
-        
+
+        if(Universal.SCORE % 2000 == 0){
+            spm.spawnPowerUp();
+            return;
+        }
     }
     
     /*Método que será chamado quando você for um cliente*/

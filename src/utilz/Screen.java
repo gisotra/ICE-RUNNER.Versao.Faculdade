@@ -42,7 +42,7 @@ public class Screen {
     /*------------ ATRIBUTOS ------------*/
     private GCanvas gc;
     public static List<Objects> objectsOnScreen = new ArrayList<>(); //vou usar pra dar update e render no player e nos obstaculos simultaneamente (mto amigavel com a cpu)
-    public static PowerUps[] powerUpArray = new PowerUps[3];
+    public static List<PowerUps> powerUpArray = new ArrayList<>();
     public static boolean thereIsAPowerUpOnTheScreen = false;
     
     /* elementos principais */
@@ -344,8 +344,10 @@ public class Screen {
     }
     
     public void startPowerUps(){
-        for(int i = 0; i < powerUpArray.length; i++){
-            powerUpArray[i] = new PowerUps(i);
+
+        for (int i = 1; i <= 3; i++) { // considerando que você tem 3 tipos
+            PowerUps p = new PowerUps(i);
+            powerUpArray.add(p);
         }
     }
     

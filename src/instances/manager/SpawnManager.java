@@ -61,12 +61,12 @@ public class SpawnManager {
     }
     
     public void spawnPowerUp(){
-        for(PowerUps p : Screen.powerUpArray){
-            if(!p.isActive()){
-                p.setX(Universal.OBST_SPAWN_X);
-                p.setY(Universal.BLOCK_SKY_LEVEL);
+        for (PowerUps p : Screen.powerUpArray) {
+            if (!p.isActive()) {
                 p.setIsActive(true);
-                return;
+                p.setX(Universal.OBST_SPAWN_X);
+                p.setY(Universal.BIRD_SPAWN_Y - 32); // ajustar se quiser
+                break;
             }
         }
     }

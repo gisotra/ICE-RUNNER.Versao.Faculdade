@@ -21,7 +21,7 @@ public class PowerUps{
     private float x, y;
     private BufferedImage sprite;
     private int index;
-    private float horizontalSpeed = Universal.BASE_SPEED;
+    private float horizontalSpeed = -10f;
     private float verticalSpeed;
     private Sprite<PowerUpAnimation> powerUpSprite;
     private Rectangle2D.Float collisionArea;
@@ -78,12 +78,13 @@ public class PowerUps{
     
     public void update(float deltaTime){
         if(isActive){
-            setX(getX() + horizontalSpeed * deltaTime);    
+            setX(getX() + horizontalSpeed); //* deltaTime);
         }
         /*pooling*/
         if(getX() < 0 - 2 * Universal.TILES_SIZE){
             setIsActive(false);
         }
+
         
     }
     

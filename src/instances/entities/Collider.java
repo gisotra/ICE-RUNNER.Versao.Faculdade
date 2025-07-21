@@ -70,6 +70,8 @@ public class Collider {
                     } 
                     player.dead = true; //MORTE DO PLAYER1 r.i.p
                 }
+
+
             }
         }
         
