@@ -44,6 +44,7 @@ public class Player extends Entities{
     private Sprite<ShadowAnimation> shadowSprite;
     private Sprite<MarkAnimation> markSprite;
     private Sprite<ChargeAnimation> chargeSprite;
+    private Sprite<SwordAnimation> swordSprite;
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
     public ChargeAnimation chargeAction = ChargeAnimation.STATIC;
     private ScarfRope scarf1, scarf2;
@@ -56,10 +57,13 @@ public class Player extends Entities{
     private boolean marioCap = false;
     private boolean shielded = false;
     
+    private boolean attacking = false;
+    
     /*Power Ups sprites*/
     private BufferedImage mariocapimage;
     private BufferedImage mariocapimageSCALED;
     private BufferedImage chargeimage;
+    private BufferedImage swordimage;
     private SpriteData capData;
     private SpriteData playerData;
     private SpriteData scarfV1Data;
@@ -67,6 +71,7 @@ public class Player extends Entities{
     private SpriteData chargeData;
     private SpriteData shadowData;
     private SpriteData markData;
+    private SpriteData swordData;
 
     //pra fazer o ghost do dash do personagem, eu teria que pegar o frame atual e só repintar ele na posição registrada
     
@@ -100,16 +105,19 @@ public class Player extends Entities{
             scarfV1Data = SpriteLoader.spriteDataLoader().get("scarf1.1");
             scarfV2Data = SpriteLoader.spriteDataLoader().get("scarf1.2");
             capData = SpriteLoader.spriteDataLoader().get("mario");
+            swordData = SpriteLoader.spriteDataLoader().get("sword1");
         } else if (playerIndex == 2){
             playerData = SpriteLoader.spriteDataLoader().get("player2");    
             scarfV1Data = SpriteLoader.spriteDataLoader().get("scarf2.1");
             scarfV2Data = SpriteLoader.spriteDataLoader().get("scarf2.2");        
             capData = SpriteLoader.spriteDataLoader().get("luigi");        
+            swordData = SpriteLoader.spriteDataLoader().get("sword2");
         }
             /*em comum*/
             chargeData = SpriteLoader.spriteDataLoader().get("charge");
             shadowData = SpriteLoader.spriteDataLoader().get("shadow");
             markData = SpriteLoader.spriteDataLoader().get("mark");
+
         try {
             playerSpriteSheet = ImageIO.read(getClass().getResource(playerData.getPath()));
             shadow = ImageIO.read(getClass().getResource(shadowData.getPath()));
@@ -118,6 +126,7 @@ public class Player extends Entities{
             scarfSegV2 = ImageIO.read(getClass().getResource(scarfV2Data.getPath()));
             mariocapimage = ImageIO.read(getClass().getResource(capData.getPath()));
             chargeimage = ImageIO.read(getClass().getResource(chargeData.getPath()));
+            swordimage = ImageIO.read(getClass().getResource(swordData.getPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +138,8 @@ public class Player extends Entities{
         shadowSprite = new Sprite<>(shadow, 32, 32, ShadowAnimation.class, 1);
         markSprite = new Sprite<>(floormark, 32, 32, MarkAnimation.class, 1);
         chargeSprite = new Sprite<>(chargeimage, 13, 13, ChargeAnimation.class, 72);
-        /*scale de imagens estáticas*/
+        swordSprite = new Sprite<>(swordimage, 52, 27, SwordAnimation.class, 1);
+        /*scale de imagens estáticas*/ 
         
         /*mario cap*/
         mariocapimageSCALED = new BufferedImage(mariocapimage.getWidth()* (int)Universal.SCALE, mariocapimage.getHeight() * (int)Universal.SCALE, BufferedImage.TYPE_INT_ARGB);
@@ -171,17 +181,26 @@ public class Player extends Entities{
         playerSprite.update(); //altero o state da minha animacao
         
 
-        if(!marioCap){
-        scarf2.render(g2d);
-        playerSprite.render(g2d, (int) getX() - 12, (int) getY());
-        scarf1.render(g2d);
-        } else {
+        
+        
+        
+        if (marioCap) { //mario
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); /*Aplico transparencia no pincel*/
             scarf2.render(g2d);
             playerSprite.render(g2d, (int) getX() - 12, (int) getY());
             g2d.drawImage(mariocapimageSCALED, (int)getX() - 25, (int)getY() - 39, null);
             scarf1.render(g2d);
             g2d.setComposite(original);
+        } else if (sword) { //sword
+            swordSprite.render(g2d, (int) getX() + 20, (int) getY() - 100);
+            scarf2.render(g2d);
+            playerSprite.render(g2d, (int) getX() - 12, (int) getY());
+            scarf1.render(g2d);
+            
+        } else {
+            scarf2.render(g2d);
+            playerSprite.render(g2d, (int) getX() - 12, (int) getY());
+            scarf1.render(g2d);
         }
         
         if (Player.isPowered) {
@@ -189,6 +208,8 @@ public class Player extends Entities{
             chargeSprite.update();
             chargeSprite.render(g2d, (int) getX() - 40, (int) getY() - 35);
         }
+        
+        
         
         if(Universal.showGrid){
             drawHitbox(g2d);
@@ -220,6 +241,7 @@ public class Player extends Entities{
             this.marioCap = false;
             this.shielded = false;
             isPowered = false;
+            this.chargeAction = null;
             chargeSprite.resetAction();
             return;
         });
@@ -368,5 +390,21 @@ public class Player extends Entities{
             return frameCount;
         }
     }
+    
+    /*sword*/
+    public enum SwordAnimation implements AnimationType {
+        STATIC;
+
+        @Override
+        public int getIndex() {
+            return 0;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return 1;
+        }
+    }
+
     
 }
