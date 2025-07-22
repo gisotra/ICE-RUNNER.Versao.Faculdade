@@ -80,12 +80,19 @@ public class Screen {
 
         
         layer3 = new Layer3(this, this.gc);
-        objectsOnScreen.add(layer3);
+        //objectsOnScreen.add(layer3);
         layer2 = new Layer2(this, this.gc);
-        objectsOnScreen.add(layer2);
+        //objectsOnScreen.add(layer2);
         layer1 = new Layer1(this, this.gc);
         objectsOnScreen.add(layer1);
 
+        
+        for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
+            objectsOnScreen.add(new Wall(this, this.gc));
+            objectsOnScreen.add(new Saw(this, this.gc));
+            objectsOnScreen.add(new FallBlock(this, this.gc));
+            objectsOnScreen.add(new Bird(this, this.gc));
+        }
         player1 = new Player(this, this.gc, 1, false);
         player2 = new Player(this, this.gc, 2, false);
         dummy1 = new Player(this, this.gc, 1, true);
@@ -94,13 +101,6 @@ public class Screen {
         objectsOnScreen.add(player2);
         objectsOnScreen.add(dummy1);
         objectsOnScreen.add(dummy2);
-        
-        for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
-            objectsOnScreen.add(new Wall(this, this.gc));
-            objectsOnScreen.add(new Saw(this, this.gc));
-            objectsOnScreen.add(new FallBlock(this, this.gc));
-            objectsOnScreen.add(new Bird(this, this.gc));
-        }
     }
     
     /*------------ MÉTODO RENDER ------------*/

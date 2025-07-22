@@ -79,12 +79,12 @@ public class Spawner{
             return;
         }
 
-        if(!Player.isPowered){
+        /*if(!Player.isPowered){
             if(currentTime - lastPowerUpSpawn >= nextPowerUpSpawn){
                 spm.spawnPowerUp();   
                 lastPowerUpSpawn = currentTime;
             }
-        }
+        }*/
     }
     
     /*Método que será chamado quando você for um cliente*/

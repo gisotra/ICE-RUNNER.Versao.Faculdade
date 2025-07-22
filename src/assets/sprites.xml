@@ -85,7 +85,7 @@
         <path>/assets/obstacles/bird.png</path>
     </sprite>
     <sprite name="layer1">
-        <path>/assets/environment/ground3.png</path>
+        <path>/assets/environment/ground4.png</path>
     </sprite>
     <sprite name="layer2">
         <path>/assets/environment/mountains.png</path>

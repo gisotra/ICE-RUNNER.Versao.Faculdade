@@ -13,8 +13,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class SpriteLoader { /*Classe auxiliar que terá um único método estático "spriteDataLoader", que vai
     retornar um hashmap do tipo <String, SpriteData>*/
 
+        /*Crio um mapa em que as chaves e valores sao: string e uma instancia do tipo SpriteData*/
         public static HashMap<String, SpriteData> spriteMap = new HashMap<>();
     
+        /*Esse método cria o meu mapa*/
         public static HashMap<String, SpriteData> spriteDataLoader(){
             if (!spriteMap.isEmpty()) return spriteMap; // já carregado, retorna
             try {

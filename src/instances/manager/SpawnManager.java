@@ -71,15 +71,6 @@ public class SpawnManager {
             Screen.powerUpArray.get(pIndex).setX(Universal.OBST_SPAWN_X);
             Screen.powerUpArray.get(pIndex).setY(Universal.BIRD_SPAWN_Y - 32);
         }
-        /*for (PowerUps p : Screen.powerUpArray) {
-            
-            if (!p.isActive()) {
-                p.setIsActive(true);
-                p.setX(Universal.OBST_SPAWN_X);
-                p.setY(Universal.BIRD_SPAWN_Y - 32); // ajustar se quiser
-                break;
-            }
-        }*/
     }
     /*
     Lógica usada:
