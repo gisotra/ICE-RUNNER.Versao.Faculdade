@@ -1,5 +1,7 @@
 package instances.entities;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -41,24 +43,30 @@ public class Player extends Entities{
     private Sprite<PlayerAnimation> playerSprite;
     private Sprite<ShadowAnimation> shadowSprite;
     private Sprite<MarkAnimation> markSprite;
+    private Sprite<ChargeAnimation> chargeSprite;
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
+    public ChargeAnimation chargeAction = ChargeAnimation.STATIC;
     private ScarfRope scarf1, scarf2;
     private BufferedImage scarfSegV1;
     private BufferedImage scarfSegV2;
     
     /*Power Ups Icons*/
-    private boolean isPowered = false;
+    public static boolean isPowered = false; //os dois players ficam com power up ao mesmo tempo
     private boolean sword = false;
-    private boolean marioCap = true;
+    private boolean marioCap = false;
     private boolean shielded = false;
     
     /*Power Ups sprites*/
     private BufferedImage mariocapimage;
     private BufferedImage mariocapimageSCALED;
+    private BufferedImage chargeimage;
     private SpriteData capData;
     private SpriteData playerData;
     private SpriteData scarfV1Data;
     private SpriteData scarfV2Data;
+    private SpriteData chargeData;
+    private SpriteData shadowData;
+    private SpriteData markData;
 
     //pra fazer o ghost do dash do personagem, eu teria que pegar o frame atual e só repintar ele na posição registrada
     
@@ -85,7 +93,7 @@ public class Player extends Entities{
         this.y = y;
         this.playerAction = anim;
     }
-    
+    /*Inicialização de Sprites via XML*/
     public void initSprite(){
         if(playerIndex == 1){
             playerData = SpriteLoader.spriteDataLoader().get("player1");
@@ -98,8 +106,10 @@ public class Player extends Entities{
             scarfV2Data = SpriteLoader.spriteDataLoader().get("scarf2.2");        
             capData = SpriteLoader.spriteDataLoader().get("luigi");        
         }
-        SpriteData shadowData = SpriteLoader.spriteDataLoader().get("shadow");
-        SpriteData markData = SpriteLoader.spriteDataLoader().get("mark");
+            /*em comum*/
+            chargeData = SpriteLoader.spriteDataLoader().get("charge");
+            shadowData = SpriteLoader.spriteDataLoader().get("shadow");
+            markData = SpriteLoader.spriteDataLoader().get("mark");
         try {
             playerSpriteSheet = ImageIO.read(getClass().getResource(playerData.getPath()));
             shadow = ImageIO.read(getClass().getResource(shadowData.getPath()));
@@ -107,7 +117,7 @@ public class Player extends Entities{
             scarfSegV1 = ImageIO.read(getClass().getResource(scarfV1Data.getPath()));
             scarfSegV2 = ImageIO.read(getClass().getResource(scarfV2Data.getPath()));
             mariocapimage = ImageIO.read(getClass().getResource(capData.getPath()));
-            
+            chargeimage = ImageIO.read(getClass().getResource(chargeData.getPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -118,6 +128,7 @@ public class Player extends Entities{
         playerSprite = new Sprite<>(playerSpriteSheet, this.heightO, this.widthO, PlayerAnimation.class, 15);
         shadowSprite = new Sprite<>(shadow, 32, 32, ShadowAnimation.class, 1);
         markSprite = new Sprite<>(floormark, 32, 32, MarkAnimation.class, 1);
+        chargeSprite = new Sprite<>(chargeimage, 13, 13, ChargeAnimation.class, 72);
         /*scale de imagens estáticas*/
         
         /*mario cap*/
@@ -141,8 +152,11 @@ public class Player extends Entities{
         movement.updateMovement(deltaTime);
         collider.updateCollisionArea();
         
-        if(collider.verifyNearby()){ //somente se HÁ um obstáculo dedd asdasdas das dantro da minha range de colisão 
+        if(collider.verifyNearby()){
             collider.verifyCollission();
+        }
+        if(!dead){    
+            collider.verifyPowerUpCollision();
         }
         scarf2.update(deltaTime);
         scarf1.update(deltaTime);
@@ -151,20 +165,30 @@ public class Player extends Entities{
 
     @Override
     public synchronized void render(Graphics2D g2d){
+        Composite original = g2d.getComposite();
+
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
+
         if(!marioCap){
         scarf2.render(g2d);
         playerSprite.render(g2d, (int) getX() - 12, (int) getY());
         scarf1.render(g2d);
         } else {
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); /*Aplico transparencia no pincel*/
             scarf2.render(g2d);
             playerSprite.render(g2d, (int) getX() - 12, (int) getY());
             g2d.drawImage(mariocapimageSCALED, (int)getX() - 25, (int)getY() - 39, null);
             scarf1.render(g2d);
+            g2d.setComposite(original);
         }
         
+        if (Player.isPowered) {
+            chargeSprite.setAction(chargeAction);
+            chargeSprite.update();
+            chargeSprite.render(g2d, (int) getX() - 40, (int) getY() - 35);
+        }
         
         if(Universal.showGrid){
             drawHitbox(g2d);
@@ -176,6 +200,33 @@ public class Player extends Entities{
     public void renderShadow(Graphics2D g2d){
         shadowSprite.render(g2d, (int) getX() - 21, (int) Universal.groundY - (Universal.TILES_SIZE / 6) + 40);
     }
+    
+    /*ChargeBar + Duração do powerUp*/
+    public void startPowerUpCounter(){
+        //chargeBar é uma sprite de 15 frames que passam com speed de duração 1,25 segundos cada
+        Player.isPowered = true;
+        this.chargeAction = ChargeAnimation.STATIC;
+        
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(15000); // Dorme exatamente 15 segundos (duração do power up)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            
+            this.sword = false;
+            this.marioCap = false;
+            this.shielded = false;
+            isPowered = false;
+            chargeSprite.resetAction();
+            return;
+        });
+
+        t.start();
+        
+    }
 
     /*------------ GETTERS AND SETTERS ------------*/
     public synchronized float getX() {
@@ -184,51 +235,53 @@ public class Player extends Entities{
     public synchronized float getY() {
         return y;
     }
-
     public synchronized void setX(float x) {
         this.x = x;
     }
-
     public synchronized void setY(float y) {
         this.y = y;
     }
-
     public synchronized boolean isDead() {
         return dead;
     }
-
     public synchronized void setDead(boolean dead) {
         this.dead = dead;
     }
-
     public synchronized int getHeight() {
         return heightO;
     }
-
     public synchronized int getPlayerIndex(){
         return playerIndex;
     }
-
     public synchronized void setPlayerIndex(int playerIndex){
         this.playerIndex = playerIndex;
     }
-
     public synchronized Movement getMovement(){
         return movement;
     }
-
     public boolean isMarioCap() {
         return marioCap;
     }
-
     public void setMarioCap(boolean marioCap) {
         this.marioCap = marioCap;
     }
+    public boolean isSword() {
+        return sword;
+    }
+    public void setSword(boolean sword) {
+        this.sword = sword;
+    }
+    public boolean isShielded() {
+        return shielded;
+    }
 
+    public void setShielded(boolean shielded) {
+        this.shielded = shielded;
+    }
+    
     public boolean isDummy(){
         return isDummy;
     }
-
     public void setIsDummy(boolean isDummy){
         this.isDummy = isDummy;
     }
@@ -293,6 +346,27 @@ public class Player extends Entities{
         }
     }
     
-    
+    /*ChargeBar*/
+    public enum ChargeAnimation implements AnimationType{
+        STATIC(0, 13); //13 frames
+        
+        private final int index;
+        private final int frameCount;
+
+        ChargeAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+
+        @Override
+        public int getIndex() {
+            return index;
+        }
+
+        @Override
+        public int getFrameCount() {
+            return frameCount;
+        }
+    }
     
 }

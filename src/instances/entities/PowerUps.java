@@ -40,12 +40,15 @@ public class PowerUps{
         switch(index){
             case 1:{//sword
                 initSprites();
+                initCollisionArea();
             }break;
             case 2:{//shield
                 initSprites();
+                initCollisionArea();
             }break;
             case 3:{//cap
                 initSprites();
+                initCollisionArea();
             }break;
         }
     }
@@ -79,6 +82,7 @@ public class PowerUps{
     public void update(float deltaTime){
         if(isActive){
             setX(getX() + horizontalSpeed); //* deltaTime);
+            updateHitbox();
         }
         /*pooling*/
         if(getX() < 0 - 2 * Universal.TILES_SIZE){
@@ -98,6 +102,13 @@ public class PowerUps{
             }    
         }
     }
+    
+    public void updateHitbox(){
+        collisionArea.x = getX();
+        collisionArea.y = getY();
+    }
+    
+    
  
     /*========== Classe interna Para os Sprites ==========*/
     public enum PowerUpAnimation implements AnimationType{
@@ -137,8 +148,15 @@ public class PowerUps{
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
-    
-    
+
+    public Rectangle2D.Float getCollisionArea() {
+        return collisionArea;
+    }    
+
+    public int getIndex() {
+        return index;
+    }
+
     
     
 }

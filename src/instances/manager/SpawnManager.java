@@ -5,6 +5,7 @@ import instances.obstacles.Bird;
 import instances.obstacles.FallBlock;
 import instances.obstacles.Saw;
 import instances.obstacles.Wall;
+import java.util.Random;
 import utilz.Screen;
 import utilz.Universal;
 
@@ -61,14 +62,24 @@ public class SpawnManager {
     }
     
     public void spawnPowerUp(){
-        for (PowerUps p : Screen.powerUpArray) {
+        Random r = new Random();
+        int pIndex;
+        pIndex = r.nextInt(3); //de 0 a 2
+        
+        if(!Screen.powerUpArray.get(pIndex).isActive()){
+            Screen.powerUpArray.get(pIndex).setIsActive(true);
+            Screen.powerUpArray.get(pIndex).setX(Universal.OBST_SPAWN_X);
+            Screen.powerUpArray.get(pIndex).setY(Universal.BIRD_SPAWN_Y - 32);
+        }
+        /*for (PowerUps p : Screen.powerUpArray) {
+            
             if (!p.isActive()) {
                 p.setIsActive(true);
                 p.setX(Universal.OBST_SPAWN_X);
                 p.setY(Universal.BIRD_SPAWN_Y - 32); // ajustar se quiser
                 break;
             }
-        }
+        }*/
     }
     /*
     Lógica usada:

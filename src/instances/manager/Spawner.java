@@ -1,5 +1,6 @@
 package instances.manager;
 
+import instances.entities.Player;
 import java.util.Random;
 import utilz.Universal;
 
@@ -11,6 +12,8 @@ public class Spawner{
     private SpawnManager spm = new SpawnManager();
     private Random r = new Random();
     private int spawnpoint;
+    private long lastPowerUpSpawn = 0;
+    private long nextPowerUpSpawn = 10000; //35000 = 35s
     
     // Cooldown global entre spawns (anti-spam)
     private long lastGlobalSpawn = 0;
@@ -76,9 +79,11 @@ public class Spawner{
             return;
         }
 
-        if(Universal.SCORE % 2000 == 0){
-            spm.spawnPowerUp();
-            return;
+        if(!Player.isPowered){
+            if(currentTime - lastPowerUpSpawn >= nextPowerUpSpawn){
+                spm.spawnPowerUp();   
+                lastPowerUpSpawn = currentTime;
+            }
         }
     }
     

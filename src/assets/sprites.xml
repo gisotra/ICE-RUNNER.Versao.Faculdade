@@ -64,6 +64,9 @@
     <sprite name = "axe">
         <path>/assets/player/throwAxe.png</path>
     </sprite>
+    <sprite name = "charge">
+        <path>/assets/powerUps/charge.png</path>
+    </sprite>
 
     <!-- Obstáculos -->
     <sprite name="wall">

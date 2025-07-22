@@ -70,6 +70,12 @@ public class Sprite<T extends Enum<T> & AnimationType> {  //restringe o tipo do 
             contadorDeFrames = 0;
         }
     }
+    
+    public void resetAction(){
+        frameAtual = 0;
+        contadorDeFrames = 0;
+    }
+    
     public void render(Graphics2D g2d, int x, int y){
         g2d.drawImage(spritesEscalonados[currentState.getIndex()][frameAtual],
                 x, y,

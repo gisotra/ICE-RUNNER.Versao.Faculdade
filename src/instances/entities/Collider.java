@@ -63,18 +63,41 @@ public class Collider {
         for (Objects obj : Screen.objectsOnScreen) {
             if (obj instanceof Obstacles) {
                 Obstacles obstacle = (Obstacles) obj;
-
+                
                 if (player.getHitbox().intersects(obstacle.getObstHitbox())) {
                     if(player.isMarioCap()){
                         continue;
                     } 
                     player.dead = true; //MORTE DO PLAYER1 r.i.p
                 }
-
-
+            }
+        }       
+    }
+    public void verifyPowerUpCollision(){
+        for (PowerUps p : Screen.powerUpArray) {
+            PowerUps poder = p;
+            if (player.getHitbox().intersects(p.getCollisionArea())) {
+                if(p.getIndex() == 1){ //sword
+                    player.setSword(true);
+                    player.startPowerUpCounter();
+                    p.setIsActive(false);
+                    return;
+                } else if(p.getIndex() == 2){ //shield
+                    player.setShielded(true);
+                    player.startPowerUpCounter();
+                    p.setIsActive(false);
+                    return;
+                } else if(p.getIndex() == 3){ //marioCap
+                    player.setMarioCap(true);
+                    player.startPowerUpCounter();
+                    p.setIsActive(false);
+                    return;
+                }
+                /*Criar um método que inicia uma thread própria que dura 15 segundos, quando chega no fim, remove o 
+                isPowered e setta os booleans de power up falsos*/
+                
             }
         }
-        
     }
     
     
