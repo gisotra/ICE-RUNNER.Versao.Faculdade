@@ -1,6 +1,7 @@
 package instances.entities;
 
 import instances.entities.Player.PlayerAnimation;
+import utilz.AudioPlayer;
 import utilz.Universal;
 
 public class Movement {
@@ -60,6 +61,7 @@ public class Movement {
                 
                 // ================ movimentação VERTICAL ================
                 if (player.jump && isGrounded()) {
+                    AudioPlayer.playSound("jump");
                     player.playerAction = PlayerAnimation.JUMP;
                     verticalSpeed = jumpPower;
                     isJumping = true;

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import utilz.AnimationType;
+import utilz.AudioPlayer;
 import utilz.Screen;
 import utilz.Sprite;
 import utilz.SpriteData;
@@ -36,6 +37,9 @@ public class GCanvas extends Canvas {
         initMouseSprites();
         addKeyListener(new KeyInputs(this, Screen.objectsOnScreen)); 
         addMouseListener(new MouseInputs(this));
+        
+        AudioPlayer.initSounds();
+        
         try {
             InputStream is = getClass().getResourceAsStream("/assets/font/Chicken Font.ttf");
             chickenFont = Font.createFont(Font.TRUETYPE_FONT, is);
