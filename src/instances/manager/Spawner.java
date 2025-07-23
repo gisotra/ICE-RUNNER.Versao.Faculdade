@@ -20,6 +20,9 @@ public class Spawner{
     
     /*Método que será chamado somente quando o player estier jogando alone OU for um host*/
     public void play(){ //(currentTime - lastSpawn) >= SpawnWall )
+        if(Universal.SCORE < 150){
+            return;
+        }
         long currentTime = System.currentTimeMillis();
         
         if(currentTime - lastGlobalSpawn < Universal.globalCooldown){ //evita spam 

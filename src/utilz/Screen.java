@@ -88,10 +88,10 @@ public class Screen {
 
         
         for(int i = 0; i < 4; i++){ //3 por obstáculo, 9 no total. 
-            //objectsOnScreen.add(new Wall(this, this.gc));
+            objectsOnScreen.add(new Wall(this, this.gc));
             objectsOnScreen.add(new Saw(this, this.gc));
-            //objectsOnScreen.add(new FallBlock(this, this.gc));
-            //objectsOnScreen.add(new Bird(this, this.gc));
+            objectsOnScreen.add(new FallBlock(this, this.gc));
+            objectsOnScreen.add(new Bird(this, this.gc));
         }
         player1 = new Player(this, this.gc, 1, false);
         player2 = new Player(this, this.gc, 2, false);

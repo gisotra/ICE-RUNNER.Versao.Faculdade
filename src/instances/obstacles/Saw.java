@@ -58,7 +58,7 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     public void initObstHitbox() { //x, y, largura, altura
         this.obs_hitbox = new Rectangle2D.Float(getX(), getY() + 29 * Universal.SCALE, 80 * Universal.SCALE, 14 * Universal.SCALE); //metade do tamanho
         this.hitbox2 = new Rectangle2D.Float(getX() + 8 * Universal.SCALE, getY() + 16 * Universal.SCALE, 64 * Universal.SCALE, 13 * Universal.SCALE);
-        this.hitbox3 = new Rectangle2D.Float(getX() + 22 * Universal.SCALE, getY(), 32 * Universal.SCALE, 12 * Universal.SCALE);
+        this.hitbox3 = new Rectangle2D.Float(getX() + 70 * Universal.SCALE, getY(), 30 * Universal.SCALE, 12 * Universal.SCALE);
     }
     
     @Override 
@@ -67,8 +67,8 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
         obs_hitbox.y = getY() + 29 * Universal.SCALE;
         hitbox2.x = getX() + 8 * Universal.SCALE;
         hitbox2.y = getY() + 16 * Universal.SCALE;
-        hitbox3.x = getX() + 22 * Universal.SCALE;
-        hitbox3.y = getY();
+        hitbox3.x = getX() + 75;
+        hitbox3.y = getY() + 12;
     }
     
     @Override
@@ -109,5 +109,10 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
         }
     }
 
-    
+    public Rectangle2D.Float getHitbox2(){
+        return hitbox2;
+    }
+    public Rectangle2D.Float getHitbox3(){
+        return hitbox3;
+    }
 }

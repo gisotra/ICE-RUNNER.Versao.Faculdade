@@ -5,6 +5,8 @@ import instances.obstacles.Obstacles;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+
+import instances.obstacles.Saw;
 import utilz.Screen;
 import utilz.Universal;
 
@@ -40,38 +42,57 @@ public class Collider {
         collisionArea.x = player.x - this.areaXOffset; //atualizo a posição horizontal
         collisionArea.y = player.y - this.areaYOffset; //atualizo a posição vertical
     }
-    
-    public boolean verifyNearby(){
+        public boolean verifyNearby(){
         /*
-        Se algum obstáculo estiver dentro da minha área de colisão (que NÃO É 
+        Se algum obstáculo estiver dentro da minha área de colisão (que NÃO É
         minha hitbox, é só um "campo de observação", eu passo a verificar a colisão
         com o obstáculo, poupando memória
         */
-        for(Objects obj : Screen.objectsOnScreen){
-            if(obj instanceof Obstacles){
-                Obstacles obstacle = (Obstacles) obj;
-                
-                if(collisionArea.intersects(obstacle.getObstHitbox())){
-                    return true;
+            for(Objects obj : Screen.objectsOnScreen){
+                if(obj instanceof Obstacles){
+                    Obstacles obstacle = (Obstacles) obj;
+
+                    if (obstacle instanceof Saw) {
+                        Saw s = (Saw) obstacle;
+                        if (collisionArea.intersects(s.getObstHitbox()) ||
+                                collisionArea.intersects(s.getHitbox2()) ||
+                                collisionArea.intersects(s.getHitbox3())) {
+                            return true;
+                        }
+                        continue;
+                    }
+
+                    if(collisionArea.intersects(obstacle.getObstHitbox())){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+    public void verifyCollission(){
+        for (Objects obj : Screen.objectsOnScreen) {
+            if (!(obj instanceof Obstacles)) continue;
+            Obstacles obstacle = (Obstacles) obj;
+            if (obstacle instanceof Saw) {
+                Saw s = (Saw) obstacle;
+                if (player.getHitbox().intersects(s.getObstHitbox()) ||
+                        player.getHitbox().intersects(s.getHitbox2()) ||
+                        player.getHitbox().intersects(s.getHitbox3())) {
+                    if (!player.isMarioCap()) {
+                        player.dead = true;
+                    }
+                    continue;
+                }
+            }
+
+            // Trata os outros obstáculos normalmente
+            if (player.getHitbox().intersects(obstacle.getObstHitbox())) {
+                if (!player.isMarioCap()) {
+                    player.dead = true;
                 }
             }
         }
-        return false;
-    }
-    
-    public void verifyCollission(){
-        for (Objects obj : Screen.objectsOnScreen) {
-            if (obj instanceof Obstacles) {
-                Obstacles obstacle = (Obstacles) obj;
-                
-                if (player.getHitbox().intersects(obstacle.getObstHitbox())) {
-                    if(player.isMarioCap()){
-                        continue;
-                    } 
-                    player.dead = true; //MORTE DO PLAYER1 r.i.p
-                }
-            }
-        }       
     }
     public void verifyPowerUpCollision(){
         for (PowerUps p : Screen.powerUpArray) {
