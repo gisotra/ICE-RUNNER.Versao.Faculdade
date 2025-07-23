@@ -105,32 +105,43 @@ public class Universal {
         Universal.youAreAClient = false;
     }
     
-    /*Sockets Classe universal*/   
-    public static InetAddress ip;
-    public static String IPString = initIP();
-    
-    public static String initIP() {
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface iface = interfaces.nextElement();
-                // ignora interfaces que estão desligadas ou loopback
-                if (iface.isLoopback() || !iface.isUp()) {
-                    continue;
+    /*Sockets Classe universal*/
+    //https://how.dev/answers/how-to-get-the-ip-address-of-a-localhost-in-java
+    //https://stackoverflow.com/questions/9481865/getting-the-ip-address-of-the-current-machine-using-java
+    //https://www.geeksforgeeks.org/java/java-program-find-ip-address-computer/
+
+    public static InetAddress ip;                                      // Declara uma variável para armazenar um endereço IP (não está sendo usada aqui)
+    public static String IPString = initIP();                          // Inicializa a variável IPString chamando o método initIP() ao carregar a classe
+
+    public static String initIP() {                                    // Método que retorna o IP local como String
+        try {                                                          // Início do bloco try para capturar possíveis exceções
+            Enumeration<NetworkInterface> interfaces =                 // Obtém todas as interfaces de rede da máquina
+                    NetworkInterface.getNetworkInterfaces();               //
+
+            while (interfaces.hasMoreElements()) {                     // Enquanto houver mais interfaces para processar
+                NetworkInterface iface = interfaces.nextElement();     // Pega a próxima interface de rede
+
+                if (iface.isLoopback() || !iface.isUp()) {             // Se for uma interface de loopback ou estiver inativa
+                    continue;                                          // Pula para a próxima interface
                 }
 
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    InetAddress addr = addresses.nextElement();
-                    if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
-                        return addr.getHostAddress(); // Aqui está o IP local correto
+                Enumeration<InetAddress> addresses =                   // Obtém todos os endereços IP da interface atual
+                        iface.getInetAddresses();                          //
+
+                while (addresses.hasMoreElements()) {                  // Enquanto houver endereços IP na interface
+                    InetAddress addr = addresses.nextElement();        // Pega o próximo endereço IP
+
+                    if (addr instanceof Inet4Address                   // Se o endereço for do tipo IPv4
+                            && !addr.isLoopbackAddress()) {                // e não for um endereço de loopback
+                        return addr.getHostAddress();                  // Retorna o IP como string (ex: "192.168.1.10")
                     }
                 }
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
+        } catch (SocketException e) {                                  // Captura qualquer erro ao acessar interfaces de rede
+            e.printStackTrace();                                       // Imprime o erro no console
         }
-        return "IP não encontrado";
+
+        return "IP não encontrado";                                    // Se nenhum IP válido for encontrado, retorna essa mensagem
     }
     
     /*-------------- SPRITES CENÁRIO ----------*/
