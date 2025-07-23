@@ -20,6 +20,7 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     private BufferedImage sawSpriteSheet;
     private Sprite<SawAnimation> sawSprite;
     private SawAnimation sawAction = SawAnimation.STATIC;
+    private Rectangle2D.Float hitbox2, hitbox3;
     
     /*------------ CONSTRUTOR ------------*/
     public Saw(Screen screen, GCanvas gc) {
@@ -49,18 +50,32 @@ public class Saw extends Obstacles{ //extends Obstacles, que extende objects
     protected void drawObstHitbox(Graphics2D g2d) {
         g2d.setColor(Color.BLUE);
         g2d.drawRect((int) obs_hitbox.x, (int) obs_hitbox.y, (int) obs_hitbox.width, (int) obs_hitbox.height);
+        g2d.drawRect((int) hitbox2.x, (int) hitbox2.y, (int) hitbox2.width, (int) hitbox2.height);
+        g2d.drawRect((int) hitbox3.x, (int) hitbox3.y, (int) hitbox3.width, (int) hitbox3.height);
     }
     
     @Override
     public void initObstHitbox() { //x, y, largura, altura
-        this.obs_hitbox = new Rectangle2D.Float(getX(), getY(), Universal.SAW_HITBOX_WIDTH, Universal.SAW_HITBOX_HEIGHT); //metade do tamanho
+        this.obs_hitbox = new Rectangle2D.Float(getX(), getY() + 29 * Universal.SCALE, 80 * Universal.SCALE, 14 * Universal.SCALE); //metade do tamanho
+        this.hitbox2 = new Rectangle2D.Float(getX() + 8 * Universal.SCALE, getY() + 16 * Universal.SCALE, 64 * Universal.SCALE, 13 * Universal.SCALE);
+        this.hitbox3 = new Rectangle2D.Float(getX() + 22 * Universal.SCALE, getY(), 32 * Universal.SCALE, 12 * Universal.SCALE);
+    }
+    
+    @Override 
+    public void updateObstHitbox() {
+        obs_hitbox.x = getX(); //atualizo a posição horizontal
+        obs_hitbox.y = getY() + 29 * Universal.SCALE;
+        hitbox2.x = getX() + 8 * Universal.SCALE;
+        hitbox2.y = getY() + 16 * Universal.SCALE;
+        hitbox3.x = getX() + 22 * Universal.SCALE;
+        hitbox3.y = getY();
     }
     
     @Override
     public void render(Graphics2D g2d){
         sawSprite.setAction(sawAction);
         sawSprite.update();
-        sawSprite.render(g2d, (int) getX() - 70, (int) getY() - 50);
+        sawSprite.render(g2d, (int) getX(), (int) getY());
             if(Universal.showGrid){
                 drawObstHitbox(g2d);
             }

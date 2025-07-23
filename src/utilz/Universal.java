@@ -63,7 +63,7 @@ public class Universal {
     public static final int SAW_HEIGHT = 40;
     public static final float SAW_HITBOX_WIDTH = 0.8f*TILES_SIZE;
     public static final float SAW_HITBOX_HEIGHT = 0.65f*Universal.TILES_SIZE;
-    public static final int SAW_SPAWN_Y = GAME_HEIGHT - (2 * TILES_SIZE + (int)SAW_HITBOX_HEIGHT) + 40;    
+    public static final int SAW_SPAWN_Y = GAME_HEIGHT - (3 * TILES_SIZE + (int)SAW_HITBOX_HEIGHT) + 80;    
     public static boolean saw = false; //flag de spawn
     
     // =============== Fall Block ===============

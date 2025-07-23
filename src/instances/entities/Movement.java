@@ -24,6 +24,7 @@ public class Movement {
     private boolean inAir = false;
     private float heightGY; //usado para achar a posição Y em que o player tá "no chão"
     private float groundLvl;
+    private boolean jumpButtonReleased = false;
 
     /*dash*/
     private boolean isDashing = false;
@@ -65,6 +66,11 @@ public class Movement {
                     player.playerAction = PlayerAnimation.JUMP;
                     verticalSpeed = jumpPower;
                     isJumping = true;
+                }
+                
+                if(jumpButtonReleased && verticalSpeed < 0){
+                    verticalSpeed = 0;
+                    player.setY(player.getY() + verticalSpeed);
                 }
                 
                 if (isJumping) { //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
@@ -320,8 +326,12 @@ public class Movement {
     public void setIsDashing(boolean isDashing) {
         this.isDashing = isDashing;
     }
-    
-    
-    
-    
+
+    public boolean isJumpButtonReleased() {
+        return jumpButtonReleased;
+    }
+
+    public void setJumpButtonReleased(boolean jumpButtonReleased) {
+        this.jumpButtonReleased = jumpButtonReleased;
+    }
 }

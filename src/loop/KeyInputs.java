@@ -44,8 +44,9 @@ public class KeyInputs implements KeyListener {
             case KeyEvent.VK_D:
                 p1.right = false;
                 break;
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_SPACE: //pulo
                 p1.jump = false;
+                p1.getMovement().setJumpButtonReleased(true);
                 break;
             case KeyEvent.VK_SHIFT:
                 p1.dash = false;
@@ -64,8 +65,9 @@ public class KeyInputs implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 p2.right = false;
                 break;
-            case KeyEvent.VK_NUMPAD1: {
+            case KeyEvent.VK_NUMPAD1: { //pulo
                 p2.jump = false;
+                p2.getMovement().setJumpButtonReleased(true);
                 break;
             }
             case KeyEvent.VK_NUMPAD2: {
@@ -106,6 +108,7 @@ public class KeyInputs implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 p1.jump = true;
+                p1.getMovement().setJumpButtonReleased(false);
                 break;
             case KeyEvent.VK_SHIFT:
                 p1.dash = true;
@@ -126,6 +129,7 @@ public class KeyInputs implements KeyListener {
                 break;
             case KeyEvent.VK_NUMPAD1: {
                 p2.jump = true;
+                p2.getMovement().setJumpButtonReleased(false);
                 break;
             }
             case KeyEvent.VK_NUMPAD2: {

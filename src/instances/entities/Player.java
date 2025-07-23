@@ -180,10 +180,6 @@ public class Player extends Entities{
         playerSprite.setAction(playerAction);
         playerSprite.update(); //altero o state da minha animacao
         
-
-        
-        
-        
         if (marioCap) { //mario
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); /*Aplico transparencia no pincel*/
             scarf2.render(g2d);
