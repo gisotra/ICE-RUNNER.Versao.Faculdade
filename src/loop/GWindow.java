@@ -14,7 +14,7 @@ public class GWindow {
     public GWindow() {
         gc = new GCanvas();
         janela = new JFrame();
-        janela.setUndecorated(false);
+        janela.setUndecorated(true);
         janela.setLayout(null);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setSize(Universal.GAME_WIDTH, Universal.GAME_HEIGHT);

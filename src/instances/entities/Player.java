@@ -88,7 +88,7 @@ public class Player extends Entities{
         setX(120 * playerCode);
         setY(360);
         movement.setIsJumping(true); //para ele cair logo de primeira
-        scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, scarfSegV1, 7, 20, 3, 9);
+        scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, scarfSegV1, 7, 23, 3, 9);
         scarf2 = new ScarfRope(this, 0.8f * Universal.SCALE, scarfSegV2, 3, 17, 2f, 12);
         setIsActive(true);
     }     

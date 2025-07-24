@@ -33,11 +33,6 @@ public class GRoom implements Runnable {
 
         while (true) {
 
-            /*if (!gc.isDisplayable() || !gc.isFocusOwner()) {
-                sleepEngine();
-                continue;
-            }*/
-
             double agora = System.nanoTime();
             double frameTime = (agora - ultimoTempo) / 1_000_000_000.0;
             ultimoTempo = agora;

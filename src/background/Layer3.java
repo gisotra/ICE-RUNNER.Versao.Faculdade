@@ -17,7 +17,7 @@ public class Layer3 extends Environment {
     
     public Layer3(Screen screen, GCanvas gc) {
         super(screen, gc);
-        this.y = Universal.layer3YOffset;
+        this.y = Universal.layer3YOffset - 120;
         this.x = 0;
         initSprite();
         setIsActive(true);
@@ -32,7 +32,7 @@ public class Layer3 extends Environment {
             throw new RuntimeException(e);
         }
         setWidth(Universal.spriteEnviroWidth); //largura em px do FRAME ORIGINAL 28 tiles
-        setHeight(32); //altura em px do FRAME ORIGINAL 8 tiles 
+        setHeight(96); //altura em px do FRAME ORIGINAL 8 tiles 
     }
     
     @Override

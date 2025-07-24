@@ -75,7 +75,7 @@ public class GCanvas extends Canvas {
             if(Gamestate.state == PLAYING){
             g2D.setFont(fontInGame);
             g2D.setColor(Color.BLACK);
-            g2D.drawString("SCORE:   " + String.valueOf(Universal.SCORE), Universal.GAME_WIDTH - 500, 40);
+            g2D.drawString("SCORE:   " + String.valueOf(Universal.SCORE), Universal.GAME_WIDTH/2 - 120, 40);
             }
             if(Gamestate.state == MULTIPLAYER_MENU){
             g2D.setFont(fontInGame);
