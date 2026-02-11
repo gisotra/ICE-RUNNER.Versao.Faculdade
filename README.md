@@ -38,5 +38,7 @@ e iniciará o jogo imediatamente.
 ---------------------------------------------------------
 
 Desenvolvido por Giovane Henrique Sotratto Silva
+
 ✉ Email | gisotra.henrique@gmail.com
+
 👤 Linkedin | www.linkedin.com/in/gisotra
