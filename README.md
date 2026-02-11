@@ -2,15 +2,13 @@ Obrigado por verificar meu repositório! Este foi um jogo desenvolvido
 em Java utilizando Swing com Java ANT, no Netbeans. Ele é uma homenagem 
 direta ao jogo Super Chicken Jumper, feito no gamemaker.
 
-## 🚀 COMO RODAR O JOGO
+## 📥 COMO BAIXAR E RODAR O JOGO
+ 
+Para jogar, baixe o arquivo compactado contendo o executável e o lançador:
 
-Para garantir que o jogo inicie corretamente sem conflitos de versão do Java:
+[**CLIQUE AQUI PARA BAIXAR O JOGO (v1.0)**](https://github.com/gisotra/ICE-RUNNER.Versao.Faculdade/releases/download/ice-runner/ICE-RUNNER-Gisotra.zip)
 
-1. Não clique direto no arquivo .jar.
-2. Dê dois cliques no arquivo .bat "JOGAR".
-
-Isso abrirá uma janela de console rápida para verificar seu Java 
-e iniciará o jogo imediatamente.
+> **Nota:** Lembre-se de extrair o ZIP e rodar pelo arquivo `JOGAR.bat`.
 
 ---
 
