@@ -75,7 +75,7 @@ public class Screen {
         playingscreen = new Playing();
         hostingscreen = new Hosting();
         connector = new ClientConnector();
-        snowEmitter = new Emitter(70);
+        snowEmitter = new Emitter(200);
         startPowerUps();
 
         
